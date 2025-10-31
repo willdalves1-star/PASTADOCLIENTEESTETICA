@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteCar Spa | Estética Automotiva Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset e fontes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0f0f0f;
+            color: #e8e8e8;
+            line-height: 1.7;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1, h2, h3, .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Logo */
+        .logo-container {
+            padding: 16px 25px;
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            text-align: left;
+            box-shadow: 0 6px 28px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            max-width: 120px;
+            height: auto;
+            margin-left: 20px;
+            filter: drop-shadow(0 0 12px rgba(255,215,0,0.4));
+            transition: transform 0.4s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Divisor Premium - Ouro Metálico */
+        .divider {
+            height: 10px;
+            background: linear-gradient(90deg, #b8860b 0%, #ffd700 35%, #daa520 70%, #b8860b 100%);
+            width: 100%;
+            box-shadow: 0 4px 18px rgba(255, 215, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Hero Banner - Primeira dobra MOBILE 1080x1440 */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 640px;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1601584115198-2c2d8d5d9a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.9);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 90%;
+            padding: 40px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content h1 {
+            font-size: 4.2rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.9);
+            letter-spacing: 2px;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 35px;
+            color: #fff;
+            font-weight: 500;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btn-cta {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 18px 55px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            box-shadow: 0 10px 35px rgba(255, 215, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-btn-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.7s;
+        }
+
+        .hero-btn-cta:hover::before {
+            left: 100%;
+        }
+
+        .hero-btn-cta:hover {
+            background: #ffed4e;
+            transform: translateY(-6px);
+            box-shadow: 0 18px 45px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Carousel Secundário */
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 1080px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.85);
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            height: 580px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.82), rgba(0,0,0,0.55));
+            z-index: 1;
+        }
+
+        .carousel-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 88%;
+            padding: 40px;
+        }
+
+        .carousel-content h2 {
+            font-size: 3.4rem;
+            color: #ffd700;
+            margin-bottom: 22px;
+            text-shadow: 0 4px 16px rgba(0,0,0,0.9);
+            letter-spacing: 1.8px;
+        }
+
+        .carousel-content p {
+            font-size: 1.35rem;
+            margin-bottom: 32px;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .carousel-btn-cta {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.45s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 28px rgba(255, 215, 0, 0.55);
+        }
+
+        .carousel-btn-cta:hover {
+            background: #ffed4e;
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(255, 215, 0, 0.75);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.9);
+            color: #ffd700;
+            border: 3px solid #ffd700;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.9rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.45s;
+            z-index: 3;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.7);
+        }
+
+        .carousel-btn:hover {
+            background: #ffd700;
+            color: #000;
+            transform: translateY(-50%) scale(1.22);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.7);
+        }
+
+        .prev { left: 32px; }
+        .next { right: 32px; }
+
+        /* Serviços */
+        .products-section {
+            padding: 100px 20px;
+            background: #111;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 65px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 5px;
+            background: #ffd700;
+            border-radius: 3px;
+            box-shadow: 0 3px 12px rgba(255, 215, 0, 0.5);
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+            max-width: 1450px;
+            margin: 0 auto;
+        }
+
+        .product {
+            background: #1a1a1a;
+            border-radius: 24px;
+            overflow: hidden;
+            width: 380px;
+            box-shadow: 0 18px 45px rgba(0,0,0,0.6);
+            transition: all 0.5s ease;
+            position: relative;
+            border: 2px solid #2a2a2a;
+        }
+
+        .product::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,215,0,0.18), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .product:hover::before {
+            opacity: 1;
+        }
+
+        .product:hover {
+            transform: translateY(-18px);
+            box-shadow: 0 28px 65px rgba(255, 215, 0, 0.35);
+            border-color: #ffd700;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            filter: brightness(0.94);
+            transition: filter 0.5s;
+        }
+
+        .product:hover .product-img {
+            filter: brightness(1.1);
+        }
+
+        .product-info {
+            padding: 32px;
+            text-align: center;
+        }
+
+        .product-title {
+            font-size: 1.55rem;
+            color: #fff;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .product-details {
+            font-size: 0.98rem;
+            color: #ccc;
+            margin: 10px 0 20px;
+            line-height: 1.6;
+        }
+
+        .price-container {
+            margin: 25px 0;
+        }
+
+        .old-price {
+            color: #777;
+            text-decoration: line-through;
+            font-size: 1.2rem;
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .new-price {
+            color: #ffd700;
+            font-size: 2.4rem;
+            font-weight: 800;
+        }
+
+        .buy-btn {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            padding: 16px 38px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.45s;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            width: 92%;
+            margin-top: 20px;
+        }
+
+        .buy-btn:hover {
+            background: #ffed4e;
+            transform: scale(1.08);
+            box-shadow: 0 14px 35px rgba(255, 215, 0, 0.7);
+        }
+
+        /* Banners */
+        .thin-banner {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #1c1c1c, #2f2f2f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 55px 0;
+            color: #ffd700;
+            text-align: center;
+            font-size: 1.9rem;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            border-top: 2px solid #444;
+            border-bottom: 2px solid #444;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .thin-banner::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(255,215,0,0.25), transparent);
+            border-radius: 50%;
+            animation: pulse 5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.45); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .big-banner {
+            width: 100%;
+            height: 560px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 65px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 28px 70px rgba(0,0,0,0.9);
+        }
+
+        .big-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.85), rgba(0,0,0,0.6));
+            z-index: 1;
+        }
+
+        .big-banner-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 90%;
+        }
+
+        .big-banner-content h2 {
+            font-size: 4.2rem;
+            margin-bottom: 26px;
+            color: #ffd700;
+            text-shadow: 0 6px 22px rgba(0,0,0,0.95);
+        }
+
+        .big-banner-content p {
+            font-size: 1.55rem;
+            margin-bottom: 38px;
+            font-weight: 500;
+        }
+
+        /* Rodapé */
+        .footer {
+            background: #000;
+            color: #ddd;
+            padding: 85px 20px 55px;
+            text-align: center;
+            border-top: 2px solid #333;
+        }
+
+        .footer h3 {
+            color: #ffd700;
+            font-size: 2.3rem;
+            margin-bottom: 20px;
+        }
+
+        .footer p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .footer-links {
+            margin: 38px 0;
+        }
+
+        .footer-links a {
+            color: #ffd700;
+            text-decoration: none;
+            margin: 0 24px;
+            font-weight: 600;
+            transition: color 0.35s;
+            font-size: 1.1rem;
+        }
+
+        .footer-links a:hover {
+            color: #ffed4e;
+        }
+
+        .social-icons {
+            margin: 32px 0;
+        }
+
+        .social-icons a {
+            color: #ffd700;
+            font-size: 1.8rem;
+            margin: 0 16px;
+            transition: all 0.35s;
+        }
+
+        .social-icons a:hover {
+            color: #ffed4e;
+            transform: translateY(-6px);
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .hero-banner, .carousel-item, .big-banner {
+                height: 520px;
+            }
+            .hero-content h1, .big-banner-content h2 {
+                font-size: 3.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                max-width: 100px;
+            }
+            .hero-banner, .carousel-item, .big-banner {
+                height: 440px;
+            }
+            .product {
+                width: 100%;
+                max-width: 420px;
+            }
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .hero-content h1, .carousel-content h2, .big-banner-content h2 {
+                font-size: 2.6rem;
+            }
+            .thin-banner {
+                font-size: 1.4rem;
+                padding: 28px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-banner, .carousel-item, .big-banner {
+                height: 380px;
+            }
+            .hero-content h1, .carousel-content h2, .big-banner-content h2 {
+                font-size: 2.1rem;
+            }
+            .carousel-btn {
+                width: 52px;
+                height: 52px;
+                font-size: 1.6rem;
+            }
+            .hero-btn-cta, .carousel-btn-cta {
+                padding: 14px 40px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo (PNG real do Google) -->
+    <div class="logo-container">
+        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEj-3GM-m_E8gJU40EyfZrjiP-VUoQ-si1rZW8kqpnM8lFRnHYa8BGw9vfREaU5nTQUS3Dab-qMS7nj_Mg2Lb-1sRdnSf82SEwpIHq5OmUEWpxDmi271nB0aqKoi0IwUwYhr4Mxeo_JvX0WYj70s6Vjbte9wEe8aMWbM-KVMiGysWWP1Kyu3F_fvk_okVhc=s196" alt="EliteCar Spa Logo" class="logo">
+    </div>
+
+    <!-- Divisor Ouro Metálico -->
+    <div class="divider"></div>
+
+    <!-- HERO BANNER - 1080x1440 para mobile -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h1>MÁXIMO CUIDADO E DEDICAÇÃO COM O SEU CARRO!</h1>
+            <p>Polimento técnico • Vitrificação • Limpeza profunda interna e externa</p>
+            <button class="hero-btn-cta">AGENDAR AGORA</button>
+        </div>
+    </section>
+
+    <!-- Serviços em Destaque -->
+    <section class="products-section">
+        <h2 class="section-title">Nossos Serviços</h2>
+        <div class="product-list">
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Polimento Técnico" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Polimento Técnico 3 Etapas</h3>
+                    <p class="product-details">Remove riscos • Recupera brilho original • Proteção UV</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 1.290</span>
+                        <span class="new-price">R$ 990</span>
+                    </div>
+                    <button class="buy-btn">ORÇAMENTO</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://i.imgur.com/pNgNp0q.png" alt="Vitrificação" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Vitrificação Cerâmica 9H</h3>
+                    <p class="product-details">Até 3 anos de proteção • Repelência à água • Brilho espelhado</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 2.990</span>
+                        <span class="new-price">R$ 2.490</span>
+                    </div>
+                    <button class="buy-btn">RESERVAR</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://fullpowerpro.com.br/wp-content/uploads/2023/04/Curso-de-Higienizacao-FullPower.jpg" alt="Limpeza Interna" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Higienização Interna Completa</h3>
+                    <p class="product-details">Bancos • Teto • Carpete • Ozônio anti-odor</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 590</span>
+                        <span class="new-price">R$ 420</span>
+                    </div>
+                    <button class="buy-btn">AGENDAR</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Fino -->
+    <div class="thin-banner">
+        <div>PRODUTOS IMPORTADOS • TÉCNICOS CERTIFICADOS • GARANTIA POR ESCRITO</div>
+    </div>
+
+    <!-- Segundo Carousel -->
+    <div class="carousel" id="carousel1">
+        <div class="carousel-inner">
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80');">
+                <div class="carousel-content">
+                    <h2>DETAILING PROFISSIONAL</h2>
+                    <p>Tratamento completo para veículos de alto padrão</p>
+                    <button class="carousel-btn-cta">VER PACOTES</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');">
+                <div class="carousel-content">
+                    <h2>PROTEÇÃO DE PINTURA</h2>
+                    <p>PPF • Vitrificação • Película anti-risco</p>
+                    <button class="carousel-btn-cta">SOLICITAR ORÇAMENTO</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://fullpowerpro.com.br/wp-content/uploads/2023/04/Curso-de-Higienizacao-FullPower.jpg');">
+                <div class="carousel-content">
+                    <h2>LIMPEZA EXPRESS</h2>
+                    <p>Interna + externa em até 2 horas</p>
+                    <button class="carousel-btn-cta">AGENDAR HOJE</button>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-btn prev" onclick="prevSlide('carousel1')"><</button>
+        <button class="carousel-btn next" onclick="nextSlide('carousel1')">></button>
+    </div>
+
+    <!-- Mais Serviços -->
+    <section class="products-section">
+        <h2 class="section-title">Pacotes Premium</h2>
+        <div class="product-list">
+            <div class="product">
+                <img src="https://vitrificacao.kishobrasil.com.br/imagens/polimento-e-vitrificacao-de-farol.jpg" alt="Pacote Elite" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Pacote Elite Full</h3>
+                    <p class="product-details">Polimento + Vitrificação + Higienização + PPF capô</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 5.900</span>
+                        <span class="new-price">R$ 4.900</span>
+                    </div>
+                    <button class="buy-btn">CONTRATAR</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Restauração" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Restauração de Faróis</h3>
+                    <p class="product-details">Remove amarelado • Polimento • Película UV</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 490</span>
+                        <span class="new-price">R$ 350</span>
+                    </div>
+                    <button class="buy-btn">AGENDAR</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Grande -->
+    <div class="big-banner" style="background-image: url('https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+        <div class="big-banner-content">
+            <h2>CLUBE ELITECAR</h2>
+            <p>Descontos exclusivos • Prioridade no agendamento • Manutenção mensal</p>
+            <button class="carousel-btn-cta" style="background: #fff; color: #000; font-size: 1.35rem; padding: 24px 60px; border: 3px solid #ffd700;">QUERO SER VIP</button>
+        </div>
+    </div>
+
+    <!-- Banner Fino 2 -->
+    <div class="thin-banner">
+        <div>ATENDIMENTO EM DOMICÍLIO • FROTA EMPRESARIAL • SEGURO CONTRA DANOS</div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <h3>ELITECAR SPA</h3>
+        <p>Estética automotiva de alto padrão desde 2019</p>
+        <p>Av. Paulista, 2100 - Bela Vista, São Paulo - SP</p>
+        <div class="footer-links">
+            <a href="#">Serviços</a>
+            <a href="#">Orçamento</a>
+            <a href="#">Clube VIP</a>
+            <a href="#">Galeria</a>
+            <a href="#">Contato</a>
+        </div>
+        <div class="social-icons">
+            <a href="#">Instagram</a>
+            <a href="#">WhatsApp</a>
+            <a href="#">YouTube</a>
+        </div>
+        <p>© 2025 EliteCar Spa. Todos os direitos reservados.</p>
+        <p>CNPJ: 12.345.678/0001-99 | (11) 98765-4321</p>
+    </footer>
+
+    <script>
+        const carousels = {};
+
+        function initCarousel(id) {
+            const carousel = document.getElementById(id);
+            const inner = carousel.querySelector('.carousel-inner');
+            const items = inner.children;
+            let currentIndex = 0;
+
+            carousels[id] = { inner, items, currentIndex };
+
+            setInterval(() => {
+                nextSlide(id);
+            }, 7000);
+        }
+
+        function nextSlide(id) {
+            const carousel = carousels[id];
+            if (!carousel) return;
+            carousel.currentIndex = (carousel.currentIndex + 1) % carousel.items.length;
+            carousel.inner.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
+        }
+
+        function prevSlide(id) {
+            const carousel = carousels[id];
+            if (!carousel) return;
+            carousel.currentIndex = (carousel.currentIndex - 1 + carousel.items.length) % carousel.items.length;
+            carousel.inner.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCarousel('carousel1');
+        });
+    </script>
+
+</body>
+</html>
