@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Premium | Corte & Estilo de Alto Padrão</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset e fontes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0f0f0f;
+            color: #e0e0e0;
+            line-height: 1.7;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1, h2, h3, .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Logo */
+        .logo-container {
+            padding: 20px 25px;
+            background-color: #000;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            max-width: 220px;
+            height: auto;
+            filter: brightness(0) invert(1);
+            margin-left: 20px;
+        }
+
+        /* Divisor Premium */
+        .divider {
+            height: 8px;
+            background: linear-gradient(90deg, #b89778 0%, #d4af37 50%, #b89778 100%);
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Carousel */
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 1080px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            height: 600px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+            z-index: 1;
+        }
+
+        .carousel-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 85%;
+            padding: 30px;
+        }
+
+        .carousel-content h2 {
+            font-size: 3.2rem;
+            color: #d4af37;
+            margin-bottom: 18px;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.7);
+        }
+
+        .carousel-content p {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #f0f0f0;
+        }
+
+        .carousel-btn-cta {
+            background: #d4af37;
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .carousel-btn-cta:hover {
+            background: #e0c16e;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.6);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #d4af37;
+            border: 2px solid #d4af37;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.6rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s;
+            z-index: 3;
+        }
+
+        .carousel-btn:hover {
+            background: #d4af37;
+            color: #000;
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .prev { left: 25px; }
+        .next { right: 25px; }
+
+        /* Produtos/Serviços */
+        .products-section {
+            padding: 80px 20px;
+            background: #111;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.6rem;
+            color: #d4af37;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #d4af37;
+            border-radius: 2px;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 35px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .product {
+            background: #1a1a1a;
+            border-radius: 16px;
+            overflow: hidden;
+            width: 320px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid #333;
+        }
+
+        .product::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .product:hover::before {
+            opacity: 1;
+        }
+
+        .product:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 45px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            filter: brightness(0.9);
+            transition: filter 0.4s;
+        }
+
+        .product:hover .product-img {
+            filter: brightness(1.1);
+        }
+
+        .product-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .price-container {
+            margin: 18px 0;
+        }
+
+        .old-price {
+            color: #e74c3c;
+            text-decoration: line-through;
+            font-size: 1.1rem;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .new-price {
+            color: #d4af37;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .buy-btn {
+            background: #d4af37;
+            color: #000;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 85%;
+            margin-top: 15px;
+        }
+
+        .buy-btn:hover {
+            background: #e0c16e;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Banners */
+        .thin-banner {
+            width: 100%;
+            height: 130px;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+            color: #d4af37;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+
+        .thin-banner::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(212,175,55,0.15), transparent);
+            border-radius: 50%;
+            animation: pulse 4s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.3); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .big-banner {
+            width: 100%;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 50px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+        }
+
+        .big-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5));
+            z-index: 1;
+        }
+
+        .big-banner-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 85%;
+        }
+
+        .big-banner-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #d4af37;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
+
+        .big-banner-content p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+        }
+
+        /* Rodapé */
+        .footer {
+            background: #000;
+            color: #ccc;
+            padding: 70px 20px 40px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .footer h3 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .footer-links {
+            margin: 30px 0;
+        }
+
+        .footer-links a {
+            color: #d4af37;
+            text-decoration: none;
+            margin: 0 18px;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            color: #e0c16e;
+        }
+
+        .social-icons {
+            margin: 25px 0;
+        }
+
+        .social-icons a {
+            color: #d4af37;
+            font-size: 1.5rem;
+            margin: 0 12px;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #e0c16e;
+            transform: translateY(-3px);
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .carousel-item, .big-banner {
+                height: 500px;
+            }
+            .carousel-content h2, .big-banner-content h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                max-width: 180px;
+            }
+            .carousel-item, .big-banner {
+                height: 400px;
+            }
+            .product {
+                width: 100%;
+                max-width: 360px;
+            }
+            .section-title {
+                font-size: 2.2rem;
+            }
+            .carousel-content h2, .big-banner-content h2 {
+                font-size: 2rem;
+            }
+            .thin-banner {
+                font-size: 1.3rem;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .carousel-item, .big-banner {
+                height: 350px;
+            }
+            .carousel-content h2, .big-banner-content h2 {
+                font-size: 1.7rem;
+            }
+            .carousel-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="https://via.placeholder.com/400x100/000000/d4af37?text=BARBEARIA+PREMIUM" alt="Barbearia Premium Logo" class="logo">
+    </div>
+
+    <!-- Divisor Dourado -->
+    <div class="divider"></div>
+
+    <!-- Carousel Principal (3 banners) -->
+    <div class="carousel" id="carousel1">
+        <div class="carousel-inner">
+            <div class="carousel-item" style="background-image: url('https://picsum.photos/1080/1440?random=20');">
+                <div class="carousel-content">
+                    <h2>CORTE DE ELITE</h2>
+                    <p>Estilo impecável com técnicas exclusivas</p>
+                    <button class="carousel-btn-cta">AGENDAR AGORA</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://picsum.photos/1080/1440?random=21');">
+                <div class="carousel-content">
+                    <h2>BARBA DE LUXO</h2>
+                    <p>Tratamento premium com óleos importados</p>
+                    <button class="carousel-btn-cta">CONHECER SERVIÇO</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://picsum.photos/1080/1440?random=22');">
+                <div class="carousel-content">
+                    <h2>EXPERIÊNCIA VIP</h2>
+                    <p>Ambiente exclusivo e atendimento personalizado</p>
+                    <button class="carousel-btn-cta">RESERVAR HORÁRIO</button>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-btn prev" onclick="prevSlide('carousel1')"><</button>
+        <button class="carousel-btn next" onclick="nextSlide('carousel1')">></button>
+    </div>
+
+    <!-- Serviços em Destaque -->
+    <section class="products-section">
+        <h2 class="section-title">Nossos Serviços Premium</h2>
+        <div class="product-list">
+            <div class="product">
+                <img src="https://picsum.photos/400/400?random=30" alt="Corte Clássico" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Corte Clássico</h3>
+                    <div class="price-container">
+                        <span class="old-price">R$ 149</span>
+                        <span class="new-price">R$ 99</span>
+                    </div>
+                    <button class="buy-btn">Agendar</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://picsum.photos/400/400?random=31" alt="Barba Completa" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Barba Completa</h3>
+                    <div class="price-container">
+                        <span class="old-price">R$ 129</span>
+                        <span class="new-price">R$ 89</span>
+                    </div>
+                    <button class="buy-btn">Agendar</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://picsum.photos/400/400?random=32" alt="Pacote VIP" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Pacote VIP Mensal</h3>
+                    <div class="price-container">
+                        <span class="old-price">R$ 499</span>
+                        <span class="new-price">R$ 399</span>
+                    </div>
+                    <button class="buy-btn">Assinar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Fino -->
+    <div class="thin-banner">
+        <div>ESTACIONAMENTO PRIVATIVO • WI-FI • BEBIDA PREMIUM INCLUÍDA</div>
+    </div>
+
+    <!-- Segundo Carousel -->
+    <div class="carousel" id="carousel2">
+        <div class="carousel-inner">
+            <div class="carousel-item" style="background-image: url('https://picsum.photos/1080/1440?random=23');">
+                <div class="carousel-content">
+                    <h2>MASTER BARBERS</h2>
+                    <p>Profissionais com mais de 15 anos de experiência</p>
+                    <button class="carousel-btn-cta">Conhecer Equipe</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://picsum.photos/1080/1440?random=24');">
+                <div class="carousel-content">
+                    <h2>PRODUTOS IMPORTADOS</h2>
+                    <p>Exclusividade em linhas American Crew e Proraso</p>
+                    <button class="carousel-btn-cta">Ver Produtos</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://picsum.photos/1080/1440?random=25');">
+                <div class="carousel-content">
+                    <h2>AMBIENTE EXCLUSIVO</h2>
+                    <p>Sala VIP com música ambiente e design vintage</p>
+                    <button class="carousel-btn-cta">Fazer Tour</button>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-btn prev" onclick="prevSlide('carousel2')"><</button>
+        <button class="carousel-btn next" onclick="nextSlide('carousel2')">></button>
+    </div>
+
+    <!-- Mais Serviços -->
+    <section class="products-section">
+        <h2 class="section-title">Tratamentos Especiais</h2>
+        <div class="product-list">
+            <div class="product">
+                <img src="https://picsum.photos/400/400?random=33" alt="Hidratação Capilar" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Hidratação Capilar</h3>
+                    <div class="price-container">
+                        <span class="old-price">R$ 189</span>
+                        <span class="new-price">R$ 139</span>
+                    </div>
+                    <button class="buy-btn">Agendar</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://picsum.photos/400/400?random=34" alt="Pigmentação" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Pigmentação Capilar</h3>
+                    <div class="price-container">
+                        <span class="old-price">R$ 299</span>
+                        <span class="new-price">R$ 219</span>
+                    </div>
+                    <button class="buy-btn">Agendar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Grande -->
+    <div class="big-banner" style="background-image: url('https://picsum.photos/1920/1080?random=26');">
+        <div class="big-banner-content">
+            <h2>CLUBE DO BARBEIRO</h2>
+            <p>Assinatura mensal com benefícios exclusivos</p>
+            <button class="carousel-btn-cta" style="background: #e74c3c; font-size: 1.2rem; padding: 18px 45px;">FAZER PARTE</button>
+        </div>
+    </div>
+
+    <!-- Outra Categoria -->
+    <section class="products-section">
+        <h2 class="section-title">Produtos Premium</h2>
+        <div class="product-list">
+            <div class="product">
+                <img src="https://picsum.photos/400/400?random=35" alt="Óleo de Barba" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Óleo de Barba Gold</h3>
+                    <div class="price-container">
+                        <span class="old-price">R$ 149</span>
+                        <span class="new-price">R$ 99</span>
+                    </div>
+                    <button class="buy-btn">Comprar</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://picsum.photos/400/400?random=36" alt="Pomada Matte" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Pomada Matte Pro</h3>
+                    <div class="price-container">
+                        <span class="old-price">R$ 129</span>
+                        <span class="new-price">R$ 89</span>
+                    </div>
+                    <button class="buy-btn">Comprar</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://picsum.photos/400/400?random=37" alt="Shampoo Premium" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Shampoo Antiqueda</h3>
+                    <div class="price-container">
+                        <span class="old-price">R$ 169</span>
+                        <span class="new-price">R$ 119</span>
+                    </div>
+                    <button class="buy-btn">Comprar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Grande 2 -->
+    <div class="big-banner" style="background-image: url('https://picsum.photos/1920/1080?random=27');">
+        <div class="big-banner-content">
+            <h2>HORÁRIO ESTENDIDO</h2>
+            <p>Atendimento até 22h • Agendamento Online 24h</p>
+        </div>
+    </div>
+
+    <!-- Banner Fino 2 -->
+    <div class="thin-banner">
+        <div>ACEITAMOS TODOS OS CARTÕES • PARCELAMENTO EM ATÉ 6X</div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <h3>BARBEARIA PREMIUM</h3>
+        <p>Excelência em cuidados masculinos desde 2018</p>
+        <p>Rua das Acácias, 123 - Jardins, São Paulo - SP</p>
+        <div class="footer-links">
+            <a href="#">Sobre</a>
+            <a href="#">Serviços</a>
+            <a href="#">Produtos</a>
+            <a href="#">Agendamento</a>
+            <a href="#">Contato</a>
+        </div>
+        <div class="social-icons">
+            <a href="#">Instagram</a>
+            <a href="#">WhatsApp</a>
+            <a href="#">Facebook</a>
+        </div>
+        <p>© 2025 Barbearia Premium. Todos os direitos reservados.</p>
+        <p>CNPJ: 12.345.678/0001-99 | (11) 98765-4321</p>
+    </footer>
+
+    <script>
+        const carousels = {};
+
+        function initCarousel(id) {
+            const carousel = document.getElementById(id);
+            const inner = carousel.querySelector('.carousel-inner');
+            const items = inner.children;
+            let currentIndex = 0;
+
+            carousels[id] = { inner, items, currentIndex };
+
+            setInterval(() => {
+                nextSlide(id);
+            }, 6000);
+        }
+
+        function nextSlide(id) {
+            const carousel = carousels[id];
+            if (!carousel) return;
+            carousel.currentIndex = (carousel.currentIndex + 1) % carousel.items.length;
+            carousel.inner.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
+        }
+
+        function prevSlide(id) {
+            const carousel = carousels[id];
+            if (!carousel) return;
+            carousel.currentIndex = (carousel.currentIndex - 1 + carousel.items.length) % carousel.items.length;
+            carousel.inner.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCarousel('carousel1');
+            initCarousel('carousel2');
+        });
+    </script>
+
+</body>
+</html>
