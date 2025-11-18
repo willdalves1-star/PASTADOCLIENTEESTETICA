@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegance Nails | Design & Cuidados Profissionais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset e fontes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #ffffff;
+            color: #333333;
+            line-height: 1.7;
+            font-family: 'Montserrat', sans-serif;
+        }
+        h1, h2, h3, .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        /* Logo */
+        .logo-container {
+            padding: 16px 25px;
+            background: linear-gradient(135deg, #ffffff, #f8f8f8);
+            text-align: left;
+            box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 100;
+            border-bottom: 1px solid #eaeaea;
+        }
+        .logo {
+            max-width: 120px;
+            height: auto;
+            margin-left: 20px;
+            filter: drop-shadow(0 0 12px rgba(147, 51, 234, 0.4));
+            transition: transform 0.4s ease;
+        }
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        /* Divisor - Gradiente Roxo */
+        .divider {
+            height: 10px;
+            background: linear-gradient(90deg, #8b5cf6 0%, #a855f7 35%, #c084fc 70%, #d946ef 100%);
+            width: 100%;
+            box-shadow: 0 4px 18px rgba(147, 51, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        /* Hero Banner - Primeira dobra MOBILE 1080x1440 */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 640px;
+            background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.75)), url('https://images.unsplash.com/photo-1604654894610-df63bc536371?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.05);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 90%;
+            padding: 40px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-content h1 {
+            font-size: 4.2rem;
+            color: #8b5cf6;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            letter-spacing: 2px;
+        }
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 35px;
+            color: #4b5563;
+            font-weight: 500;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-btn-cta {
+            background: linear-gradient(135deg, #8b5cf6, #c084fc);
+            color: #fff;
+            border: none;
+            padding: 18px 55px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            box-shadow: 0 10px 35px rgba(139, 92, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-btn-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.7s;
+        }
+        .hero-btn-cta:hover::before {
+            left: 100%;
+        }
+        .hero-btn-cta:hover {
+            background: linear-gradient(135deg, #a855f7, #d946ef);
+            transform: translateY(-6px);
+            box-shadow: 0 18px 45px rgba(139, 92, 246, 0.6);
+        }
+        /* Carousel Secundário */
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 1080px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        .carousel-item {
+            min-width: 100%;
+            height: 580px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));
+            z-index: 1;
+        }
+        .carousel-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 88%;
+            padding: 40px;
+        }
+        .carousel-content h2 {
+            font-size: 3.4rem;
+            color: #8b5cf6;
+            margin-bottom: 22px;
+            text-shadow: 0 4px 16px rgba(0,0,0,0.05);
+            letter-spacing: 1.8px;
+        }
+        .carousel-content p {
+            font-size: 1.35rem;
+            margin-bottom: 32px;
+            color: #4b5563;
+            font-weight: 500;
+        }
+        .carousel-btn-cta {
+            background: linear-gradient(135deg, #8b5cf6, #c084fc);
+            color: #fff;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.45s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 28px rgba(139, 92, 246, 0.4);
+        }
+        .carousel-btn-cta:hover {
+            background: linear-gradient(135deg, #a855f7, #d946ef);
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(139, 92, 246, 0.6);
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            color: #8b5cf6;
+            border: 3px solid #8b5cf6;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.9rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.45s;
+            z-index: 3;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.1);
+        }
+        .carousel-btn:hover {
+            background: #8b5cf6;
+            color: #fff;
+            transform: translateY(-50%) scale(1.22);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
+        }
+        .prev { left: 32px; }
+        .next { right: 32px; }
+        /* Serviços */
+        .products-section {
+            padding: 100px 20px;
+            background: #f9fafb;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 3rem;
+            color: #8b5cf6;
+            margin-bottom: 65px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 5px;
+            background: linear-gradient(90deg, #8b5cf6, #c084fc);
+            border-radius: 3px;
+            box-shadow: 0 3px 12px rgba(139, 92, 246, 0.3);
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+            max-width: 1450px;
+            margin: 0 auto;
+        }
+        .product {
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            width: 380px;
+            box-shadow: 0 18px 45px rgba(0,0,0,0.08);
+            transition: all 0.5s ease;
+            position: relative;
+            border: 2px solid #f3f4f6;
+        }
+        .product::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .product:hover::before {
+            opacity: 1;
+        }
+        .product:hover {
+            transform: translateY(-18px);
+            box-shadow: 0 28px 65px rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+        }
+        .product-img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            filter: brightness(0.94);
+            transition: filter 0.5s;
+        }
+        .product:hover .product-img {
+            filter: brightness(1.1);
+        }
+        .product-info {
+            padding: 32px;
+            text-align: center;
+        }
+        .product-title {
+            font-size: 1.55rem;
+            color: #1f2937;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        .product-details {
+            font-size: 0.98rem;
+            color: #6b7280;
+            margin: 10px 0 20px;
+            line-height: 1.6;
+        }
+        .price-container {
+            margin: 25px 0;
+        }
+        .old-price {
+            color: #9ca3af;
+            text-decoration: line-through;
+            font-size: 1.2rem;
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .new-price {
+            color: #8b5cf6;
+            font-size: 2.4rem;
+            font-weight: 800;
+        }
+        .buy-btn {
+            background: linear-gradient(135deg, #8b5cf6, #c084fc);
+            color: #fff;
+            border: none;
+            padding: 16px 38px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.45s;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            width: 92%;
+            margin-top: 20px;
+        }
+        .buy-btn:hover {
+            background: linear-gradient(135deg, #a855f7, #d946ef);
+            transform: scale(1.08);
+            box-shadow: 0 14px 35px rgba(139, 92, 246, 0.5);
+        }
+        /* Banners */
+        .thin-banner {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 55px 0;
+            color: #8b5cf6;
+            text-align: center;
+            font-size: 1.9rem;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            border-top: 2px solid #e5e7eb;
+            border-bottom: 2px solid #e5e7eb;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .thin-banner::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent);
+            border-radius: 50%;
+            animation: pulse 5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.45); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        .big-banner {
+            width: 100%;
+            height: 560px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 65px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 28px 70px rgba(0,0,0,0.05);
+        }
+        .big-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            z-index: 1;
+        }
+        .big-banner-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #1f2937;
+            max-width: 90%;
+        }
+        .big-banner-content h2 {
+            font-size: 4.2rem;
+            margin-bottom: 26px;
+            color: #8b5cf6;
+            text-shadow: 0 6px 22px rgba(0,0,0,0.05);
+        }
+        .big-banner-content p {
+            font-size: 1.55rem;
+            margin-bottom: 38px;
+            font-weight: 500;
+            color: #4b5563;
+        }
+        /* Rodapé */
+        .footer {
+            background: #f9fafb;
+            color: #4b5563;
+            padding: 85px 20px 55px;
+            text-align: center;
+            border-top: 2px solid #e5e7eb;
+        }
+        .footer h3 {
+            color: #8b5cf6;
+            font-size: 2.3rem;
+            margin-bottom: 20px;
+        }
+        .footer p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .footer-links {
+            margin: 38px 0;
+        }
+        .footer-links a {
+            color: #8b5cf6;
+            text-decoration: none;
+            margin: 0 24px;
+            font-weight: 600;
+            transition: color 0.35s;
+            font-size: 1.1rem;
+        }
+        .footer-links a:hover {
+            color: #a855f7;
+        }
+        .social-icons {
+            margin: 32px 0;
+        }
+        .social-icons a {
+            color: #8b5cf6;
+            font-size: 1.8rem;
+            margin: 0 16px;
+            transition: all 0.35s;
+        }
+        .social-icons a:hover {
+            color: #a855f7;
+            transform: translateY(-6px);
+        }
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .hero-banner, .carousel-item, .big-banner {
+                height: 520px;
+            }
+            .hero-content h1, .big-banner-content h2 {
+                font-size: 3.2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .logo {
+                max-width: 100px;
+            }
+            .hero-banner, .carousel-item, .big-banner {
+                height: 440px;
+            }
+            .product {
+                width: 100%;
+                max-width: 420px;
+            }
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .hero-content h1, .carousel-content h2, .big-banner-content h2 {
+                font-size: 2.6rem;
+            }
+            .thin-banner {
+                font-size: 1.4rem;
+                padding: 28px;
+            }
+        }
+        @media (max-width: 576px) {
+            .hero-banner, .carousel-item, .big-banner {
+                height: 380px;
+            }
+            .hero-content h1, .carousel-content h2, .big-banner-content h2 {
+                font-size: 2.1rem;
+            }
+            .carousel-btn {
+                width: 52px;
+                height: 52px;
+                font-size: 1.6rem;
+            }
+            .hero-btn-cta, .carousel-btn-cta {
+                padding: 14px 40px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo (PNG premium de Nail Designer) -->
+    <div class="logo-container">
+        <img src="https://i.imgur.com/hjFxxFT.png" alt="Elegance Nails Logo" class="logo">
+    </div>
+    <!-- Divisor Gradiente Roxo -->
+    <div class="divider"></div>
+    <!-- HERO BANNER - 1080x1440 para mobile -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h1>DESIGN & CUIDADOS PROFISSIONAIS</h1>
+            <p>Unhas impecáveis • Design exclusivo • Produtos premium</p>
+            <button class="hero-btn-cta">AGENDAR AGORA</button>
+        </div>
+    </section>
+    <!-- Serviços em Destaque -->
+    <section class="products-section">
+        <h2 class="section-title">Nossos Serviços</h2>
+        <div class="product-list">
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Manicure Completa" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Manicure Completa</h3>
+                    <p class="product-details">Cutículas • Esmaltação • Hidratação • Design</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 85</span>
+                        <span class="new-price">R$ 65</span>
+                    </div>
+                    <button class="buy-btn">AGENDAR</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1598439210625-5067c578f3f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Alongamento em Gel" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Alongamento em Gel</h3>
+                    <p class="product-details">Alongamento • Manutenção • Design personalizado</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 150</span>
+                        <span class="new-price">R$ 120</span>
+                    </div>
+                    <button class="buy-btn">AGENDAR</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1633526548816-9c5c5f6c8b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Spa das Mãos" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Spa das Mãos</h3>
+                    <p class="product-details">Esfoliação • Máscara nutritiva • Massagem relaxante</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 110</span>
+                        <span class="new-price">R$ 85</span>
+                    </div>
+                    <button class="buy-btn">AGENDAR</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Banner Fino -->
+    <div class="thin-banner">
+        <div>PRODUTOS PREMIUM • DESIGN EXCLUSIVO • HIGIENE GARANTIDA</div>
+    </div>
+    <!-- Segundo Carousel -->
+    <div class="carousel" id="carousel1">
+        <div class="carousel-inner">
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1604654894610-df63bc536371?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80');">
+                <div class="carousel-content">
+                    <h2>DESIGN EXCLUSIVO</h2>
+                    <p>Unhas artísticas • Personalização total • Tendências da moda</p>
+                    <button class="carousel-btn-cta">VER PORTFÓLIO</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1598439210625-5067c578f3f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80');">
+                <div class="carousel-content">
+                    <h2>ALONGAMENTOS</h2>
+                    <p>Gel • Acrigel • Fibra de vidro • Manutenção especializada</p>
+                    <button class="carousel-btn-cta">CONHECER TÉCNICAS</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1633526548816-9c5c5f6c8b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80');">
+                <div class="carousel-content">
+                    <h2>CUIDADOS ESPECIAIS</h2>
+                    <p>Hidratação profunda • Fortalecimento • Tratamentos</p>
+                    <button class="carousel-btn-cta">VER TRATAMENTOS</button>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-btn prev" onclick="prevSlide('carousel1')"><</button>
+        <button class="carousel-btn next" onclick="nextSlide('carousel1')">></button>
+    </div>
+    <!-- Pacotes Premium -->
+    <section class="products-section">
+        <h2 class="section-title">Pacotes Especiais</h2>
+        <div class="product-list">
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1577097989248-54d5ca8a8036?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Noivas" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Pacote Noivas</h3>
+                    <p class="product-details">Design especial • Teste prévio • Dia do casamento</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 220</span>
+                        <span class="new-price">R$ 180</span>
+                    </div>
+                    <button class="buy-btn">AGENDAR</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mensal" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Assinatura Mensal</h3>
+                    <p class="product-details">4 sessões mensais • Design ilimitado • Brinde especial</p>
+                    <div class="price-container">
+                        <span class="old-price">R$ 260</span>
+                        <span class="new-price">R$ 200</span>
+                    </div>
+                    <button class="buy-btn">ASSINAR</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Banner Grande -->
+    <div class="big-banner" style="background-image: url('https://images.unsplash.com/photo-1604654894610-df63bc536371?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+        <div class="big-banner-content">
+            <h2>CLUBE ELEGANCE NAILS</h2>
+            <p>Descontos exclusivos • Acesso antecipado • Brindes mensais</p>
+            <button class="carousel-btn-cta" style="background: #fff; color: #8b5cf6; font-size: 1.35rem; padding: 24px 60px; border: 3px solid #8b5cf6;">QUERO PARTICIPAR</button>
+        </div>
+    </div>
+    <!-- Banner Fino 2 -->
+    <div class="thin-banner">
+        <div>AGENDAMENTO ONLINE • ATENDIMENTO DOMICILIAR • HORÁRIOS FLEXÍVEIS</div>
+    </div>
+    <!-- Rodapé -->
+    <footer class="footer">
+        <h3>ELEGANCE NAILS</h3>
+        <p>Design & cuidados profissionais para unhas desde 2019</p>
+        <p>Rua Oscar Freire, 1100 – Jardins, São Paulo - SP</p>
+        <div class="footer-links">
+            <a href="#">Serviços</a>
+            <a href="#">Portfólio</a>
+            <a href="#">Promoções</a>
+            <a href="#">Clube</a>
+            <a href="#">Contato</a>
+        </div>
+        <div class="social-icons">
+            <a href="#">Instagram</a>
+            <a href="#">WhatsApp</a>
+            <a href="#">Facebook</a>
+        </div>
+        <p>© 2025 Elegance Nails. Todos os direitos reservados.</p>
+        <p>CNPJ: 12.345.678/0001-99 | (11) 98765-4321</p>
+    </footer>
+    <script>
+        const carousels = {};
+        function initCarousel(id) {
+            const carousel = document.getElementById(id);
+            const inner = carousel.querySelector('.carousel-inner');
+            const items = inner.children;
+            let currentIndex = 0;
+            carousels[id] = { inner, items, currentIndex };
+            setInterval(() => {
+                nextSlide(id);
+            }, 7000);
+        }
+        function nextSlide(id) {
+            const carousel = carousels[id];
+            if (!carousel) return;
+            carousel.currentIndex = (carousel.currentIndex + 1) % carousel.items.length;
+            carousel.inner.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
+        }
+        function prevSlide(id) {
+            const carousel = carousels[id];
+            if (!carousel) return;
+            carousel.currentIndex = (carousel.currentIndex - 1 + carousel.items.length) % carousel.items.length;
+            carousel.inner.style.transform = `translateX(-${carousel.currentIndex * 100}%)`;
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            initCarousel('carousel1');
+        });
+    </script>
+</body>
+</html>
