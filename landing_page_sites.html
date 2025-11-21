@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Profissional que Vende | Oferta Exclusiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-header {
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            color: #000;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-header:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 128, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        h1 {
+            font-size: clamp(32px, 6vw, 64px);
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: clamp(18px, 3vw, 24px);
+            color: #aaa;
+            margin-bottom: 40px;
+            animation: slideUp 1s ease-out 0.2s backwards;
+        }
+
+        .price-container {
+            margin: 40px 0;
+            animation: slideUp 1s ease-out 0.4s backwards;
+        }
+
+        .old-price {
+            font-size: 24px;
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        .new-price {
+            font-size: 56px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ffff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff0080, #ff4040);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            color: #000;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 30px 0;
+            display: inline-block;
+            text-decoration: none;
+            animation: slideUp 1s ease-out 0.6s backwards;
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 255, 255, 0.5);
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            animation: slideUp 1s ease-out 0.8s backwards;
+        }
+
+        .timer-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 80px;
+        }
+
+        .timer-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #00ffff;
+        }
+
+        .timer-label {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(32px, 5vw, 48px);
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #fff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            padding: 40px 30px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .benefit-card.visible {
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            border-color: #00ffff;
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+        }
+
+        .benefit-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .benefit-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #00ffff;
+        }
+
+        .benefit-text {
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        /* Comparison Section */
+        .comparison {
+            padding: 100px 0;
+            background: rgba(0, 255, 255, 0.02);
+        }
+
+        .comparison-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .comparison-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        .comparison-card.highlight {
+            border: 2px solid #00ffff;
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+        }
+
+        .comparison-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .comparison-item {
+            display: flex;
+            align-items: start;
+            margin: 20px 0;
+        }
+
+        .comparison-item span {
+            margin-right: 15px;
+            font-size: 24px;
+        }
+
+        /* Guarantee Section */
+        .guarantee {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .guarantee-box {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 128, 255, 0.1));
+            border: 2px solid #00ffff;
+            border-radius: 30px;
+            padding: 60px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .guarantee-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+        }
+
+        .guarantee-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #00ffff;
+        }
+
+        .guarantee-text {
+            font-size: 18px;
+            color: #aaa;
+            line-height: 1.8;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            padding: 100px 0;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 128, 255, 0.15) 0%, transparent 70%);
+        }
+
+        .final-cta h2 {
+            font-size: clamp(28px, 5vw, 48px);
+            margin-bottom: 30px;
+        }
+
+        .urgency-text {
+            color: #ff4040;
+            font-size: 18px;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #666;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .timer {
+                flex-wrap: wrap;
+            }
+
+            .timer-box {
+                min-width: 60px;
+                padding: 15px;
+            }
+
+            .timer-number {
+                font-size: 24px;
+            }
+
+            .comparison-card.highlight {
+                transform: scale(1);
+            }
+
+            .cta-button {
+                padding: 18px 40px;
+                font-size: 18px;
+            }
+
+            .benefit-card {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Floating Elements */
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .shape1 {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #00ffff, #0080ff);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #ff0080, #ff4040);
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape3 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00ff88, #00ffff);
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">SITES PRO</div>
+                <a href="#cta" class="cta-header">GARANTIR MINHA VAGA</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">🔥 OFERTA EXCLUSIVA - VAGAS LIMITADAS</div>
+                <h1>O Site Que Vai Transformar Seu Negócio em uma Máquina de Vendas</h1>
+                <p class="subtitle">Design profissional + Tecnologia de ponta + Estratégia de conversão</p>
+                
+                <div class="price-container">
+                    <div class="old-price">De R$ 1.497</div>
+                    <div class="new-price">Por apenas R$ 997</div>
+                    <div class="discount-badge">33% DE DESCONTO</div>
+                </div>
+
+                <div class="timer">
+                    <div class="timer-box">
+                        <div class="timer-number" id="hours">23</div>
+                        <div class="timer-label">Horas</div>
+                    </div>
+                    <div class="timer-box">
+                        <div class="timer-number" id="minutes">59</div>
+                        <div class="timer-label">Minutos</div>
+                    </div>
+                    <div class="timer-box">
+                        <div class="timer-number" id="seconds">59</div>
+                        <div class="timer-label">Segundos</div>
+                    </div>
+                </div>
+
+                <a href="#cta" class="cta-button">QUERO MEU SITE AGORA</a>
+                <p style="color: #666; margin-top: 15px;">✓ Entrega em até 7 dias • ✓ Suporte dedicado • ✓ Garantia total</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Por Que Somos Diferentes de Qualquer Outro</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🚀</div>
+                    <h3 class="benefit-title">Entrega Relâmpago</h3>
+                    <p class="benefit-text">Seu site profissional pronto em até 7 dias. Não meses, não semanas. DIAS. Porque sabemos que cada dia sem um site é dinheiro perdido.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💎</div>
+                    <h3 class="benefit-title">Qualidade Premium</h3>
+                    <p class="benefit-text">Design de nível internacional, tecnologia de ponta e otimização para conversão. Não fazemos sites bonitos, fazemos sites que VENDEM.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📈</div>
+                    <h3 class="benefit-title">Resultados Reais</h3>
+                    <p class="benefit-text">Cada elemento é estrategicamente posicionado para gerar leads e vendas. Seus concorrentes vão se perguntar qual é o seu segredo.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3 class="benefit-title">Preço Justo</h3>
+                    <p class="benefit-text">Qualidade de agência de R$ 5.000+ por uma fração do preço. Esta é genuinamente a melhor oportunidade do mercado brasileiro.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3 class="benefit-title">Otimizado para Google</h3>
+                    <p class="benefit-text">SEO técnico implementado desde o início. Seu site vai ranquear e ser encontrado pelos clientes certos no momento certo.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📱</div>
+                    <h3 class="benefit-title">100% Responsivo</h3>
+                    <p class="benefit-text">Perfeito em qualquer dispositivo. Mobile, tablet, desktop. Seus clientes terão a melhor experiência, sempre.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="comparison">
+        <div class="container">
+            <h2 class="section-title">Compare e Decida com Inteligência</h2>
+            <div class="comparison-container">
+                <div class="comparison-card">
+                    <h3 class="comparison-title" style="color: #ff4040;">Outras Agências</h3>
+                    <div class="comparison-item">
+                        <span>❌</span>
+                        <div>Entrega em 30-60 dias</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>❌</span>
+                        <div>Preços de R$ 3.000 a R$ 10.000</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>❌</span>
+                        <div>Burocracia e reuniões infinitas</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>❌</span>
+                        <div>Suporte limitado</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>❌</span>
+                        <div>Templates genéricos</div>
+                    </div>
+                </div>
+
+                <div class="comparison-card highlight">
+                    <h3 class="comparison-title" style="color: #00ffff;">SITES PRO</h3>
+                    <div class="comparison-item">
+                        <span>✅</span>
+                        <div>Entrega em até 7 dias úteis</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>✅</span>
+                        <div>Apenas R$ 997 (33% OFF hoje)</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>✅</span>
+                        <div>Processo ágil e descomplicado</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>✅</span>
+                        <div>Suporte dedicado por 30 dias</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>✅</span>
+                        <div>Design 100% personalizado</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>✅</span>
+                        <div>Otimização para conversão</div>
+                    </div>
+                    <div class="comparison-item">
+                        <span>✅</span>
+                        <div>Garantia de satisfação</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="guarantee">
+        <div class="container">
+            <div class="guarantee-box">
+                <div class="guarantee-icon">🛡️</div>
+                <h2 class="guarantee-title">Garantia Blindada de Satisfação</h2>
+                <p class="guarantee-text">
+                    Estamos tão confiantes na qualidade do nosso trabalho que oferecemos garantia total. Se por qualquer motivo você não ficar 100% satisfeito com seu site, nós revisamos até você aprovar. Sem letras miúdas, sem enrolação. É simples assim.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta" id="cta">
+        <div class="container">
+            <h2>Não Deixe Seus Concorrentes Saírem na Frente</h2>
+            <p style="font-size: 20px; color: #aaa; max-width: 700px; margin: 20px auto;">
+                Enquanto você lê isso, seus concorrentes estão conquistando clientes online. Cada dia sem um site profissional é uma oportunidade perdida.
+            </p>
+            <div class="price-container">
+                <div class="old-price">De R$ 1.497</div>
+                <div class="new-price">Por apenas R$ 997</div>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Quero%20garantir%20minha%20vaga%20com%20desconto!" class="cta-button">
+                GARANTIR MINHA VAGA AGORA
+            </a>
+            <p class="urgency-text">⚠️ ATENÇÃO: Esta oferta expira em menos de 24 horas</p>
+            <p style="color: #666; margin-top: 20px;">🔒 Pagamento 100% seguro • ⚡ Atendimento imediato • ✓ Satisfação garantida</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sites Pro. Todos os direitos reservados.</p>
+            <p style="margin-top: 10px; font-size: 14px;">Transformando negócios através de sites profissionais de alta conversão.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateTimer() {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            
+            const diff = midnight - now;
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.benefit-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
