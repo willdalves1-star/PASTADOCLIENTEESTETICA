@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualização de Anúncio Galaxy Dark Theme</title>
+    <style>
+        /* Reset básico para garantir consistência entre navegadores */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Centralizando o anúncio na tela */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000000; /* Fundo da página PRETO PURO */
+            padding: 20px;
+        }
+
+        /* O Container Principal do Anúncio */
+        .ad-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            /* MUDANÇA: Gradiente Deep Space (Preto profundo) */
+            background: linear-gradient(135deg, #000000 0%, #0a0a14 100%);
+            color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            /* Adicionando uma borda sutil dourada para luxo */
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        /* Imagem de Fundo Galáxia (Overlay) */
+        .ad-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* MUDANÇA: Imagem de Galáxia/Nebulosa */
+            background-image: url('https://images.unsplash.com/photo-1462331940025-496dfa712568?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            /* Ajuste de opacidade e blend mode para as estrelas brilharem no fundo escuro */
+            opacity: 0.4; 
+            mix-blend-mode: screen;
+            z-index: 1;
+        }
+
+        /* Conteúdo do anúncio */
+        .ad-content {
+            position: relative;
+            z-index: 2;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            /* Sombra sutil no texto para melhorar leitura sobre a galáxia */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* --- Hierarquia Tipográfica e Cores Douradas --- */
+
+        /* O FILTRO (Público-Alvo) */
+        .highlight-filter {
+            color: #FFD700; /* Dourado */
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: -10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); /* Brilho dourado */
+        }
+
+        /* TÍTULO PRINCIPAL */
+        h1 {
+            font-size: 1.8rem;
+            line-height: 1.2;
+            font-weight: 800;
+            color: #ffffff;
+             /* Brilho dourado sutil no título */
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        /* O Problema e a Ambição (Texto do corpo) */
+        .body-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #e0e0e0;
+        }
+
+        /* Bloco de Escala */
+        .scaling-block {
+            /* Fundo mais escuro e translúcido */
+            background-color: rgba(0, 0, 0, 0.4); 
+            padding: 20px;
+            border-radius: 12px;
+            /* Borda dourada vibrante */
+            border-left: 4px solid #FFD700;
+            box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.05);
+        }
+
+        .scaling-item {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+        
+        .scaling-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .emoji-rocket {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        /* Metodologia (Texto secundário) */
+        .methodology-text {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #bbb; /* Um pouco mais claro para contraste no preto */
+            font-style: italic;
+        }
+
+        /* Botão CTA Dourado Premium */
+        .cta-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Gradiente dourado mais rico e metálico */
+            background: linear-gradient(to right, #CFAB00, #FFD700, #CFAB00);
+            color: #000000; /* Texto preto para máximo contraste no ouro */
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 18px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4); /* Sombra dourada */
+            text-align: center;
+            border: 1px solid #FFD700;
+            text-shadow: none; /* Remove sombra de texto do botão */
+        }
+
+        /* Efeito de hover no botão */
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(to right, #FFD700, #FFE57A, #FFD700); /* Fica mais claro no hover */
+        }
+        
+        .link-icon {
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="ad-container">
+        <div class="ad-bg-image"></div>
+
+        <div class="ad-content">
+            
+            <div>
+                <p class="highlight-filter">Atenção Empreendedor</p>
+                <h1>Faturamento entre 10k a 50k mês?</h1>
+            </div>
+
+            <p class="body-text">
+                Gostaria de realizar anúncios patrocinados e vídeos comerciais para conquistar mais clientes todos os dias? Não fique para trás dos concorrentes que já estão realizando isso com grandes equipes.
+            </p>
+
+            <div class="scaling-block">
+                <p style="margin-bottom: 15px; font-weight: bold; color: #FFD700;">A conta tem que fechar. Aumente seu lucro 🎯</p>
+                <div class="scaling-item">
+                    <span class="emoji-rocket">🚀</span> Quem vende 10k → tem que vender 20... 30... 50k.
+                </div>
+                <div class="scaling-item">
+                    <span class="emoji-rocket">🚀</span> Quem vende 5k → tem que vender 10k mês.
+                </div>
+            </div>
+
+            <p class="methodology-text">
+                Sempre crescendo com base, estrutura, calma e profissionalismo. Sem mágica, mas dentro da realidade, criando vídeos anúncios, atraindo clientes com boas ofertas e diferenciais.
+            </p>
+
+            <a href="#" class="cta-button" id="myLinkButton">
+                <span class="link-icon">🔗</span> Aperte em nosso link
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        // Adiciona um ouvinte de clique ao botão para simular a ação
+        document.getElementById('myLinkButton').addEventListener('click', function(e) {
+            e.preventDefault(); // Impede o link de navegar de verdade neste exemplo
+            
+            // Simulação visual de clique
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = 'translateY(-2px)';
+            }, 150);
+
+            // Feedback para quem está testando o código
+            alert("Clique registrado! No anúncio real, isso levaria para sua landing page/WhatsApp.");
+            console.log("O usuário clicou no CTA de crescimento de faturamento.");
+        });
+    </script>
+
+</body>
+</html>
