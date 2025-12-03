@@ -47,7 +47,7 @@
 <body class="bg-gray-50 font-sans text-gray-800 overflow-hidden">
 
     <!-- ========================================== -->
-    <!-- TELA 1: FORMULÁRIO INICIAL -->
+    <!-- TELA 1: FORMULÁRIO INICIAL (DIAGNÓSTICO) -->
     <!-- ========================================== -->
     <div id="form-screen" class="min-h-screen flex items-center justify-center p-4">
         <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in relative">
@@ -60,13 +60,25 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-2">
                         <label class="text-sm font-semibold text-gray-700">Nome da Empresa</label>
-                        <input type="text" id="input-name" required placeholder="Ex: Pizzaria do João, TechSoluções..." 
+                        <input type="text" id="input-name" required placeholder="Ex: Pizzaria do João..." 
                             class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
                     </div>
                     
                     <div class="space-y-2">
                         <label class="text-sm font-semibold text-gray-700">Nicho de Atuação</label>
-                        <input type="text" id="input-niche" required placeholder="Ex: Moda Feminina, Advocacia..." 
+                        <input type="text" id="input-niche" required placeholder="Ex: Moda, Advocacia..." 
+                            class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">WhatsApp / Telefone</label>
+                        <input type="tel" id="input-phone" required placeholder="(XX) 9XXXX-XXXX" 
+                            class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Instagram</label>
+                        <input type="text" id="input-instagram" required placeholder="@seu.perfil" 
                             class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
                     </div>
 
@@ -89,13 +101,20 @@
                     </div>
                 </div>
 
-                <div class="pt-4">
+                <div class="pt-4 space-y-3">
                     <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-indigo-500/30 flex items-center justify-center gap-2">
                         <i class="ph ph-lightning text-xl"></i>
                         Gerar Diagnóstico Gratuito
                     </button>
+                    
+                    <div class="text-center pt-2">
+                         <button type="button" onclick="showClientLogin()" class="text-indigo-600 font-semibold hover:underline text-sm">
+                            Já tem um diagnóstico? Fazer Login
+                        </button>
+                    </div>
+
                     <p class="text-xs text-gray-400 text-center mt-3 flex items-center justify-center gap-1">
-                        <i class="ph-fill ph-fire"></i> Dados salvos via Firebase Realtime
+                        <i class="ph-fill ph-lock"></i> Dados salvos com segurança via Firebase
                     </p>
                 </div>
             </form>
@@ -103,9 +122,85 @@
             <!-- Link para Admin -->
             <div class="absolute top-4 right-4">
                 <button onclick="showAdminLogin()" class="text-indigo-200 hover:text-white text-sm font-medium transition-colors flex items-center gap-1">
-                    <i class="ph ph-lock-key"></i> Sou Admin
+                    <i class="ph ph-lock-key"></i> Admin
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TELA 1.5: CADASTRO DO CLIENTE (CRIAÇÃO DE CONTA) -->
+    <!-- ========================================== -->
+    <div id="registration-screen" class="hidden-section min-h-screen flex items-center justify-center p-4 bg-gray-50">
+        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+            <div class="bg-gray-900 p-6 text-white text-center">
+                <h2 class="text-2xl font-bold">Quase lá!</h2>
+                <p class="opacity-80 text-sm">Crie seu acesso para ver o resultado e baixar seus arquivos.</p>
+            </div>
+            <form onsubmit="handleRegistration(event)" class="p-8 space-y-4">
+                
+                <div class="bg-indigo-50 p-3 rounded-lg text-sm text-indigo-800 mb-4">
+                    <p><strong>Empresa:</strong> <span id="reg-business-name">...</span></p>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Crie um Login</label>
+                    <input type="text" id="reg-login" required placeholder="Ex: seu.nome" 
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Crie uma Senha</label>
+                    <input type="password" id="reg-password" required placeholder="Senha simples" 
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Repita a Senha</label>
+                    <input type="password" id="reg-confirm-password" required placeholder="Repita a senha" 
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
+                </div>
+
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 mt-4">
+                    <i class="ph ph-check-circle text-xl"></i>
+                    Finalizar e Ver Resultado
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TELA LOGIN CLIENTE -->
+    <!-- ========================================== -->
+    <div id="client-login-screen" class="hidden-section min-h-screen flex items-center justify-center p-4 bg-gray-50">
+        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+            <div class="bg-indigo-600 p-6 text-white text-center">
+                <h2 class="text-2xl font-bold">Área do Cliente</h2>
+                <p class="opacity-80 text-sm">Entre para acessar seus arquivos.</p>
+            </div>
+            <form onsubmit="handleClientLogin(event)" class="p-8 space-y-5">
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Login</label>
+                    <input type="text" id="login-user" required placeholder="Seu login" 
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Senha</label>
+                    <input type="password" id="login-pass" required placeholder="Sua senha" 
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">
+                    Entrar
+                </button>
+
+                <div class="text-center">
+                    <button type="button" onclick="resetApp()" class="text-gray-500 hover:text-gray-700 text-sm">
+                        Voltar para Diagnóstico
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -149,7 +244,7 @@
                 <div class="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full border border-gray-200">
                     <span id="total-leads-count" class="font-bold text-gray-900">0</span> Leads
                 </div>
-                <button onclick="resetApp()" class="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-1">
+                <button onclick="handleLogout()" class="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-1">
                     <i class="ph ph-sign-out"></i> Sair
                 </button>
             </div>
@@ -164,9 +259,9 @@
                             <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500 border-b border-gray-200">
                                 <tr>
                                     <th class="px-6 py-4">Data</th>
+                                    <th class="px-6 py-4">Login</th>
                                     <th class="px-6 py-4">Empresa</th>
-                                    <th class="px-6 py-4">Nicho</th>
-                                    <th class="px-6 py-4">Modelo</th>
+                                    <th class="px-6 py-4">Contato</th>
                                     <th class="px-6 py-4">Status</th>
                                     <th class="px-6 py-4 text-right">Ações</th>
                                 </tr>
@@ -231,8 +326,8 @@
     <!-- ========================================== -->
     <div id="loading-screen" class="hidden-section min-h-screen flex flex-col items-center justify-center bg-gray-50">
         <div class="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
-        <h2 class="text-xl font-semibold text-gray-700 animate-pulse">Analisando seu negócio...</h2>
-        <p class="text-gray-500 mt-2">Nossa IA está criando seu plano de ação.</p>
+        <h2 class="text-xl font-semibold text-gray-700 animate-pulse">Gerando Diagnóstico...</h2>
+        <p class="text-gray-500 mt-2">Aguarde, estamos preparando sua conta.</p>
     </div>
 
     <!-- ========================================== -->
@@ -264,9 +359,9 @@
                     <i class="ph ph-instagram-logo text-xl"></i> Feed & Orgânico
                 </button>
 
-                <div class="px-4 mb-2 mt-8 text-xs font-semibold text-gray-400 uppercase tracking-wider">Configurações</div>
-                <button onclick="resetApp()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900">
-                    <i class="ph ph-storefront text-xl text-gray-400"></i> Novo Negócio
+                <div class="px-4 mb-2 mt-8 text-xs font-semibold text-gray-400 uppercase tracking-wider">Conta</div>
+                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-600 hover:bg-red-50 hover:text-red-900">
+                    <i class="ph ph-sign-out text-xl"></i> Sair da Conta
                 </button>
             </nav>
 
@@ -277,7 +372,7 @@
                     </div>
                     <div class="overflow-hidden">
                         <p id="user-business-name" class="text-sm font-medium text-gray-700 truncate">Empresa</p>
-                        <p id="user-niche" class="text-xs text-gray-500 truncate">Nicho</p>
+                        <p id="user-login-display" class="text-xs text-gray-500 truncate">@login</p>
                     </div>
                 </div>
             </div>
@@ -310,8 +405,8 @@
                     <i class="ph ph-instagram-logo text-xl"></i> Feed & Orgânico
                 </button>
                 <div class="border-t my-2 border-gray-100"></div>
-                <button onclick="resetApp()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-500 hover:bg-red-50">
-                    <i class="ph ph-arrow-counter-clockwise text-xl"></i> Reiniciar
+                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-500 hover:bg-red-50">
+                    <i class="ph ph-sign-out text-xl"></i> Sair
                 </button>
             </div>
         </div>
@@ -348,24 +443,34 @@
         const analytics = getAnalytics(app);
         const db = getDatabase(app);
 
-        // 1. Função de salvar (Cliente)
-        window.saveLeadToFirebase = function(formData, diagnosisResult) {
+        // 1. Função de salvar (Cadastro Cliente)
+        window.saveLeadToFirebase = function(formData, diagnosisResult, login, password) {
             const leadsRef = ref(db, 'leads');
             const newLeadRef = push(leadsRef);
-            // Salva e retorna o ID para uso local
             const leadKey = newLeadRef.key;
             
-            set(newLeadRef, {
+            const userData = {
                 business_name: formData.businessName,
                 niche: formData.niche,
+                phone: formData.phone,
+                instagram: formData.instagram,
                 business_type: formData.type,
                 budget: formData.budget,
                 diagnosis_result: diagnosisResult,
+                username: login,
+                password: password, // OBS: Em produção, usar hash.
                 created_at: new Date().toISOString()
-            });
+            };
+
+            set(newLeadRef, userData);
+
+            // Salvar no LocalStorage para auto-login
+            localStorage.setItem('userSession', JSON.stringify({ id: leadKey, ...userData }));
 
             // Inicia o listener para este cliente específico
             window.listenToMyLead(leadKey);
+            
+            return userData;
         };
 
         // 2. Listener do Próprio Cliente (Para receber atualizações em tempo real)
@@ -374,18 +479,46 @@
             onValue(leadRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data && data.deliverables) {
-                    // Atualiza o estado global com os entregáveis
                     state.serverDeliverables = data.deliverables;
-                    // Força re-renderização da aba atual
                     renderContent(state.activeTab);
-                    
-                    // Opcional: Notificação visual
-                    // console.log("Novos dados recebidos!", data.deliverables);
                 }
             });
         };
 
-        // 3. Função de Salvar Entrega (Admin)
+        // 3. Função de Login do Cliente
+        window.loginClientFromFirebase = function(login, password) {
+            const leadsRef = ref(db, 'leads');
+            onValue(leadsRef, (snapshot) => {
+                const data = snapshot.val();
+                let foundUser = null;
+                let foundKey = null;
+
+                if (data) {
+                    for (const [key, user] of Object.entries(data)) {
+                        if (user.username === login && user.password === password) {
+                            foundUser = user;
+                            foundKey = key;
+                            break;
+                        }
+                    }
+                }
+
+                if (foundUser) {
+                    // Salvar sessão
+                    localStorage.setItem('userSession', JSON.stringify({ id: foundKey, ...foundUser }));
+                    // Carregar estado
+                    loadUserIntoState(foundUser, foundKey);
+                    // UI
+                    document.getElementById('client-login-screen').classList.add('hidden-section');
+                    document.getElementById('dashboard-screen').classList.remove('hidden-section');
+                    renderContent('overview');
+                } else {
+                    alert('Login ou senha incorretos!');
+                }
+            }, { onlyOnce: true });
+        };
+
+        // 4. Função de Salvar Entrega (Admin)
         window.saveDelivery = function(leadKey, section, coverUrl, targetUrl) {
             const updates = {};
             updates[`leads/${leadKey}/deliverables/${section}`] = {
@@ -395,11 +528,11 @@
             };
             
             update(ref(db), updates)
-                .then(() => alert('Entrega realizada com sucesso! O cliente verá instantaneamente.'))
-                .catch((e) => alert('Erro ao entregar: ' + e.message));
+                .then(() => alert('Entrega realizada!'))
+                .catch((e) => alert('Erro: ' + e.message));
         };
 
-        // 4. Função de carregar Leads (Admin)
+        // 5. Função de carregar Leads (Admin)
         window.loadAdminData = function() {
             const leadsRef = ref(db, 'leads');
             const tableBody = document.getElementById('leads-table-body');
@@ -421,7 +554,7 @@
 
                 leads.forEach(lead => {
                     const date = new Date(lead.created_at).toLocaleDateString('pt-BR', {
-                        day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute:'2-digit'
+                        day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit'
                     });
                     
                     let budgetBadgeClass = 'bg-gray-100 text-gray-600';
@@ -432,10 +565,12 @@
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-gray-50 transition-colors border-b border-gray-100";
                     tr.innerHTML = `
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-500">${date}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-500 text-xs">${date}</td>
+                        <td class="px-6 py-4 font-bold text-indigo-700">${lead.username || '-'}</td>
                         <td class="px-6 py-4 font-medium text-gray-900">${lead.business_name}</td>
-                        <td class="px-6 py-4 text-gray-600">${lead.niche}</td>
-                        <td class="px-6 py-4 text-gray-600 capitalize">${lead.business_type}</td>
+                        <td class="px-6 py-4 text-gray-600 text-xs">
+                            ${lead.phone || '-'}<br>${lead.instagram || '-'}
+                        </td>
                         <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-semibold ${budgetBadgeClass}">${budgetText}</span></td>
                         <td class="px-6 py-4 text-right">
                             <button onclick="openDeliveryModal('${lead.id}', '${lead.business_name}')" class="bg-gray-900 hover:bg-gray-700 text-white text-xs font-bold py-2 px-3 rounded flex items-center gap-1 ml-auto">
@@ -456,15 +591,126 @@
             data: {},
             diagnosis: {},
             activeTab: 'overview',
-            serverDeliverables: {}, // Dados vindos do Firebase (Entregas do Admin)
+            serverDeliverables: {}, 
             files: {
-                overview: [],
-                landing: [],
-                design: [],
-                ads: [],
-                content: []
+                overview: [], landing: [], design: [], ads: [], content: []
             }
         };
+
+        // --- Verificação de Sessão (Auto-Login) ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const session = localStorage.getItem('userSession');
+            if (session) {
+                const user = JSON.parse(session);
+                // Restaurar estado
+                loadUserIntoState(user, user.id);
+                
+                // Mostrar Dashboard direto
+                document.getElementById('form-screen').classList.add('hidden-section');
+                document.getElementById('dashboard-screen').classList.remove('hidden-section');
+                renderContent('overview');
+                
+                // Reconectar listener do Firebase
+                if(window.listenToMyLead) {
+                    window.listenToMyLead(user.id);
+                }
+            }
+        });
+
+        function loadUserIntoState(user, key) {
+            state.data = {
+                businessName: user.business_name,
+                niche: user.niche,
+                type: user.business_type,
+                budget: user.budget,
+                phone: user.phone,
+                instagram: user.instagram
+            };
+            state.diagnosis = user.diagnosis_result;
+            if(user.deliverables) state.serverDeliverables = user.deliverables;
+            
+            // Atualizar Sidebar
+            document.getElementById('user-business-name').textContent = state.data.businessName;
+            document.getElementById('user-avatar').textContent = state.data.businessName.substring(0,2).toUpperCase();
+            document.getElementById('user-login-display').textContent = '@' + user.username;
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('userSession');
+            location.reload(); // Recarrega para limpar tudo
+        }
+
+        // --- Fluxo de Cadastro e Login ---
+
+        // 1. Submit Diagnóstico -> Vai para Registro
+        document.getElementById('diagnosis-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Coletar dados iniciais
+            state.data = {
+                businessName: document.getElementById('input-name').value,
+                niche: document.getElementById('input-niche').value,
+                phone: document.getElementById('input-phone').value,
+                instagram: document.getElementById('input-instagram').value,
+                type: document.getElementById('input-type').value,
+                budget: document.getElementById('input-budget').value,
+            };
+
+            // Mudar para tela de registro
+            document.getElementById('form-screen').classList.add('hidden-section');
+            document.getElementById('loading-screen').classList.remove('hidden-section');
+            
+            // Simular loading rápido e ir para registro
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden-section');
+                document.getElementById('reg-business-name').textContent = state.data.businessName;
+                document.getElementById('registration-screen').classList.remove('hidden-section');
+            }, 1000);
+        });
+
+        // 2. Submit Registro -> Salva no Firebase -> Dashboard
+        function handleRegistration(e) {
+            e.preventDefault();
+            
+            const login = document.getElementById('reg-login').value;
+            const pass = document.getElementById('reg-password').value;
+            const confirmPass = document.getElementById('reg-confirm-password').value;
+
+            if (pass !== confirmPass) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+
+            // Gerar Diagnóstico
+            state.diagnosis = generateDiagnosis(state.data);
+
+            // Salvar no Firebase + Login
+            if (window.saveLeadToFirebase) {
+                const user = window.saveLeadToFirebase(state.data, state.diagnosis, login, pass);
+                
+                // Atualizar UI
+                loadUserIntoState(user, null); // ID já salvo no saveLeadToFirebase
+                document.getElementById('registration-screen').classList.add('hidden-section');
+                document.getElementById('dashboard-screen').classList.remove('hidden-section');
+                renderContent('overview');
+            }
+        }
+
+        // 3. Login Cliente Existente
+        function showClientLogin() {
+            document.getElementById('form-screen').classList.add('hidden-section');
+            document.getElementById('client-login-screen').classList.remove('hidden-section');
+        }
+
+        function handleClientLogin(e) {
+            e.preventDefault();
+            const login = document.getElementById('login-user').value;
+            const pass = document.getElementById('login-pass').value;
+
+            if (window.loginClientFromFirebase) {
+                window.loginClientFromFirebase(login, pass);
+            }
+        }
 
         // --- Lógica Mock AI ---
         function generateDiagnosis(data) {
@@ -568,7 +814,7 @@
             let agencyFilesHtml = '';
             if (serverDelivery) {
                 agencyFilesHtml = `
-                    <div class="mb-6">
+                    <div class="mb-6 animate-fade-in">
                         <h4 class="text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
                             <i class="ph-fill ph-star text-yellow-500"></i> Arquivos Recebidos da Agência
                         </h4>
@@ -642,43 +888,7 @@
 
         // --- Renderização ---
 
-        document.getElementById('diagnosis-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // 1. Coletar dados
-            state.data = {
-                businessName: document.getElementById('input-name').value,
-                niche: document.getElementById('input-niche').value,
-                type: document.getElementById('input-type').value,
-                budget: document.getElementById('input-budget').value,
-            };
-
-            // 2. Atualizar UI imediata
-            document.getElementById('user-business-name').textContent = state.data.businessName;
-            document.getElementById('user-niche').textContent = state.data.niche;
-            document.getElementById('user-avatar').textContent = state.data.businessName.substring(0,2).toUpperCase();
-
-            // 3. Gerar Diagnóstico (Local)
-            state.diagnosis = generateDiagnosis(state.data);
-
-            // 4. Salvar no Firebase Realtime Database
-            if (window.saveLeadToFirebase) {
-                window.saveLeadToFirebase(state.data, state.diagnosis);
-            } else {
-                console.warn("Função saveLeadToFirebase não carregada ainda.");
-            }
-
-            // 5. Mudar para Loading
-            document.getElementById('form-screen').classList.add('hidden-section');
-            document.getElementById('loading-screen').classList.remove('hidden-section');
-
-            // Simular tempo de "análise" visual
-            setTimeout(() => {
-                document.getElementById('loading-screen').classList.add('hidden-section');
-                document.getElementById('dashboard-screen').classList.remove('hidden-section');
-                renderContent('overview');
-            }, 1500);
-        });
+        // O listener de submit do form inicial está dentro do bloco DOMContentLoaded/Script acima.
 
         // --- ADMIN LOGIN LOGIC ---
         function showAdminLogin() {
@@ -864,15 +1074,8 @@
         }
 
         function resetApp() {
-            document.getElementById('diagnosis-form').reset();
-            document.getElementById('dashboard-screen').classList.add('hidden-section');
-            document.getElementById('mobile-menu-overlay').classList.add('hidden');
-            document.getElementById('admin-login-screen').classList.add('hidden-section'); // Garantir que tela login suma
-            document.getElementById('admin-dashboard-screen').classList.add('hidden-section'); // Garantir que tela admin suma
-            document.getElementById('form-screen').classList.remove('hidden-section');
-            state.data = {}; state.diagnosis = {}; state.activeTab = 'overview';
-            state.files = { overview: [], landing: [], design: [], ads: [], content: [] };
-            switchTab('overview');
+            localStorage.removeItem('userSession');
+            location.reload();
         }
     </script>
 </body>
