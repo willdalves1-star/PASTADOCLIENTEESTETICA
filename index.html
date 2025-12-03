@@ -89,6 +89,9 @@
                         <i class="ph ph-lightning text-xl"></i>
                         Gerar Diagnóstico Gratuito
                     </button>
+                    <p class="text-xs text-gray-400 text-center mt-3 flex items-center justify-center gap-1">
+                        <i class="ph-fill ph-fire"></i> Dados salvos via Firebase Realtime
+                    </p>
                 </div>
             </form>
         </div>
@@ -107,7 +110,6 @@
     <!-- TELA 3: DASHBOARD -->
     <!-- ========================================== -->
     <div id="dashboard-screen" class="hidden-section flex h-screen bg-gray-50 overflow-hidden">
-        
         <!-- Sidebar Desktop -->
         <aside class="hidden md:flex w-64 flex-col bg-white border-r border-gray-200">
             <div class="p-6 border-b border-gray-100 flex items-center gap-2">
@@ -193,6 +195,60 @@
         </main>
     </div>
 
+    <!-- SCRIPT DO FIREBASE (MÓDULO) -->
+    <script type="module">
+        // Importar as funções SDKs do CDN (Compatível com navegador)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+
+        // --- CONFIGURAÇÃO FIREBASE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBr1vvN-c4QQ5S9KiHmRRF7Gq0SRzm6R_E",
+            authDomain: "diagnostico-7dfde.firebaseapp.com",
+            projectId: "diagnostico-7dfde",
+            storageBucket: "diagnostico-7dfde.firebasestorage.app",
+            messagingSenderId: "209032249418",
+            appId: "1:209032249418:web:0e9c972c05779abf54a6b3",
+            measurementId: "G-JKJEF0XYLY",
+            // Adicionado manualmente para garantir funcionamento do Realtime Database
+            databaseURL: "https://diagnostico-7dfde-default-rtdb.firebaseio.com"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+
+        // Função de salvar (Exposta no window para ser usada pelo script principal)
+        window.saveLeadToFirebase = function(formData, diagnosisResult) {
+            console.log("Tentando salvar no Firebase...");
+            
+            // Referência para a "tabela" leads
+            const leadsRef = ref(db, 'leads');
+            
+            // Criar novo registro
+            const newLeadRef = push(leadsRef);
+            
+            // Definir os dados
+            set(newLeadRef, {
+                business_name: formData.businessName,
+                niche: formData.niche,
+                business_type: formData.type,
+                budget: formData.budget,
+                diagnosis_result: diagnosisResult,
+                created_at: new Date().toISOString()
+            })
+            .then(() => {
+                console.log("Lead salvo com sucesso no Firebase Realtime Database!");
+            })
+            .catch((error) => {
+                console.error("Erro ao salvar no Firebase:", error);
+            });
+        };
+    </script>
+
+    <!-- SCRIPT PRINCIPAL DO APP -->
     <script>
         // --- Estado Global ---
         const state = {
@@ -346,23 +402,40 @@
 
         document.getElementById('diagnosis-form').addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            // 1. Coletar dados
             state.data = {
                 businessName: document.getElementById('input-name').value,
                 niche: document.getElementById('input-niche').value,
                 type: document.getElementById('input-type').value,
                 budget: document.getElementById('input-budget').value,
             };
+
+            // 2. Atualizar UI imediata
             document.getElementById('user-business-name').textContent = state.data.businessName;
             document.getElementById('user-niche').textContent = state.data.niche;
             document.getElementById('user-avatar').textContent = state.data.businessName.substring(0,2).toUpperCase();
+
+            // 3. Gerar Diagnóstico (Local)
+            state.diagnosis = generateDiagnosis(state.data);
+
+            // 4. Salvar no Firebase Realtime Database
+            if (window.saveLeadToFirebase) {
+                window.saveLeadToFirebase(state.data, state.diagnosis);
+            } else {
+                console.warn("Função saveLeadToFirebase não carregada ainda.");
+            }
+
+            // 5. Mudar para Loading
             document.getElementById('form-screen').classList.add('hidden-section');
             document.getElementById('loading-screen').classList.remove('hidden-section');
+
+            // Simular tempo de "análise" visual
             setTimeout(() => {
-                state.diagnosis = generateDiagnosis(state.data);
                 document.getElementById('loading-screen').classList.add('hidden-section');
                 document.getElementById('dashboard-screen').classList.remove('hidden-section');
                 renderContent('overview');
-            }, 2000);
+            }, 1500);
         });
 
         function switchTab(tabId) {
