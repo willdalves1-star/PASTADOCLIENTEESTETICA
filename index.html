@@ -42,6 +42,11 @@
         .modal-overlay {
             background-color: rgba(0, 0, 0, 0.5);
         }
+
+        /* Aspect Ratio 3:4 Safe Fallback */
+        .aspect-3-4 {
+            aspect-ratio: 3/4;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 overflow-hidden">
@@ -260,7 +265,7 @@
                                 <tr>
                                     <th class="px-6 py-4">Data</th>
                                     <th class="px-6 py-4">Login</th>
-                                    <th class="px-6 py-4">Empresa</th>
+                                    <th class="px-6 py-4">Empresa (Clique para Editar)</th>
                                     <th class="px-6 py-4">Contato</th>
                                     <th class="px-6 py-4">Status</th>
                                     <th class="px-6 py-4 text-right">Ações</th>
@@ -275,46 +280,92 @@
             </div>
         </main>
 
-        <!-- Modal de Entrega -->
-        <div id="delivery-modal" class="hidden-section fixed inset-0 z-50 flex items-center justify-center modal-overlay backdrop-blur-sm">
-            <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden animate-fade-in">
-                <div class="bg-gray-900 px-6 py-4 flex justify-between items-center">
-                    <h3 class="text-white font-bold flex items-center gap-2">
-                        <i class="ph ph-package"></i> Entregar Arquivos
+        <!-- NOVO MODAL: DETALHES COMPLETOS DO CLIENTE -->
+        <div id="client-details-modal" class="hidden-section fixed inset-0 z-50 flex items-center justify-center modal-overlay backdrop-blur-sm p-4">
+            <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden animate-fade-in">
+                <!-- Header Modal -->
+                <div class="bg-gray-900 px-6 py-4 flex justify-between items-center shrink-0">
+                    <h3 class="text-white font-bold flex items-center gap-2 text-lg">
+                        <i class="ph ph-user-gear"></i> Gerenciar Cliente
                     </h3>
-                    <button onclick="closeDeliveryModal()" class="text-gray-400 hover:text-white">
-                        <i class="ph ph-x text-xl"></i>
+                    <button onclick="closeClientDetailsModal()" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="ph ph-x text-2xl"></i>
                     </button>
                 </div>
-                <div class="p-6 space-y-4">
-                    <div class="bg-blue-50 text-blue-800 p-3 rounded-lg text-sm mb-4">
-                        <p>Entregando para: <span id="modal-business-name" class="font-bold">Empresa</span></p>
-                    </div>
 
-                    <div class="space-y-3">
-                        <label class="block text-sm font-medium text-gray-700">Selecione a Seção</label>
-                        <select id="delivery-section" class="w-full p-2 border rounded-lg bg-gray-50">
-                            <option value="landing">Página de Vendas</option>
-                            <option value="design">Identidade Visual</option>
-                            <option value="ads">Anúncios</option>
-                            <option value="content">Feed & Conteúdo</option>
-                        </select>
-                    </div>
+                <!-- Corpo Modal (Scrollável) -->
+                <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
+                    <form id="edit-client-form" onsubmit="saveClientDetails(event)">
+                        <input type="hidden" id="edit-lead-id">
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Coluna 1: Dados Cadastrais -->
+                            <div class="space-y-4">
+                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2">Dados Cadastrais</h4>
+                                
+                                <div class="grid grid-cols-1 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Nome da Empresa</label>
+                                        <input type="text" id="edit-business-name" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Nicho</label>
+                                        <input type="text" id="edit-niche" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                            <label class="block text-xs font-semibold text-gray-500 mb-1">Telefone</label>
+                                            <input type="text" id="edit-phone" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-gray-500 mb-1">Instagram</label>
+                                            <input type="text" id="edit-instagram" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Tipo de Negócio</label>
+                                        <input type="text" id="edit-type" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Budget</label>
+                                        <input type="text" id="edit-budget" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
+                                    </div>
+                                </div>
 
-                    <div class="space-y-3">
-                        <label class="block text-sm font-medium text-gray-700">Link da Imagem de Capa (Preview)</label>
-                        <input type="url" id="delivery-cover" placeholder="https://exemplo.com/imagem.jpg" class="w-full p-2 border rounded-lg">
-                        <p class="text-xs text-gray-500">Cole o link direto da imagem que aparecerá como capa.</p>
-                    </div>
+                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 pt-4">Acesso (Login)</h4>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Login</label>
+                                        <input type="text" id="edit-username" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Senha</label>
+                                        <input type="text" id="edit-password" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="space-y-3">
-                        <label class="block text-sm font-medium text-gray-700">Link dos Arquivos (Destino)</label>
-                        <input type="url" id="delivery-link" placeholder="https://drive.google.com/..." class="w-full p-2 border rounded-lg">
-                        <p class="text-xs text-gray-500">Link para onde o cliente será redirecionado (Drive, Dropbox, etc).</p>
-                    </div>
+                            <!-- Coluna 2: Entregáveis -->
+                            <div class="space-y-4">
+                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 flex items-center justify-between">
+                                    Entregas e Arquivos
+                                    <span class="text-xs font-normal text-gray-500 lowercase">Cole os links abaixo</span>
+                                </h4>
 
-                    <button onclick="submitDelivery()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg mt-4 flex justify-center items-center gap-2">
-                        <i class="ph ph-paper-plane-right"></i> Enviar para o Cliente
+                                <!-- Loop de Seções -->
+                                <div id="edit-deliverables-container" class="space-y-6">
+                                    <!-- Renderizado via JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Footer Modal -->
+                <div class="bg-white border-t p-4 flex justify-end gap-3 shrink-0">
+                    <button onclick="closeClientDetailsModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm font-medium">Cancelar</button>
+                    <button onclick="document.getElementById('edit-client-form').requestSubmit()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold flex items-center gap-2">
+                        <i class="ph ph-floppy-disk"></i> Salvar Tudo
                     </button>
                 </div>
             </div>
@@ -481,6 +532,16 @@
                 if (data && data.deliverables) {
                     state.serverDeliverables = data.deliverables;
                     renderContent(state.activeTab);
+                } else if (data) {
+                     // Atualizar dados cadastrais em tempo real se o admin mudar
+                    const session = localStorage.getItem('userSession');
+                    if(session) {
+                        const localUser = JSON.parse(session);
+                        // Mesclar dados
+                        const updatedUser = { ...localUser, ...data };
+                        localStorage.setItem('userSession', JSON.stringify(updatedUser));
+                        loadUserIntoState(updatedUser, leadKey);
+                    }
                 }
             });
         };
@@ -518,21 +579,104 @@
             }, { onlyOnce: true });
         };
 
-        // 4. Função de Salvar Entrega (Admin)
-        window.saveDelivery = function(leadKey, section, coverUrl, targetUrl) {
-            const updates = {};
-            updates[`leads/${leadKey}/deliverables/${section}`] = {
-                coverUrl: coverUrl,
-                targetUrl: targetUrl,
-                deliveredAt: new Date().toISOString()
-            };
-            
-            update(ref(db), updates)
-                .then(() => alert('Entrega realizada!'))
-                .catch((e) => alert('Erro: ' + e.message));
+        // 4. Função: Admin abre modal de detalhes
+        window.openClientDetails = function(leadId) {
+             const leadRef = ref(db, 'leads/' + leadId);
+             onValue(leadRef, (snapshot) => {
+                 const data = snapshot.val();
+                 if(!data) return;
+
+                 // Preencher campos cadastrais
+                 document.getElementById('edit-lead-id').value = leadId;
+                 document.getElementById('edit-business-name').value = data.business_name || '';
+                 document.getElementById('edit-niche').value = data.niche || '';
+                 document.getElementById('edit-phone').value = data.phone || '';
+                 document.getElementById('edit-instagram').value = data.instagram || '';
+                 document.getElementById('edit-type').value = data.business_type || '';
+                 document.getElementById('edit-budget').value = data.budget || '';
+                 document.getElementById('edit-username').value = data.username || '';
+                 document.getElementById('edit-password').value = data.password || '';
+
+                 // Gerar campos de entregas dinâmicos
+                 const container = document.getElementById('edit-deliverables-container');
+                 container.innerHTML = '';
+                 
+                 const sections = [
+                    { id: 'landing', label: 'Página de Vendas' },
+                    { id: 'design', label: 'Identidade Visual' },
+                    { id: 'ads', label: 'Anúncios' },
+                    { id: 'content', label: 'Feed & Conteúdo' }
+                 ];
+
+                 sections.forEach(sec => {
+                     const delivery = (data.deliverables && data.deliverables[sec.id]) || { coverUrl: '', targetUrl: '' };
+                     
+                     const div = document.createElement('div');
+                     div.className = "bg-white p-4 rounded-lg border border-gray-200 shadow-sm";
+                     div.innerHTML = `
+                        <p class="font-semibold text-sm text-gray-800 mb-2">${sec.label}</p>
+                        <div class="space-y-2">
+                            <input type="text" placeholder="Link da Capa (Imagem)" 
+                                value="${delivery.coverUrl || ''}" 
+                                id="del-cover-${sec.id}"
+                                class="w-full p-2 border rounded text-xs">
+                            <input type="text" placeholder="Link do Arquivo (Drive/Dropbox)" 
+                                value="${delivery.targetUrl || ''}" 
+                                id="del-target-${sec.id}"
+                                class="w-full p-2 border rounded text-xs">
+                        </div>
+                     `;
+                     container.appendChild(div);
+                 });
+
+                 // Abrir modal
+                 document.getElementById('client-details-modal').classList.remove('hidden-section');
+
+             }, { onlyOnce: true });
         };
 
-        // 5. Função de carregar Leads (Admin)
+        // 5. Função: Admin salva tudo (Cadastro + Entregas)
+        window.saveClientDetails = function(e) {
+            e.preventDefault();
+            const leadId = document.getElementById('edit-lead-id').value;
+            if(!leadId) return;
+
+            const updates = {};
+            
+            // Dados Cadastrais
+            updates[`leads/${leadId}/business_name`] = document.getElementById('edit-business-name').value;
+            updates[`leads/${leadId}/niche`] = document.getElementById('edit-niche').value;
+            updates[`leads/${leadId}/phone`] = document.getElementById('edit-phone').value;
+            updates[`leads/${leadId}/instagram`] = document.getElementById('edit-instagram').value;
+            updates[`leads/${leadId}/business_type`] = document.getElementById('edit-type').value;
+            updates[`leads/${leadId}/budget`] = document.getElementById('edit-budget').value;
+            updates[`leads/${leadId}/username`] = document.getElementById('edit-username').value;
+            updates[`leads/${leadId}/password`] = document.getElementById('edit-password').value;
+
+            // Dados de Entrega
+            const sections = ['landing', 'design', 'ads', 'content'];
+            sections.forEach(sec => {
+                const cover = document.getElementById(`del-cover-${sec}`).value;
+                const target = document.getElementById(`del-target-${sec}`).value;
+                
+                if(cover || target) {
+                    updates[`leads/${leadId}/deliverables/${sec}`] = {
+                        coverUrl: cover,
+                        targetUrl: target,
+                        updatedAt: new Date().toISOString()
+                    };
+                }
+            });
+
+            update(ref(db), updates)
+                .then(() => {
+                    alert('Dados atualizados com sucesso!');
+                    document.getElementById('client-details-modal').classList.add('hidden-section');
+                })
+                .catch(err => alert('Erro: ' + err.message));
+        };
+
+        // 6. Função de carregar Leads na Tabela (Admin)
         window.loadAdminData = function() {
             const leadsRef = ref(db, 'leads');
             const tableBody = document.getElementById('leads-table-body');
@@ -562,19 +706,29 @@
                     if(lead.budget === 'medium') { budgetBadgeClass = 'bg-blue-100 text-blue-700'; budgetText = 'Crescimento'; }
                     if(lead.budget === 'high') { budgetBadgeClass = 'bg-purple-100 text-purple-700'; budgetText = 'Escala'; }
 
+                    // Verifica se já tem entrega (para pintar o botão de verde)
+                    const hasDeliveries = lead.deliverables && Object.keys(lead.deliverables).length > 0;
+                    const btnClass = hasDeliveries ? "bg-green-600 hover:bg-green-700" : "bg-gray-900 hover:bg-gray-700";
+                    const btnText = hasDeliveries ? "Ver / Editar" : "Entregar";
+                    const btnIcon = hasDeliveries ? "ph-check-circle" : "ph-paper-plane-right";
+
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-gray-50 transition-colors border-b border-gray-100";
                     tr.innerHTML = `
                         <td class="px-6 py-4 whitespace-nowrap text-gray-500 text-xs">${date}</td>
-                        <td class="px-6 py-4 font-bold text-indigo-700">${lead.username || '-'}</td>
-                        <td class="px-6 py-4 font-medium text-gray-900">${lead.business_name}</td>
+                        <td class="px-6 py-4 font-bold text-indigo-700 text-xs">${lead.username || '-'}</td>
+                        <td class="px-6 py-4">
+                            <button onclick="openClientDetails('${lead.id}')" class="font-medium text-gray-900 hover:text-indigo-600 hover:underline text-left">
+                                ${lead.business_name}
+                            </button>
+                        </td>
                         <td class="px-6 py-4 text-gray-600 text-xs">
                             ${lead.phone || '-'}<br>${lead.instagram || '-'}
                         </td>
                         <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-semibold ${budgetBadgeClass}">${budgetText}</span></td>
                         <td class="px-6 py-4 text-right">
-                            <button onclick="openDeliveryModal('${lead.id}', '${lead.business_name}')" class="bg-gray-900 hover:bg-gray-700 text-white text-xs font-bold py-2 px-3 rounded flex items-center gap-1 ml-auto">
-                                <i class="ph ph-paper-plane-right"></i> Entregar
+                            <button onclick="openClientDetails('${lead.id}')" class="${btnClass} text-white text-xs font-bold py-2 px-3 rounded flex items-center gap-1 ml-auto transition-colors">
+                                <i class="ph ${btnIcon}"></i> ${btnText}
                             </button>
                         </td>
                     `;
@@ -813,27 +967,30 @@
             // HTML para o bloco de "Arquivos Recebidos (Agência)"
             let agencyFilesHtml = '';
             if (serverDelivery) {
+                // ATUALIZADO: Card Vertical 3:4 para Mobile e Desktop
                 agencyFilesHtml = `
-                    <div class="mb-6 animate-fade-in">
-                        <h4 class="text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
-                            <i class="ph-fill ph-star text-yellow-500"></i> Arquivos Recebidos da Agência
-                        </h4>
-                        <a href="${serverDelivery.targetUrl}" target="_blank" class="block group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all border border-gray-200 aspect-video w-full md:w-80">
-                            <!-- Imagem de Capa -->
-                            <img src="${serverDelivery.coverUrl}" alt="Capa da Entrega" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            
-                            <!-- Overlay com Botão -->
-                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
-                                <div class="bg-white text-gray-900 px-4 py-2 rounded-lg font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                                    <i class="ph ph-download-simple"></i> Acessar Arquivos
+                    <div class="mb-6 animate-fade-in flex justify-center md:justify-start">
+                        <div class="w-full max-w-[280px]"> <!-- Container limitado para mobile -->
+                            <h4 class="text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
+                                <i class="ph-fill ph-star text-yellow-500"></i> Arquivos Recebidos
+                            </h4>
+                            <a href="${serverDelivery.targetUrl}" target="_blank" class="block group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all border border-gray-200 aspect-3-4 w-full">
+                                <!-- Imagem de Capa (Object Cover) -->
+                                <img src="${serverDelivery.coverUrl}" alt="Capa da Entrega" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                
+                                <!-- Overlay com Botão -->
+                                <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
+                                    <div class="bg-white text-gray-900 px-6 py-3 rounded-full font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform shadow-lg">
+                                        <i class="ph ph-download-simple text-lg"></i> Baixar
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <!-- Badge -->
-                            <div class="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm">
-                                DISPONÍVEL
-                            </div>
-                        </a>
+                                
+                                <!-- Badge -->
+                                <div class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md z-10">
+                                    DISPONÍVEL
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 `;
             }
@@ -912,39 +1069,10 @@
             }
         }
 
-        // --- ADMIN DELIVERY LOGIC ---
-        let selectedLeadForDelivery = null;
-
-        function openDeliveryModal(leadId, businessName) {
-            selectedLeadForDelivery = leadId;
-            document.getElementById('modal-business-name').textContent = businessName;
-            document.getElementById('delivery-modal').classList.remove('hidden-section');
-        }
-
-        function closeDeliveryModal() {
-            document.getElementById('delivery-modal').classList.add('hidden-section');
-            selectedLeadForDelivery = null;
-            // Limpar campos
-            document.getElementById('delivery-cover').value = '';
-            document.getElementById('delivery-link').value = '';
-        }
-
-        function submitDelivery() {
-            if(!selectedLeadForDelivery) return;
-            
-            const section = document.getElementById('delivery-section').value;
-            const cover = document.getElementById('delivery-cover').value;
-            const link = document.getElementById('delivery-link').value;
-
-            if(!cover || !link) {
-                alert('Por favor, preencha os dois links.');
-                return;
-            }
-
-            if(window.saveDelivery) {
-                window.saveDelivery(selectedLeadForDelivery, section, cover, link);
-                closeDeliveryModal();
-            }
+        // --- MODAL DETALHES CLIENTE (Função para fechar) ---
+        window.closeClientDetailsModal = function() {
+            document.getElementById('client-details-modal').classList.add('hidden-section');
+            document.getElementById('edit-lead-id').value = '';
         }
 
         function switchTab(tabId) {
