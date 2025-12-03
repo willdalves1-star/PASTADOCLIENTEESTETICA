@@ -45,7 +45,7 @@
     <!-- TELA 1: FORMULÁRIO INICIAL -->
     <!-- ========================================== -->
     <div id="form-screen" class="min-h-screen flex items-center justify-center p-4">
-        <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+        <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in relative">
             <div class="bg-indigo-600 p-8 text-white">
                 <h1 class="text-3xl font-bold mb-2">Diagnóstico de Negócio 360º</h1>
                 <p class="opacity-90">Preencha os dados da sua empresa para receber um plano de ação personalizado.</p>
@@ -94,11 +94,95 @@
                     </p>
                 </div>
             </form>
+
+            <!-- Link para Admin -->
+            <div class="absolute top-4 right-4">
+                <button onclick="showAdminLogin()" class="text-indigo-200 hover:text-white text-sm font-medium transition-colors flex items-center gap-1">
+                    <i class="ph ph-lock-key"></i> Sou Admin
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- ========================================== -->
-    <!-- TELA 2: LOADING -->
+    <!-- TELA ADMIN: LOGIN -->
+    <!-- ========================================== -->
+    <div id="admin-login-screen" class="hidden-section min-h-screen flex items-center justify-center p-4 bg-gray-100">
+        <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8 animate-fade-in">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-gray-900 text-white rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <i class="ph ph-shield-check text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Acesso Restrito</h2>
+                <p class="text-gray-500 text-sm">Digite a senha de administrador</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="admin-password" placeholder="Senha (admin123)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none" required>
+                </div>
+                <button type="submit" class="w-full bg-gray-900 text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition-colors">
+                    Entrar no Painel
+                </button>
+                <button type="button" onclick="resetApp()" class="w-full text-gray-500 text-sm hover:text-gray-700">
+                    Voltar ao início
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TELA ADMIN: DASHBOARD (TABELA) -->
+    <!-- ========================================== -->
+    <div id="admin-dashboard-screen" class="hidden-section min-h-screen bg-gray-100 flex flex-col">
+        <!-- Admin Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gray-900 text-white rounded flex items-center justify-center font-bold">A</div>
+                <h1 class="text-xl font-bold text-gray-800">Painel Administrativo</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full border border-gray-200">
+                    <span id="total-leads-count" class="font-bold text-gray-900">0</span> Leads Cadastrados
+                </div>
+                <button onclick="resetApp()" class="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-1">
+                    <i class="ph ph-sign-out"></i> Sair
+                </button>
+            </div>
+        </header>
+
+        <!-- Admin Content -->
+        <main class="flex-1 p-6 overflow-auto">
+            <div class="max-w-7xl mx-auto">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-600">
+                            <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-4">Data</th>
+                                    <th class="px-6 py-4">Empresa</th>
+                                    <th class="px-6 py-4">Nicho</th>
+                                    <th class="px-6 py-4">Modelo</th>
+                                    <th class="px-6 py-4">Budget</th>
+                                    <th class="px-6 py-4">Maturidade</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leads-table-body" class="divide-y divide-gray-100">
+                                <tr>
+                                    <td colspan="6" class="px-6 py-8 text-center text-gray-400">
+                                        <i class="ph ph-spinner animate-spin text-2xl mb-2"></i>
+                                        <p>Carregando dados do Firebase...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TELA 2: LOADING (CLIENTE) -->
     <!-- ========================================== -->
     <div id="loading-screen" class="hidden-section min-h-screen flex flex-col items-center justify-center bg-gray-50">
         <div class="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
@@ -107,7 +191,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- TELA 3: DASHBOARD -->
+    <!-- TELA 3: DASHBOARD (CLIENTE) -->
     <!-- ========================================== -->
     <div id="dashboard-screen" class="hidden-section flex h-screen bg-gray-50 overflow-hidden">
         <!-- Sidebar Desktop -->
@@ -199,7 +283,7 @@
     <script type="module">
         // Importar as funções SDKs do CDN (Compatível com navegador)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
         // --- CONFIGURAÇÃO FIREBASE ---
@@ -211,7 +295,6 @@
             messagingSenderId: "209032249418",
             appId: "1:209032249418:web:0e9c972c05779abf54a6b3",
             measurementId: "G-JKJEF0XYLY",
-            // Adicionado manualmente para garantir funcionamento do Realtime Database
             databaseURL: "https://diagnostico-7dfde-default-rtdb.firebaseio.com"
         };
 
@@ -220,17 +303,10 @@
         const analytics = getAnalytics(app);
         const db = getDatabase(app);
 
-        // Função de salvar (Exposta no window para ser usada pelo script principal)
+        // 1. Função de salvar (Cliente)
         window.saveLeadToFirebase = function(formData, diagnosisResult) {
-            console.log("Tentando salvar no Firebase...");
-            
-            // Referência para a "tabela" leads
             const leadsRef = ref(db, 'leads');
-            
-            // Criar novo registro
             const newLeadRef = push(leadsRef);
-            
-            // Definir os dados
             set(newLeadRef, {
                 business_name: formData.businessName,
                 niche: formData.niche,
@@ -238,12 +314,59 @@
                 budget: formData.budget,
                 diagnosis_result: diagnosisResult,
                 created_at: new Date().toISOString()
-            })
-            .then(() => {
-                console.log("Lead salvo com sucesso no Firebase Realtime Database!");
-            })
-            .catch((error) => {
-                console.error("Erro ao salvar no Firebase:", error);
+            });
+        };
+
+        // 2. Função de carregar Leads (Admin)
+        window.loadAdminData = function() {
+            const leadsRef = ref(db, 'leads');
+            const tableBody = document.getElementById('leads-table-body');
+            const countEl = document.getElementById('total-leads-count');
+
+            // Ouvir mudanças no Firebase (Realtime)
+            onValue(leadsRef, (snapshot) => {
+                tableBody.innerHTML = '';
+                const data = snapshot.val();
+                
+                if (!data) {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500">Nenhum lead encontrado.</td></tr>';
+                    countEl.textContent = '0';
+                    return;
+                }
+
+                const leads = Object.values(data);
+                countEl.textContent = leads.length;
+
+                // Ordenar por data (mais recente primeiro)
+                leads.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+                leads.forEach(lead => {
+                    const date = new Date(lead.created_at).toLocaleDateString('pt-BR', {
+                        day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute:'2-digit'
+                    });
+                    
+                    // Formatação visual do Budget
+                    let budgetBadgeClass = 'bg-gray-100 text-gray-600';
+                    let budgetText = 'Iniciante';
+                    if(lead.budget === 'medium') { budgetBadgeClass = 'bg-blue-100 text-blue-700'; budgetText = 'Crescimento'; }
+                    if(lead.budget === 'high') { budgetBadgeClass = 'bg-purple-100 text-purple-700'; budgetText = 'Escala'; }
+
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-gray-50 transition-colors border-b border-gray-100";
+                    tr.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-500">${date}</td>
+                        <td class="px-6 py-4 font-medium text-gray-900">${lead.business_name}</td>
+                        <td class="px-6 py-4 text-gray-600">${lead.niche}</td>
+                        <td class="px-6 py-4 text-gray-600 capitalize">${lead.business_type}</td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 py-1 rounded text-xs font-semibold ${budgetBadgeClass}">${budgetText}</span>
+                        </td>
+                        <td class="px-6 py-4 font-bold text-gray-700">
+                            ${lead.diagnosis_result?.overview?.score || '-'} / 100
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
             });
         };
     </script>
@@ -438,6 +561,28 @@
             }, 1500);
         });
 
+        // --- ADMIN LOGIN LOGIC ---
+        function showAdminLogin() {
+            document.getElementById('form-screen').classList.add('hidden-section');
+            document.getElementById('admin-login-screen').classList.remove('hidden-section');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('admin-password').value;
+            if (password === 'admin123') {
+                document.getElementById('admin-login-screen').classList.add('hidden-section');
+                document.getElementById('admin-dashboard-screen').classList.remove('hidden-section');
+                
+                // Carregar dados reais
+                if(window.loadAdminData) {
+                    window.loadAdminData();
+                }
+            } else {
+                alert('Senha incorreta!');
+            }
+        }
+
         function switchTab(tabId) {
             state.activeTab = tabId;
             document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -568,6 +713,8 @@
             document.getElementById('diagnosis-form').reset();
             document.getElementById('dashboard-screen').classList.add('hidden-section');
             document.getElementById('mobile-menu-overlay').classList.add('hidden');
+            document.getElementById('admin-login-screen').classList.add('hidden-section'); // Garantir que tela login suma
+            document.getElementById('admin-dashboard-screen').classList.add('hidden-section'); // Garantir que tela admin suma
             document.getElementById('form-screen').classList.remove('hidden-section');
             state.data = {}; state.diagnosis = {}; state.activeTab = 'overview';
             state.files = { overview: [], landing: [], design: [], ads: [], content: [] };
