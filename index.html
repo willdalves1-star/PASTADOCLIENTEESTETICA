@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico de Marketing AI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* Animações Personalizadas */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* Utilitários de visibilidade */
+        .hidden-section {
+            display: none !important;
+        }
+
+        /* Scrollbar personalizada */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c7c7cc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 overflow-hidden">
+
+    <!-- ========================================== -->
+    <!-- TELA 1: FORMULÁRIO INICIAL -->
+    <!-- ========================================== -->
+    <div id="form-screen" class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+            <div class="bg-indigo-600 p-8 text-white">
+                <h1 class="text-3xl font-bold mb-2">Diagnóstico de Negócio 360º</h1>
+                <p class="opacity-90">Preencha os dados da sua empresa para receber um plano de ação personalizado.</p>
+            </div>
+            
+            <form id="diagnosis-form" class="p-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Nome da Empresa</label>
+                        <input type="text" id="input-name" required placeholder="Ex: Pizzaria do João, TechSoluções..." 
+                            class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Nicho de Atuação</label>
+                        <input type="text" id="input-niche" required placeholder="Ex: Moda Feminina, Advocacia..." 
+                            class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Tipo de Negócio</label>
+                        <select id="input-type" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none bg-white">
+                            <option value="service">Prestação de Serviços</option>
+                            <option value="ecommerce">E-commerce / Loja Virtual</option>
+                            <option value="local">Negócio Local Físico</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Orçamento Mensal de Mkt</label>
+                        <select id="input-budget" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none bg-white">
+                            <option value="low">Iniciante (Até R$ 1.000)</option>
+                            <option value="medium">Crescimento (R$ 1k - R$ 5k)</option>
+                            <option value="high">Escala (R$ 5k+)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-indigo-500/30 flex items-center justify-center gap-2">
+                        <i class="ph ph-lightning text-xl"></i>
+                        Gerar Diagnóstico Gratuito
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TELA 2: LOADING -->
+    <!-- ========================================== -->
+    <div id="loading-screen" class="hidden-section min-h-screen flex flex-col items-center justify-center bg-gray-50">
+        <div class="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
+        <h2 class="text-xl font-semibold text-gray-700 animate-pulse">Analisando seu negócio...</h2>
+        <p class="text-gray-500 mt-2">Nossa IA está criando seu plano de ação.</p>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TELA 3: DASHBOARD -->
+    <!-- ========================================== -->
+    <div id="dashboard-screen" class="hidden-section flex h-screen bg-gray-50 overflow-hidden">
+        
+        <!-- Sidebar Desktop -->
+        <aside class="hidden md:flex w-64 flex-col bg-white border-r border-gray-200">
+            <div class="p-6 border-b border-gray-100 flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold">D</div>
+                <span class="text-xl font-bold text-gray-800">Diagnóstico<span class="text-indigo-600">.AI</span></span>
+            </div>
+            
+            <nav class="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar" id="desktop-nav">
+                <div class="px-4 mb-2 mt-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Menu Principal</div>
+                <button onclick="switchTab('overview')" id="btn-overview" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all bg-indigo-50 text-indigo-700 shadow-sm">
+                    <i class="ph ph-squares-four text-xl"></i> Visão Geral
+                </button>
+                <button onclick="switchTab('landing')" id="btn-landing" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
+                    <i class="ph ph-globe text-xl"></i> Página de Vendas
+                </button>
+                <button onclick="switchTab('design')" id="btn-design" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
+                    <i class="ph ph-paint-brush text-xl"></i> Identidade Visual
+                </button>
+                <button onclick="switchTab('ads')" id="btn-ads" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
+                    <i class="ph ph-megaphone text-xl"></i> Anúncios
+                </button>
+                <button onclick="switchTab('content')" id="btn-content" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
+                    <i class="ph ph-instagram-logo text-xl"></i> Feed & Orgânico
+                </button>
+
+                <div class="px-4 mb-2 mt-8 text-xs font-semibold text-gray-400 uppercase tracking-wider">Configurações</div>
+                <button onclick="resetApp()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                    <i class="ph ph-storefront text-xl text-gray-400"></i> Novo Negócio
+                </button>
+            </nav>
+
+            <div class="p-4 border-t border-gray-100">
+                <div class="flex items-center gap-3">
+                    <div id="user-avatar" class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
+                        <!-- Iniciais -->
+                    </div>
+                    <div class="overflow-hidden">
+                        <p id="user-business-name" class="text-sm font-medium text-gray-700 truncate">Empresa</p>
+                        <p id="user-niche" class="text-xs text-gray-500 truncate">Nicho</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Mobile Header -->
+        <div class="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-20 flex items-center justify-between px-4 shadow-sm">
+            <span class="text-lg font-bold text-gray-800">Diagnóstico<span class="text-indigo-600">.AI</span></span>
+            <button onclick="toggleMobileMenu()" class="p-2 text-gray-600">
+                <i id="mobile-menu-icon" class="ph ph-list text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="hidden md:hidden fixed inset-0 z-10 bg-gray-800/50 backdrop-blur-sm" onclick="toggleMobileMenu()">
+            <div class="absolute right-0 top-16 bottom-0 w-64 bg-white shadow-xl p-4 space-y-2 overflow-y-auto" onclick="event.stopPropagation()">
+                <button onclick="switchTab('overview'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
+                    <i class="ph ph-squares-four text-xl"></i> Visão Geral
+                </button>
+                <button onclick="switchTab('landing'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
+                    <i class="ph ph-globe text-xl"></i> Página de Vendas
+                </button>
+                <button onclick="switchTab('design'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
+                    <i class="ph ph-paint-brush text-xl"></i> Identidade Visual
+                </button>
+                <button onclick="switchTab('ads'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
+                    <i class="ph ph-megaphone text-xl"></i> Anúncios
+                </button>
+                <button onclick="switchTab('content'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
+                    <i class="ph ph-instagram-logo text-xl"></i> Feed & Orgânico
+                </button>
+                <div class="border-t my-2 border-gray-100"></div>
+                <button onclick="resetApp()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-500 hover:bg-red-50">
+                    <i class="ph ph-arrow-counter-clockwise text-xl"></i> Reiniciar
+                </button>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 mt-16 md:mt-0 relative w-full">
+            <div class="max-w-5xl mx-auto space-y-6 animate-fade-in" id="main-content">
+                <!-- Conteúdo injetado via JS -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- Estado Global ---
+        const state = {
+            data: {},
+            diagnosis: {},
+            activeTab: 'overview',
+            files: {
+                overview: [],
+                landing: [],
+                design: [],
+                ads: [],
+                content: []
+            }
+        };
+
+        // --- Lógica Mock AI ---
+        function generateDiagnosis(data) {
+            const { businessName, niche, type, budget } = data;
+
+            const getAdStrategy = () => {
+                if (budget === 'low') return {
+                    platform: "Meta Ads (Instagram/Facebook)",
+                    focus: "Focar em remarketing e público local num raio de 5km.",
+                    budgetDesc: "R$ 20,00 - R$ 50,00 / dia"
+                };
+                if (budget === 'medium') return {
+                    platform: "Meta Ads + Google Search",
+                    focus: "Campanhas de intenção (Google) e desejo (Instagram).",
+                    budgetDesc: "R$ 50,00 - R$ 150,00 / dia"
+                };
+                return {
+                    platform: "Omnichannel (Meta, Google, TikTok, Youtube)",
+                    focus: "Dominância de marca e escala de conversão.",
+                    budgetDesc: "Acima de R$ 200,00 / dia"
+                };
+            };
+
+            const adStrategy = getAdStrategy();
+
+            return {
+                overview: {
+                    score: budget === 'low' ? 45 : 78,
+                    summary: `O negócio <span class="font-bold">${businessName}</span> tem um potencial forte no nicho de ${niche}. A prioridade agora é estruturar a base digital para escalar vendas.`
+                },
+                landingPage: {
+                    title: "Estrutura de Alta Conversão",
+                    recommendation: type === 'ecommerce' 
+                        ? "Loja Virtual com Checkout Transparente e Recuperação de Carrinho." 
+                        : "Landing Page de Captura (LP) focada em VSL (Vídeo de Vendas) e Botão WhatsApp.",
+                    sections: [
+                        "Headline forte focada na dor do cliente",
+                        "Prova social (Depoimentos em vídeo/texto)",
+                        "Garantia incondicional visível",
+                        "FAQ quebra-objeções"
+                    ],
+                    priority: "Alta"
+                },
+                visualIdentity: {
+                    title: "Auditoria de Branding",
+                    recommendation: "Modernização Minimalista",
+                    actions: [
+                        "Simplificar o logotipo para funcionar bem em ícones de app e favicons.",
+                        "Definir paleta de cores primária (confiança) e secundária (ação).",
+                        "Padronizar tipografia: Uma fonte para títulos (impacto) e uma para leitura."
+                    ],
+                    priority: "Média"
+                },
+                paidAds: {
+                    title: "Estratégia de Tráfego Pago",
+                    ...adStrategy,
+                    audiences: [
+                        "Lookalike 1% (Lista de clientes)",
+                        "Interesses relacionados a " + niche,
+                        "Remarketing 30 dias (Visitantes do site)"
+                    ],
+                    priority: "Alta"
+                },
+                organicContent: {
+                    title: "Calendário Editorial Sugerido",
+                    strategy: "Conteúdo de Conexão e Autoridade",
+                    ideas: [
+                        { type: "Reels", color: "bg-pink-500", title: "Bastidores: Como fazemos na " + businessName },
+                        { type: "Carrossel", color: "bg-blue-500", title: "5 Mitos sobre " + niche },
+                        { type: "Stories", color: "bg-yellow-500", title: "Enquete: Qual problema você enfrenta hoje com " + niche + "?" },
+                        { type: "Foto", color: "bg-purple-500", title: "Prova social: Cliente satisfeito usando o produto" }
+                    ],
+                    priority: "Média"
+                }
+            };
+        }
+
+        // --- Gerenciamento de Arquivos ---
+        function triggerUpload(sectionId) { document.getElementById(`upload-${sectionId}`).click(); }
+
+        function handleFileSelect(input, sectionId) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const newFile = { id: Date.now(), name: file.name, size: (file.size / 1024).toFixed(1) + ' KB', type: file.type };
+                state.files[sectionId].push(newFile);
+                renderContent(state.activeTab);
+            }
+        }
+
+        function deleteFile(sectionId, fileId) {
+            state.files[sectionId] = state.files[sectionId].filter(f => f.id !== fileId);
+            renderContent(state.activeTab);
+        }
+
+        function getFileBlock(sectionId) {
+            const files = state.files[sectionId] || [];
+            let filesListHtml = '';
+            
+            if (files.length === 0) {
+                filesListHtml = `
+                    <div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center group hover:border-indigo-300 transition-colors cursor-pointer" onclick="triggerUpload('${sectionId}')">
+                        <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                            <i class="ph ph-cloud-arrow-up text-xl"></i>
+                        </div>
+                        <p class="text-sm text-gray-500">Clique para anexar arquivos para <span class="font-medium text-gray-700">esta seção</span></p>
+                    </div>
+                `;
+            } else {
+                filesListHtml = `
+                    <div class="grid grid-cols-1 gap-3">
+                        ${files.map(file => `
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-white border border-gray-100 rounded flex items-center justify-center text-indigo-600"><i class="ph ph-file-text text-lg"></i></div>
+                                    <div><p class="text-sm font-medium text-gray-800 truncate max-w-[200px]">${file.name}</p><p class="text-xs text-gray-500">${file.size}</p></div>
+                                </div>
+                                <button onclick="deleteFile('${sectionId}', ${file.id})" class="text-gray-400 hover:text-red-500 p-2"><i class="ph ph-trash text-lg"></i></button>
+                            </div>
+                        `).join('')}
+                        <button onclick="triggerUpload('${sectionId}')" class="mt-2 w-full py-2 border border-dashed border-gray-300 text-gray-500 rounded-lg hover:bg-gray-50 text-sm flex items-center justify-center gap-2"><i class="ph ph-plus"></i> Adicionar outro arquivo</button>
+                    </div>
+                `;
+            }
+            return `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mt-6 animate-fade-in">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2"><i class="ph ph-folder-notch text-indigo-600"></i> Arquivos Entregues</h3>
+                        ${files.length > 0 ? `<button onclick="triggerUpload('${sectionId}')" class="text-sm bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg font-medium hover:bg-indigo-100 transition-colors flex items-center gap-2"><i class="ph ph-upload-simple"></i> Anexar</button>` : ''}
+                    </div>
+                    <div id="file-list-${sectionId}" class="space-y-3">${filesListHtml}</div>
+                    <input type="file" id="upload-${sectionId}" class="hidden" onchange="handleFileSelect(this, '${sectionId}')">
+                </div>
+            `;
+        }
+
+        // --- Renderização ---
+
+        document.getElementById('diagnosis-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            state.data = {
+                businessName: document.getElementById('input-name').value,
+                niche: document.getElementById('input-niche').value,
+                type: document.getElementById('input-type').value,
+                budget: document.getElementById('input-budget').value,
+            };
+            document.getElementById('user-business-name').textContent = state.data.businessName;
+            document.getElementById('user-niche').textContent = state.data.niche;
+            document.getElementById('user-avatar').textContent = state.data.businessName.substring(0,2).toUpperCase();
+            document.getElementById('form-screen').classList.add('hidden-section');
+            document.getElementById('loading-screen').classList.remove('hidden-section');
+            setTimeout(() => {
+                state.diagnosis = generateDiagnosis(state.data);
+                document.getElementById('loading-screen').classList.add('hidden-section');
+                document.getElementById('dashboard-screen').classList.remove('hidden-section');
+                renderContent('overview');
+            }, 2000);
+        });
+
+        function switchTab(tabId) {
+            state.activeTab = tabId;
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.id === `btn-${tabId}`) {
+                    btn.classList.remove('text-gray-600', 'hover:bg-gray-50');
+                    btn.classList.add('bg-indigo-50', 'text-indigo-700', 'shadow-sm');
+                    btn.querySelector('i').classList.remove('text-gray-400');
+                    btn.querySelector('i').classList.add('text-indigo-600');
+                } else {
+                    btn.classList.add('text-gray-600', 'hover:bg-gray-50');
+                    btn.classList.remove('bg-indigo-50', 'text-indigo-700', 'shadow-sm');
+                    btn.querySelector('i').classList.add('text-gray-400');
+                    btn.querySelector('i').classList.remove('text-indigo-600');
+                }
+            });
+            renderContent(tabId);
+        }
+
+        function renderContent(tabId) {
+            const container = document.getElementById('main-content');
+            const d = state.diagnosis;
+            const filesBlock = getFileBlock(tabId);
+            let html = '';
+
+            if (tabId === 'overview') {
+                html = `
+                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white shadow-lg animate-fade-in">
+                        <h2 class="text-3xl font-bold mb-2">Olá, gestor da ${state.data.businessName}!</h2>
+                        <p class="text-indigo-100 text-lg">${d.overview.summary}</p>
+                        <div class="mt-6 flex items-center gap-4">
+                            <div class="bg-white/20 backdrop-blur-md rounded-lg p-4"><span class="block text-sm opacity-80">Maturidade Digital</span><span class="text-2xl font-bold">${d.overview.score}/100</span></div>
+                            <div class="bg-white/20 backdrop-blur-md rounded-lg p-4"><span class="block text-sm opacity-80">Próximo Nível</span><span class="text-2xl font-bold">Escala</span></div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Ações Imediatas</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-red-100 text-red-600">Prioridade Alta</span></div>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-green-500 text-xl mt-0.5"></i><span class="text-gray-600">Configurar Pixel e API de Conversão.</span></li>
+                                <li class="flex items-start gap-3"><i class="ph ph-check-circle text-gray-300 text-xl mt-0.5"></i><span class="text-gray-600">Otimizar Bio do Instagram para conversão.</span></li>
+                            </ul>
+                        </div>
+                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                             <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Resumo do Plano</h3></div>
+                             <p class="text-gray-600 mb-4">Seu foco principal deve ser a construção de ativos digitais que não dependam exclusivamente do seu tempo.</p>
+                             <button onclick="switchTab('landing')" class="text-indigo-600 font-semibold hover:underline flex items-center gap-1">Ver detalhes da Página <i class="ph ph-arrow-right"></i></button>
+                        </div>
+                    </div>`;
+            } else if (tabId === 'landing') {
+                html = `
+                    <h2 class="text-2xl font-bold text-gray-800 animate-fade-in">Criação de Páginas (Web)</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Recomendação de Estrutura</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-red-100 text-red-600">Prioridade ${d.landingPage.priority}</span></div>
+                                <p class="text-gray-600 mb-4 font-medium">${d.landingPage.recommendation}</p>
+                                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100"><h4 class="font-semibold text-gray-700 mb-3">Seções Obrigatórias:</h4><ul class="space-y-2">${d.landingPage.sections.map(sec => `<li class="flex items-center gap-2 text-gray-600"><div class="w-2 h-2 rounded-full bg-indigo-500"></div>${sec}</li>`).join('')}</ul></div>
+                            </div>
+                        </div>
+                        <div class="space-y-6"><div class="bg-indigo-50 border border-indigo-100 p-6 rounded-xl"><h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2"><i class="ph ph-device-mobile text-xl"></i> Mobile First</h3><p class="text-indigo-800 text-sm">80% do seu tráfego virá do celular. Certifique-se que o botão de WhatsApp esteja sempre visível (sticky) na parte inferior da tela.</p></div></div>
+                    </div>`;
+            } else if (tabId === 'design') {
+                html = `
+                     <div class="space-y-6 animate-fade-in">
+                        <h2 class="text-2xl font-bold text-gray-800">Melhorias de Logotipo e Identidade</h2>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                             <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">${d.visualIdentity.recommendation}</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-yellow-100 text-yellow-700">Prioridade ${d.visualIdentity.priority}</span></div>
+                            <div class="space-y-4">
+                                <p class="text-gray-600">Para o nicho de <span class="font-semibold">${state.data.niche}</span>, a confiança visual é determinante para o preço que você pode cobrar.</p>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">${d.visualIdentity.actions.map((action, idx) => `<div class="bg-gray-50 p-4 rounded-lg border border-gray-100"><span class="text-2xl font-bold text-indigo-200 mb-2 block">0${idx + 1}</span><p class="text-sm text-gray-700 font-medium">${action}</p></div>`).join('')}</div>
+                            </div>
+                        </div>
+                    </div>`;
+            } else if (tabId === 'ads') {
+                // ATUALIZADO: Apenas Botão Baixar e Quadrado de Anexar
+                html = `
+                    <div class="space-y-6 animate-fade-in">
+                        <h2 class="text-2xl font-bold text-gray-800">Anúncios Patrocinados</h2>
+                        
+                        <!-- Novo Bloco Simplificado -->
+                        <div class="bg-gradient-to-r from-gray-900 to-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700 text-white relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-red-600 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+                            
+                            <div class="flex items-center gap-4 relative z-10">
+                                <button class="bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl flex items-center gap-3 transition-colors border border-white/10 h-24">
+                                    <i class="ph ph-download-simple text-2xl"></i>
+                                    <span class="font-medium text-lg">Baixar Modelo</span>
+                                </button>
+
+                                <!-- Quadrado em branco para Anexar -->
+                                <div class="w-24 h-24 bg-white rounded-xl flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors" onclick="triggerUpload('ads')">
+                                     <i class="ph ph-plus text-3xl text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                 <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Estratégia de Canais</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-red-100 text-red-600">Prioridade ${d.paidAds.priority}</span></div>
+                                <div class="mb-4"><span class="text-sm text-gray-500 block mb-1">Canais Recomendados</span><p class="font-semibold text-lg text-gray-800">${d.paidAds.platform}</p></div>
+                                <div><span class="text-sm text-gray-500 block mb-1">Orçamento Diário Sugerido</span><p class="font-semibold text-green-600">${d.paidAds.budgetDesc}</p></div>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Públicos-Alvo</h3></div>
+                                <ul class="divide-y divide-gray-100">${d.paidAds.audiences.map(aud => `<li class="py-3 flex items-center gap-3"><i class="ph ph-target text-indigo-500 text-lg"></i><span class="text-gray-700">${aud}</span></li>`).join('')}</ul>
+                            </div>
+                        </div>
+                    </div>`;
+            } else if (tabId === 'content') {
+                html = `
+                    <div class="space-y-6 animate-fade-in">
+                        <h2 class="text-2xl font-bold text-gray-800">Conteúdo Orgânico (Feed)</h2>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Ideias de Publicação</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-yellow-100 text-yellow-700">Prioridade ${d.organicContent.priority}</span></div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">${d.organicContent.ideas.map(idea => `<div class="flex gap-4 items-start p-3 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-100"><div class="p-2 rounded-lg text-white text-xs font-bold uppercase tracking-wider ${idea.color}">${idea.type}</div><div><p class="font-medium text-gray-800">${idea.title}</p><p class="text-xs text-gray-500 mt-1">Foco: Engajamento</p></div></div>`).join('')}</div>
+                        </div>
+                    </div>`;
+            }
+            container.innerHTML = html + filesBlock;
+        }
+
+        function toggleMobileMenu() {
+            const overlay = document.getElementById('mobile-menu-overlay');
+            if (overlay.classList.contains('hidden')) { overlay.classList.remove('hidden'); } else { overlay.classList.add('hidden'); }
+        }
+
+        function resetApp() {
+            document.getElementById('diagnosis-form').reset();
+            document.getElementById('dashboard-screen').classList.add('hidden-section');
+            document.getElementById('mobile-menu-overlay').classList.add('hidden');
+            document.getElementById('form-screen').classList.remove('hidden-section');
+            state.data = {}; state.diagnosis = {}; state.activeTab = 'overview';
+            state.files = { overview: [], landing: [], design: [], ads: [], content: [] };
+            switchTab('overview');
+        }
+    </script>
+</body>
+</html>
