@@ -49,7 +49,8 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800 overflow-hidden">
+<!-- REMOVIDO 'overflow-hidden' DAQUI PARA PERMITIR ROLAGEM NO FORMULÁRIO -->
+<body class="bg-gray-50 font-sans text-gray-800">
 
     <!-- ========================================== -->
     <!-- TELA 1: FORMULÁRIO INICIAL (DIAGNÓSTICO) -->
@@ -246,7 +247,7 @@
                     <i class="ph ph-paint-brush text-xl"></i> Identidade Visual
                 </button>
                 <button onclick="switchTab('ads')" id="btn-ads" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
-                    <i class="ph ph-megaphone text-xl"></i> Anúncios (Ads)
+                    <i class="ph ph-megaphone text-xl"></i> Anúncios
                 </button>
                 <button onclick="switchTab('content')" id="btn-content" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
                     <i class="ph ph-instagram-logo text-xl"></i> Feed & Ofertas
@@ -808,4 +809,4 @@
         function resetApp() { localStorage.removeItem('userSession'); location.reload(); }
     </script>
 </body>
-</html>
+</html>"
