@@ -240,16 +240,16 @@
                     <i class="ph ph-squares-four text-xl"></i> Visão Geral
                 </button>
                 <button onclick="switchTab('landing')" id="btn-landing" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
-                    <i class="ph ph-desktop text-xl"></i> Páginas de Vendas
+                    <i class="ph ph-globe text-xl"></i> Página de Vendas
                 </button>
                 <button onclick="switchTab('design')" id="btn-design" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
-                    <i class="ph ph-palette text-xl"></i> Identidade Visual
+                    <i class="ph ph-paint-brush text-xl"></i> Identidade Visual
                 </button>
                 <button onclick="switchTab('ads')" id="btn-ads" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
                     <i class="ph ph-megaphone text-xl"></i> Anúncios (Ads)
                 </button>
                 <button onclick="switchTab('content')" id="btn-content" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
-                    <i class="ph ph-article text-xl"></i> Feed & Ofertas
+                    <i class="ph ph-instagram-logo text-xl"></i> Feed & Ofertas
                 </button>
 
                 <div class="px-4 mb-2 mt-8 text-xs font-semibold text-gray-400 uppercase tracking-wider">Conta</div>
@@ -289,16 +289,16 @@
                     <i class="ph ph-squares-four text-xl"></i> Visão Geral
                 </button>
                 <button onclick="switchTab('landing'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
-                    <i class="ph ph-desktop text-xl"></i> Páginas de Vendas
+                    <i class="ph ph-globe text-xl"></i> Página de Vendas
                 </button>
                 <button onclick="switchTab('design'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
-                    <i class="ph ph-palette text-xl"></i> Identidade Visual
+                    <i class="ph ph-paint-brush text-xl"></i> Identidade Visual
                 </button>
                 <button onclick="switchTab('ads'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
                     <i class="ph ph-megaphone text-xl"></i> Anúncios
                 </button>
                 <button onclick="switchTab('content'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
-                    <i class="ph ph-article text-xl"></i> Feed & Ofertas
+                    <i class="ph ph-instagram-logo text-xl"></i> Feed & Ofertas
                 </button>
                 <div class="border-t my-2 border-gray-100"></div>
                 <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-500 hover:bg-red-50">
@@ -671,12 +671,51 @@
                             </div>
                         </div>
                     </div>
-                </div>`;
+                </div>
+
+                <!-- MENU RÁPIDO (GRID) -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 px-1">Acesso Rápido</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="switchTab('landing')" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all text-left group">
+                            <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600 mb-3 group-hover:scale-110 transition-transform">
+                                <i class="ph-fill ph-globe text-2xl"></i>
+                            </div>
+                            <span class="block text-sm font-bold text-gray-800">Páginas de Vendas</span>
+                            <span class="text-xs text-gray-500">Ver materiais</span>
+                        </button>
+
+                        <button onclick="switchTab('design')" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all text-left group">
+                            <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600 mb-3 group-hover:scale-110 transition-transform">
+                                <i class="ph-fill ph-paint-brush text-2xl"></i>
+                            </div>
+                            <span class="block text-sm font-bold text-gray-800">Identidade Visual</span>
+                            <span class="text-xs text-gray-500">Ver propostas</span>
+                        </button>
+
+                        <button onclick="switchTab('ads')" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all text-left group">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-3 group-hover:scale-110 transition-transform">
+                                <i class="ph-fill ph-megaphone text-2xl"></i>
+                            </div>
+                            <span class="block text-sm font-bold text-gray-800">Anúncios (Ads)</span>
+                            <span class="text-xs text-gray-500">Estratégias</span>
+                        </button>
+
+                        <button onclick="switchTab('content')" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all text-left group">
+                            <div class="w-10 h-10 bg-yellow-50 rounded-lg flex items-center justify-center text-yellow-600 mb-3 group-hover:scale-110 transition-transform">
+                                <i class="ph-fill ph-instagram-logo text-2xl"></i>
+                            </div>
+                            <span class="block text-sm font-bold text-gray-800">Feed & Ofertas</span>
+                            <span class="text-xs text-gray-500">Calendário</span>
+                        </button>
+                    </div>
+                </div>
+                `;
             }
             else if(tabId === 'landing') {
                 html = `
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="p-3 bg-indigo-100 rounded-lg text-indigo-600"><i class="ph-bold ph-desktop text-2xl"></i></div>
+                    <div class="p-3 bg-indigo-100 rounded-lg text-indigo-600"><i class="ph-bold ph-globe text-2xl"></i></div>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Páginas de Alta Conversão</h2>
                         <p class="text-sm text-gray-500">Estrutura focada em vendas.</p>
@@ -693,7 +732,7 @@
             else if(tabId === 'design') {
                 html = `
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="p-3 bg-purple-100 rounded-lg text-purple-600"><i class="ph-bold ph-palette text-2xl"></i></div>
+                    <div class="p-3 bg-purple-100 rounded-lg text-purple-600"><i class="ph-bold ph-paint-brush text-2xl"></i></div>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Identidade Visual</h2>
                         <p class="text-sm text-gray-500">Branding e posicionamento.</p>
@@ -738,7 +777,7 @@
             else if(tabId === 'content') {
                 html = `
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="p-3 bg-yellow-100 rounded-lg text-yellow-600"><i class="ph-bold ph-article text-2xl"></i></div>
+                    <div class="p-3 bg-yellow-100 rounded-lg text-yellow-600"><i class="ph-bold ph-instagram-logo text-2xl"></i></div>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Conteúdo Orgânico</h2>
                         <p class="text-sm text-gray-500">Engajamento e autoridade.</p>
