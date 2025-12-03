@@ -37,6 +37,11 @@
             background: #c7c7cc;
             border-radius: 4px;
         }
+        
+        /* Modal Overlay */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 overflow-hidden">
@@ -114,11 +119,11 @@
                     <i class="ph ph-shield-check text-2xl"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-800">Acesso Restrito</h2>
-                <p class="text-gray-500 text-sm">Digite a senha de administrador</p>
+                <p class="text-gray-500 text-sm">Área exclusiva para administradores.</p>
             </div>
             <form onsubmit="handleAdminLogin(event)" class="space-y-4">
                 <div>
-                    <input type="password" id="admin-password" placeholder="Senha (admin123)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none" required>
+                    <input type="password" id="admin-password" placeholder="Senha" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none" required>
                 </div>
                 <button type="submit" class="w-full bg-gray-900 text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition-colors">
                     Entrar no Painel
@@ -142,7 +147,7 @@
             </div>
             <div class="flex items-center gap-4">
                 <div class="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full border border-gray-200">
-                    <span id="total-leads-count" class="font-bold text-gray-900">0</span> Leads Cadastrados
+                    <span id="total-leads-count" class="font-bold text-gray-900">0</span> Leads
                 </div>
                 <button onclick="resetApp()" class="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-1">
                     <i class="ph ph-sign-out"></i> Sair
@@ -162,23 +167,63 @@
                                     <th class="px-6 py-4">Empresa</th>
                                     <th class="px-6 py-4">Nicho</th>
                                     <th class="px-6 py-4">Modelo</th>
-                                    <th class="px-6 py-4">Budget</th>
-                                    <th class="px-6 py-4">Maturidade</th>
+                                    <th class="px-6 py-4">Status</th>
+                                    <th class="px-6 py-4 text-right">Ações</th>
                                 </tr>
                             </thead>
                             <tbody id="leads-table-body" class="divide-y divide-gray-100">
-                                <tr>
-                                    <td colspan="6" class="px-6 py-8 text-center text-gray-400">
-                                        <i class="ph ph-spinner animate-spin text-2xl mb-2"></i>
-                                        <p>Carregando dados do Firebase...</p>
-                                    </td>
-                                </tr>
+                                <!-- Conteúdo gerado via JS -->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </main>
+
+        <!-- Modal de Entrega -->
+        <div id="delivery-modal" class="hidden-section fixed inset-0 z-50 flex items-center justify-center modal-overlay backdrop-blur-sm">
+            <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden animate-fade-in">
+                <div class="bg-gray-900 px-6 py-4 flex justify-between items-center">
+                    <h3 class="text-white font-bold flex items-center gap-2">
+                        <i class="ph ph-package"></i> Entregar Arquivos
+                    </h3>
+                    <button onclick="closeDeliveryModal()" class="text-gray-400 hover:text-white">
+                        <i class="ph ph-x text-xl"></i>
+                    </button>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div class="bg-blue-50 text-blue-800 p-3 rounded-lg text-sm mb-4">
+                        <p>Entregando para: <span id="modal-business-name" class="font-bold">Empresa</span></p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-gray-700">Selecione a Seção</label>
+                        <select id="delivery-section" class="w-full p-2 border rounded-lg bg-gray-50">
+                            <option value="landing">Página de Vendas</option>
+                            <option value="design">Identidade Visual</option>
+                            <option value="ads">Anúncios</option>
+                            <option value="content">Feed & Conteúdo</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-gray-700">Link da Imagem de Capa (Preview)</label>
+                        <input type="url" id="delivery-cover" placeholder="https://exemplo.com/imagem.jpg" class="w-full p-2 border rounded-lg">
+                        <p class="text-xs text-gray-500">Cole o link direto da imagem que aparecerá como capa.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-gray-700">Link dos Arquivos (Destino)</label>
+                        <input type="url" id="delivery-link" placeholder="https://drive.google.com/..." class="w-full p-2 border rounded-lg">
+                        <p class="text-xs text-gray-500">Link para onde o cliente será redirecionado (Drive, Dropbox, etc).</p>
+                    </div>
+
+                    <button onclick="submitDelivery()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg mt-4 flex justify-center items-center gap-2">
+                        <i class="ph ph-paper-plane-right"></i> Enviar para o Cliente
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ========================================== -->
@@ -283,7 +328,7 @@
     <script type="module">
         // Importar as funções SDKs do CDN (Compatível com navegador)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
         // --- CONFIGURAÇÃO FIREBASE ---
@@ -307,6 +352,9 @@
         window.saveLeadToFirebase = function(formData, diagnosisResult) {
             const leadsRef = ref(db, 'leads');
             const newLeadRef = push(leadsRef);
+            // Salva e retorna o ID para uso local
+            const leadKey = newLeadRef.key;
+            
             set(newLeadRef, {
                 business_name: formData.businessName,
                 niche: formData.niche,
@@ -315,15 +363,48 @@
                 diagnosis_result: diagnosisResult,
                 created_at: new Date().toISOString()
             });
+
+            // Inicia o listener para este cliente específico
+            window.listenToMyLead(leadKey);
         };
 
-        // 2. Função de carregar Leads (Admin)
+        // 2. Listener do Próprio Cliente (Para receber atualizações em tempo real)
+        window.listenToMyLead = function(leadKey) {
+            const leadRef = ref(db, 'leads/' + leadKey);
+            onValue(leadRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data && data.deliverables) {
+                    // Atualiza o estado global com os entregáveis
+                    state.serverDeliverables = data.deliverables;
+                    // Força re-renderização da aba atual
+                    renderContent(state.activeTab);
+                    
+                    // Opcional: Notificação visual
+                    // console.log("Novos dados recebidos!", data.deliverables);
+                }
+            });
+        };
+
+        // 3. Função de Salvar Entrega (Admin)
+        window.saveDelivery = function(leadKey, section, coverUrl, targetUrl) {
+            const updates = {};
+            updates[`leads/${leadKey}/deliverables/${section}`] = {
+                coverUrl: coverUrl,
+                targetUrl: targetUrl,
+                deliveredAt: new Date().toISOString()
+            };
+            
+            update(ref(db), updates)
+                .then(() => alert('Entrega realizada com sucesso! O cliente verá instantaneamente.'))
+                .catch((e) => alert('Erro ao entregar: ' + e.message));
+        };
+
+        // 4. Função de carregar Leads (Admin)
         window.loadAdminData = function() {
             const leadsRef = ref(db, 'leads');
             const tableBody = document.getElementById('leads-table-body');
             const countEl = document.getElementById('total-leads-count');
 
-            // Ouvir mudanças no Firebase (Realtime)
             onValue(leadsRef, (snapshot) => {
                 tableBody.innerHTML = '';
                 const data = snapshot.val();
@@ -334,10 +415,8 @@
                     return;
                 }
 
-                const leads = Object.values(data);
+                const leads = Object.entries(data).map(([key, value]) => ({...value, id: key}));
                 countEl.textContent = leads.length;
-
-                // Ordenar por data (mais recente primeiro)
                 leads.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
                 leads.forEach(lead => {
@@ -345,7 +424,6 @@
                         day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute:'2-digit'
                     });
                     
-                    // Formatação visual do Budget
                     let budgetBadgeClass = 'bg-gray-100 text-gray-600';
                     let budgetText = 'Iniciante';
                     if(lead.budget === 'medium') { budgetBadgeClass = 'bg-blue-100 text-blue-700'; budgetText = 'Crescimento'; }
@@ -358,11 +436,11 @@
                         <td class="px-6 py-4 font-medium text-gray-900">${lead.business_name}</td>
                         <td class="px-6 py-4 text-gray-600">${lead.niche}</td>
                         <td class="px-6 py-4 text-gray-600 capitalize">${lead.business_type}</td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 py-1 rounded text-xs font-semibold ${budgetBadgeClass}">${budgetText}</span>
-                        </td>
-                        <td class="px-6 py-4 font-bold text-gray-700">
-                            ${lead.diagnosis_result?.overview?.score || '-'} / 100
+                        <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-semibold ${budgetBadgeClass}">${budgetText}</span></td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="openDeliveryModal('${lead.id}', '${lead.business_name}')" class="bg-gray-900 hover:bg-gray-700 text-white text-xs font-bold py-2 px-3 rounded flex items-center gap-1 ml-auto">
+                                <i class="ph ph-paper-plane-right"></i> Entregar
+                            </button>
                         </td>
                     `;
                     tableBody.appendChild(tr);
@@ -378,6 +456,7 @@
             data: {},
             diagnosis: {},
             activeTab: 'overview',
+            serverDeliverables: {}, // Dados vindos do Firebase (Entregas do Admin)
             files: {
                 overview: [],
                 landing: [],
@@ -463,7 +542,7 @@
             };
         }
 
-        // --- Gerenciamento de Arquivos ---
+        // --- Gerenciamento de Arquivos e Entregas ---
         function triggerUpload(sectionId) { document.getElementById(`upload-${sectionId}`).click(); }
 
         function handleFileSelect(input, sectionId) {
@@ -480,7 +559,40 @@
             renderContent(state.activeTab);
         }
 
+        // Função Atualizada: Exibe Entregáveis do Admin + Uploads Locais
         function getFileBlock(sectionId) {
+            // 1. Verificar se há entregas do Admin para esta seção
+            const serverDelivery = state.serverDeliverables && state.serverDeliverables[sectionId];
+            
+            // HTML para o bloco de "Arquivos Recebidos (Agência)"
+            let agencyFilesHtml = '';
+            if (serverDelivery) {
+                agencyFilesHtml = `
+                    <div class="mb-6">
+                        <h4 class="text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
+                            <i class="ph-fill ph-star text-yellow-500"></i> Arquivos Recebidos da Agência
+                        </h4>
+                        <a href="${serverDelivery.targetUrl}" target="_blank" class="block group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all border border-gray-200 aspect-video w-full md:w-80">
+                            <!-- Imagem de Capa -->
+                            <img src="${serverDelivery.coverUrl}" alt="Capa da Entrega" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            
+                            <!-- Overlay com Botão -->
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
+                                <div class="bg-white text-gray-900 px-4 py-2 rounded-lg font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                                    <i class="ph ph-download-simple"></i> Acessar Arquivos
+                                </div>
+                            </div>
+                            
+                            <!-- Badge -->
+                            <div class="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm">
+                                DISPONÍVEL
+                            </div>
+                        </a>
+                    </div>
+                `;
+            }
+
+            // 2. Lógica existente de uploads locais (mantida)
             const files = state.files[sectionId] || [];
             let filesListHtml = '';
             
@@ -509,13 +621,20 @@
                     </div>
                 `;
             }
+
             return `
                 <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mt-6 animate-fade-in">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2"><i class="ph ph-folder-notch text-indigo-600"></i> Arquivos Entregues</h3>
                         ${files.length > 0 ? `<button onclick="triggerUpload('${sectionId}')" class="text-sm bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg font-medium hover:bg-indigo-100 transition-colors flex items-center gap-2"><i class="ph ph-upload-simple"></i> Anexar</button>` : ''}
                     </div>
-                    <div id="file-list-${sectionId}" class="space-y-3">${filesListHtml}</div>
+                    
+                    ${agencyFilesHtml} <!-- Injeta os arquivos da agência aqui -->
+                    
+                    <div class="border-t border-gray-100 my-4 pt-4">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Seus Anexos</h4>
+                        <div id="file-list-${sectionId}" class="space-y-3">${filesListHtml}</div>
+                    </div>
                     <input type="file" id="upload-${sectionId}" class="hidden" onchange="handleFileSelect(this, '${sectionId}')">
                 </div>
             `;
@@ -580,6 +699,41 @@
                 }
             } else {
                 alert('Senha incorreta!');
+            }
+        }
+
+        // --- ADMIN DELIVERY LOGIC ---
+        let selectedLeadForDelivery = null;
+
+        function openDeliveryModal(leadId, businessName) {
+            selectedLeadForDelivery = leadId;
+            document.getElementById('modal-business-name').textContent = businessName;
+            document.getElementById('delivery-modal').classList.remove('hidden-section');
+        }
+
+        function closeDeliveryModal() {
+            document.getElementById('delivery-modal').classList.add('hidden-section');
+            selectedLeadForDelivery = null;
+            // Limpar campos
+            document.getElementById('delivery-cover').value = '';
+            document.getElementById('delivery-link').value = '';
+        }
+
+        function submitDelivery() {
+            if(!selectedLeadForDelivery) return;
+            
+            const section = document.getElementById('delivery-section').value;
+            const cover = document.getElementById('delivery-cover').value;
+            const link = document.getElementById('delivery-link').value;
+
+            if(!cover || !link) {
+                alert('Por favor, preencha os dois links.');
+                return;
+            }
+
+            if(window.saveDelivery) {
+                window.saveDelivery(selectedLeadForDelivery, section, cover, link);
+                closeDeliveryModal();
             }
         }
 
