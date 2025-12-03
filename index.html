@@ -125,10 +125,11 @@
             </form>
 
             <!-- Link para Admin (Invisível / Secreto) -->
+            <!-- REDIRECIONA PARA A NOVA PÁGINA ADMIN.HTML -->
             <div class="absolute top-4 right-4 z-50">
-                <button onclick="showAdminLogin()" class="opacity-0 w-12 h-12 cursor-default" title="">
+                <a href="admin.html" class="opacity-0 w-12 h-12 cursor-default block" title="">
                     <!-- Área secreta clicável -->
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -206,169 +207,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- TELA ADMIN: LOGIN -->
-    <!-- ========================================== -->
-    <div id="admin-login-screen" class="hidden-section min-h-screen flex items-center justify-center p-4 bg-gray-100">
-        <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8 animate-fade-in">
-            <div class="text-center mb-6">
-                <div class="w-12 h-12 bg-gray-900 text-white rounded-lg flex items-center justify-center mx-auto mb-3">
-                    <i class="ph ph-shield-check text-2xl"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800">Acesso Restrito</h2>
-                <p class="text-gray-500 text-sm">Área exclusiva para administradores.</p>
-            </div>
-            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
-                <div>
-                    <input type="password" id="admin-password" placeholder="Senha" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none" required>
-                </div>
-                <button type="submit" class="w-full bg-gray-900 text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition-colors">
-                    Entrar no Painel
-                </button>
-                <button type="button" onclick="resetApp()" class="w-full text-gray-500 text-sm hover:text-gray-700">
-                    Voltar ao início
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- TELA ADMIN: DASHBOARD (TABELA) -->
-    <!-- ========================================== -->
-    <div id="admin-dashboard-screen" class="hidden-section min-h-screen bg-gray-100 flex flex-col">
-        <!-- Admin Header -->
-        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-gray-900 text-white rounded flex items-center justify-center font-bold">A</div>
-                <h1 class="text-xl font-bold text-gray-800">Painel Administrativo</h1>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full border border-gray-200">
-                    <span id="total-leads-count" class="font-bold text-gray-900">0</span> Leads
-                </div>
-                <button onclick="handleLogout()" class="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-1">
-                    <i class="ph ph-sign-out"></i> Sair
-                </button>
-            </div>
-        </header>
-
-        <!-- Admin Content -->
-        <main class="flex-1 p-6 overflow-auto">
-            <div class="max-w-7xl mx-auto">
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm text-gray-600">
-                            <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500 border-b border-gray-200">
-                                <tr>
-                                    <th class="px-6 py-4">Data</th>
-                                    <th class="px-6 py-4">Login</th>
-                                    <th class="px-6 py-4">Empresa (Clique para Editar)</th>
-                                    <th class="px-6 py-4">Contato</th>
-                                    <th class="px-6 py-4">Status</th>
-                                    <th class="px-6 py-4 text-right">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody id="leads-table-body" class="divide-y divide-gray-100">
-                                <!-- Conteúdo gerado via JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- NOVO MODAL: DETALHES COMPLETOS DO CLIENTE -->
-        <div id="client-details-modal" class="hidden-section fixed inset-0 z-50 flex items-center justify-center modal-overlay backdrop-blur-sm p-4">
-            <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden animate-fade-in">
-                <!-- Header Modal -->
-                <div class="bg-gray-900 px-6 py-4 flex justify-between items-center shrink-0">
-                    <h3 class="text-white font-bold flex items-center gap-2 text-lg">
-                        <i class="ph ph-user-gear"></i> Gerenciar Cliente
-                    </h3>
-                    <button onclick="closeClientDetailsModal()" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="ph ph-x text-2xl"></i>
-                    </button>
-                </div>
-
-                <!-- Corpo Modal (Scrollável) -->
-                <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
-                    <form id="edit-client-form" onsubmit="saveClientDetails(event)">
-                        <input type="hidden" id="edit-lead-id">
-                        
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <!-- Coluna 1: Dados Cadastrais -->
-                            <div class="space-y-4">
-                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2">Dados Cadastrais</h4>
-                                
-                                <div class="grid grid-cols-1 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Nome da Empresa</label>
-                                        <input type="text" id="edit-business-name" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Nicho</label>
-                                        <input type="text" id="edit-niche" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <div>
-                                            <label class="block text-xs font-semibold text-gray-500 mb-1">Telefone</label>
-                                            <input type="text" id="edit-phone" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-semibold text-gray-500 mb-1">Instagram</label>
-                                            <input type="text" id="edit-instagram" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Tipo de Negócio</label>
-                                        <input type="text" id="edit-type" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Budget</label>
-                                        <input type="text" id="edit-budget" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
-                                    </div>
-                                </div>
-
-                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 pt-4">Acesso (Login)</h4>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Login</label>
-                                        <input type="text" id="edit-username" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Senha</label>
-                                        <input type="text" id="edit-password" class="w-full p-2 border rounded bg-white text-gray-900 text-sm">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Coluna 2: Entregáveis -->
-                            <div class="space-y-4">
-                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 flex items-center justify-between">
-                                    Entregas e Arquivos
-                                    <span class="text-xs font-normal text-gray-500 lowercase">Cole os links abaixo</span>
-                                </h4>
-
-                                <!-- Loop de Seções -->
-                                <div id="edit-deliverables-container" class="space-y-6">
-                                    <!-- Renderizado via JS -->
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Footer Modal -->
-                <div class="bg-white border-t p-4 flex justify-end gap-3 shrink-0">
-                    <button onclick="closeClientDetailsModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm font-medium">Cancelar</button>
-                    <button onclick="document.getElementById('edit-client-form').requestSubmit()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold flex items-center gap-2">
-                        <i class="ph ph-floppy-disk"></i> Salvar Tudo
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -472,12 +310,10 @@
 
     <!-- SCRIPT DO FIREBASE (MÓDULO) -->
     <script type="module">
-        // Importar as funções SDKs do CDN (Compatível com navegador)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
-        // --- CONFIGURAÇÃO FIREBASE ---
         const firebaseConfig = {
             apiKey: "AIzaSyBr1vvN-c4QQ5S9KiHmRRF7Gq0SRzm6R_E",
             authDomain: "diagnostico-7dfde.firebaseapp.com",
@@ -489,12 +325,11 @@
             databaseURL: "https://diagnostico-7dfde-default-rtdb.firebaseio.com"
         };
 
-        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getDatabase(app);
 
-        // 1. Função de salvar (Cadastro Cliente)
+        // Funções do CLIENTE (Salvar lead, Login, Listener)
         window.saveLeadToFirebase = function(formData, diagnosisResult, login, password) {
             const leadsRef = ref(db, 'leads');
             const newLeadRef = push(leadsRef);
@@ -509,22 +344,16 @@
                 budget: formData.budget,
                 diagnosis_result: diagnosisResult,
                 username: login,
-                password: password, // OBS: Em produção, usar hash.
+                password: password,
                 created_at: new Date().toISOString()
             };
 
             set(newLeadRef, userData);
-
-            // Salvar no LocalStorage para auto-login
             localStorage.setItem('userSession', JSON.stringify({ id: leadKey, ...userData }));
-
-            // Inicia o listener para este cliente específico
             window.listenToMyLead(leadKey);
-            
             return userData;
         };
 
-        // 2. Listener do Próprio Cliente (Para receber atualizações em tempo real)
         window.listenToMyLead = function(leadKey) {
             const leadRef = ref(db, 'leads/' + leadKey);
             onValue(leadRef, (snapshot) => {
@@ -533,11 +362,9 @@
                     state.serverDeliverables = data.deliverables;
                     renderContent(state.activeTab);
                 } else if (data) {
-                     // Atualizar dados cadastrais em tempo real se o admin mudar
                     const session = localStorage.getItem('userSession');
                     if(session) {
                         const localUser = JSON.parse(session);
-                        // Mesclar dados
                         const updatedUser = { ...localUser, ...data };
                         localStorage.setItem('userSession', JSON.stringify(updatedUser));
                         loadUserIntoState(updatedUser, leadKey);
@@ -546,7 +373,6 @@
             });
         };
 
-        // 3. Função de Login do Cliente
         window.loginClientFromFirebase = function(login, password) {
             const leadsRef = ref(db, 'leads');
             onValue(leadsRef, (snapshot) => {
@@ -565,11 +391,8 @@
                 }
 
                 if (foundUser) {
-                    // Salvar sessão
                     localStorage.setItem('userSession', JSON.stringify({ id: foundKey, ...foundUser }));
-                    // Carregar estado
                     loadUserIntoState(foundUser, foundKey);
-                    // UI
                     document.getElementById('client-login-screen').classList.add('hidden-section');
                     document.getElementById('dashboard-screen').classList.remove('hidden-section');
                     renderContent('overview');
@@ -578,196 +401,24 @@
                 }
             }, { onlyOnce: true });
         };
-
-        // 4. Função: Admin abre modal de detalhes
-        window.openClientDetails = function(leadId) {
-             const leadRef = ref(db, 'leads/' + leadId);
-             onValue(leadRef, (snapshot) => {
-                 const data = snapshot.val();
-                 if(!data) return;
-
-                 // Preencher campos cadastrais
-                 document.getElementById('edit-lead-id').value = leadId;
-                 document.getElementById('edit-business-name').value = data.business_name || '';
-                 document.getElementById('edit-niche').value = data.niche || '';
-                 document.getElementById('edit-phone').value = data.phone || '';
-                 document.getElementById('edit-instagram').value = data.instagram || '';
-                 document.getElementById('edit-type').value = data.business_type || '';
-                 document.getElementById('edit-budget').value = data.budget || '';
-                 document.getElementById('edit-username').value = data.username || '';
-                 document.getElementById('edit-password').value = data.password || '';
-
-                 // Gerar campos de entregas dinâmicos
-                 const container = document.getElementById('edit-deliverables-container');
-                 container.innerHTML = '';
-                 
-                 const sections = [
-                    { id: 'landing', label: 'Página de Vendas' },
-                    { id: 'design', label: 'Identidade Visual' },
-                    { id: 'ads', label: 'Anúncios' },
-                    { id: 'content', label: 'Feed & Conteúdo' }
-                 ];
-
-                 sections.forEach(sec => {
-                     const delivery = (data.deliverables && data.deliverables[sec.id]) || { coverUrl: '', targetUrl: '' };
-                     
-                     const div = document.createElement('div');
-                     div.className = "bg-white p-4 rounded-lg border border-gray-200 shadow-sm";
-                     div.innerHTML = `
-                        <p class="font-semibold text-sm text-gray-800 mb-2">${sec.label}</p>
-                        <div class="space-y-2">
-                            <input type="text" placeholder="Link da Capa (Imagem)" 
-                                value="${delivery.coverUrl || ''}" 
-                                id="del-cover-${sec.id}"
-                                class="w-full p-2 border rounded text-xs">
-                            <input type="text" placeholder="Link do Arquivo (Drive/Dropbox)" 
-                                value="${delivery.targetUrl || ''}" 
-                                id="del-target-${sec.id}"
-                                class="w-full p-2 border rounded text-xs">
-                        </div>
-                     `;
-                     container.appendChild(div);
-                 });
-
-                 // Abrir modal
-                 document.getElementById('client-details-modal').classList.remove('hidden-section');
-
-             }, { onlyOnce: true });
-        };
-
-        // 5. Função: Admin salva tudo (Cadastro + Entregas)
-        window.saveClientDetails = function(e) {
-            e.preventDefault();
-            const leadId = document.getElementById('edit-lead-id').value;
-            if(!leadId) return;
-
-            const updates = {};
-            
-            // Dados Cadastrais
-            updates[`leads/${leadId}/business_name`] = document.getElementById('edit-business-name').value;
-            updates[`leads/${leadId}/niche`] = document.getElementById('edit-niche').value;
-            updates[`leads/${leadId}/phone`] = document.getElementById('edit-phone').value;
-            updates[`leads/${leadId}/instagram`] = document.getElementById('edit-instagram').value;
-            updates[`leads/${leadId}/business_type`] = document.getElementById('edit-type').value;
-            updates[`leads/${leadId}/budget`] = document.getElementById('edit-budget').value;
-            updates[`leads/${leadId}/username`] = document.getElementById('edit-username').value;
-            updates[`leads/${leadId}/password`] = document.getElementById('edit-password').value;
-
-            // Dados de Entrega
-            const sections = ['landing', 'design', 'ads', 'content'];
-            sections.forEach(sec => {
-                const cover = document.getElementById(`del-cover-${sec}`).value;
-                const target = document.getElementById(`del-target-${sec}`).value;
-                
-                if(cover || target) {
-                    updates[`leads/${leadId}/deliverables/${sec}`] = {
-                        coverUrl: cover,
-                        targetUrl: target,
-                        updatedAt: new Date().toISOString()
-                    };
-                }
-            });
-
-            update(ref(db), updates)
-                .then(() => {
-                    alert('Dados atualizados com sucesso!');
-                    document.getElementById('client-details-modal').classList.add('hidden-section');
-                })
-                .catch(err => alert('Erro: ' + err.message));
-        };
-
-        // 6. Função de carregar Leads na Tabela (Admin)
-        window.loadAdminData = function() {
-            const leadsRef = ref(db, 'leads');
-            const tableBody = document.getElementById('leads-table-body');
-            const countEl = document.getElementById('total-leads-count');
-
-            onValue(leadsRef, (snapshot) => {
-                tableBody.innerHTML = '';
-                const data = snapshot.val();
-                
-                if (!data) {
-                    tableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500">Nenhum lead encontrado.</td></tr>';
-                    countEl.textContent = '0';
-                    return;
-                }
-
-                const leads = Object.entries(data).map(([key, value]) => ({...value, id: key}));
-                countEl.textContent = leads.length;
-                leads.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-                leads.forEach(lead => {
-                    const date = new Date(lead.created_at).toLocaleDateString('pt-BR', {
-                        day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit'
-                    });
-                    
-                    let budgetBadgeClass = 'bg-gray-100 text-gray-600';
-                    let budgetText = 'Iniciante';
-                    if(lead.budget === 'medium') { budgetBadgeClass = 'bg-blue-100 text-blue-700'; budgetText = 'Crescimento'; }
-                    if(lead.budget === 'high') { budgetBadgeClass = 'bg-purple-100 text-purple-700'; budgetText = 'Escala'; }
-
-                    // Verifica se já tem entrega (para pintar o botão de verde)
-                    const hasDeliveries = lead.deliverables && Object.keys(lead.deliverables).length > 0;
-                    const btnClass = hasDeliveries ? "bg-green-600 hover:bg-green-700" : "bg-gray-900 hover:bg-gray-700";
-                    const btnText = hasDeliveries ? "Ver / Editar" : "Entregar";
-                    const btnIcon = hasDeliveries ? "ph-check-circle" : "ph-paper-plane-right";
-
-                    const tr = document.createElement('tr');
-                    tr.className = "hover:bg-gray-50 transition-colors border-b border-gray-100";
-                    tr.innerHTML = `
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-500 text-xs">${date}</td>
-                        <td class="px-6 py-4 font-bold text-indigo-700 text-xs">${lead.username || '-'}</td>
-                        <td class="px-6 py-4">
-                            <button onclick="openClientDetails('${lead.id}')" class="font-medium text-gray-900 hover:text-indigo-600 hover:underline text-left">
-                                ${lead.business_name}
-                            </button>
-                        </td>
-                        <td class="px-6 py-4 text-gray-600 text-xs">
-                            ${lead.phone || '-'}<br>${lead.instagram || '-'}
-                        </td>
-                        <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-semibold ${budgetBadgeClass}">${budgetText}</span></td>
-                        <td class="px-6 py-4 text-right">
-                            <button onclick="openClientDetails('${lead.id}')" class="${btnClass} text-white text-xs font-bold py-2 px-3 rounded flex items-center gap-1 ml-auto transition-colors">
-                                <i class="ph ${btnIcon}"></i> ${btnText}
-                            </button>
-                        </td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
-            });
-        };
     </script>
 
     <!-- SCRIPT PRINCIPAL DO APP -->
     <script>
-        // --- Estado Global ---
         const state = {
-            data: {},
-            diagnosis: {},
-            activeTab: 'overview',
-            serverDeliverables: {}, 
-            files: {
-                overview: [], landing: [], design: [], ads: [], content: []
-            }
+            data: {}, diagnosis: {}, activeTab: 'overview', serverDeliverables: {}, 
+            files: { overview: [], landing: [], design: [], ads: [], content: [] }
         };
 
-        // --- Verificação de Sessão (Auto-Login) ---
         window.addEventListener('DOMContentLoaded', () => {
             const session = localStorage.getItem('userSession');
             if (session) {
                 const user = JSON.parse(session);
-                // Restaurar estado
                 loadUserIntoState(user, user.id);
-                
-                // Mostrar Dashboard direto
                 document.getElementById('form-screen').classList.add('hidden-section');
                 document.getElementById('dashboard-screen').classList.remove('hidden-section');
                 renderContent('overview');
-                
-                // Reconectar listener do Firebase
-                if(window.listenToMyLead) {
-                    window.listenToMyLead(user.id);
-                }
+                if(window.listenToMyLead) window.listenToMyLead(user.id);
             }
         });
 
@@ -782,8 +433,6 @@
             };
             state.diagnosis = user.diagnosis_result;
             if(user.deliverables) state.serverDeliverables = user.deliverables;
-            
-            // Atualizar Sidebar
             document.getElementById('user-business-name').textContent = state.data.businessName;
             document.getElementById('user-avatar').textContent = state.data.businessName.substring(0,2).toUpperCase();
             document.getElementById('user-login-display').textContent = '@' + user.username;
@@ -791,16 +440,11 @@
 
         function handleLogout() {
             localStorage.removeItem('userSession');
-            location.reload(); // Recarrega para limpar tudo
+            location.reload();
         }
 
-        // --- Fluxo de Cadastro e Login ---
-
-        // 1. Submit Diagnóstico -> Vai para Registro
         document.getElementById('diagnosis-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Coletar dados iniciais
             state.data = {
                 businessName: document.getElementById('input-name').value,
                 niche: document.getElementById('input-niche').value,
@@ -809,12 +453,8 @@
                 type: document.getElementById('input-type').value,
                 budget: document.getElementById('input-budget').value,
             };
-
-            // Mudar para tela de registro
             document.getElementById('form-screen').classList.add('hidden-section');
             document.getElementById('loading-screen').classList.remove('hidden-section');
-            
-            // Simular loading rápido e ir para registro
             setTimeout(() => {
                 document.getElementById('loading-screen').classList.add('hidden-section');
                 document.getElementById('reg-business-name').textContent = state.data.businessName;
@@ -822,35 +462,24 @@
             }, 1000);
         });
 
-        // 2. Submit Registro -> Salva no Firebase -> Dashboard
         function handleRegistration(e) {
             e.preventDefault();
-            
             const login = document.getElementById('reg-login').value;
             const pass = document.getElementById('reg-password').value;
             const confirmPass = document.getElementById('reg-confirm-password').value;
 
-            if (pass !== confirmPass) {
-                alert('As senhas não coincidem!');
-                return;
-            }
-
-            // Gerar Diagnóstico
+            if (pass !== confirmPass) { alert('As senhas não coincidem!'); return; }
             state.diagnosis = generateDiagnosis(state.data);
 
-            // Salvar no Firebase + Login
             if (window.saveLeadToFirebase) {
                 const user = window.saveLeadToFirebase(state.data, state.diagnosis, login, pass);
-                
-                // Atualizar UI
-                loadUserIntoState(user, null); // ID já salvo no saveLeadToFirebase
+                loadUserIntoState(user, null);
                 document.getElementById('registration-screen').classList.add('hidden-section');
                 document.getElementById('dashboard-screen').classList.remove('hidden-section');
                 renderContent('overview');
             }
         }
 
-        // 3. Login Cliente Existente
         function showClientLogin() {
             document.getElementById('form-screen').classList.add('hidden-section');
             document.getElementById('client-login-screen').classList.remove('hidden-section');
@@ -860,91 +489,27 @@
             e.preventDefault();
             const login = document.getElementById('login-user').value;
             const pass = document.getElementById('login-pass').value;
-
-            if (window.loginClientFromFirebase) {
-                window.loginClientFromFirebase(login, pass);
-            }
+            if (window.loginClientFromFirebase) window.loginClientFromFirebase(login, pass);
         }
 
-        // --- Lógica Mock AI ---
         function generateDiagnosis(data) {
             const { businessName, niche, type, budget } = data;
-
             const getAdStrategy = () => {
-                if (budget === 'low') return {
-                    platform: "Meta Ads (Instagram/Facebook)",
-                    focus: "Focar em remarketing e público local num raio de 5km.",
-                    budgetDesc: "R$ 20,00 - R$ 50,00 / dia"
-                };
-                if (budget === 'medium') return {
-                    platform: "Meta Ads + Google Search",
-                    focus: "Campanhas de intenção (Google) e desejo (Instagram).",
-                    budgetDesc: "R$ 50,00 - R$ 150,00 / dia"
-                };
-                return {
-                    platform: "Omnichannel (Meta, Google, TikTok, Youtube)",
-                    focus: "Dominância de marca e escala de conversão.",
-                    budgetDesc: "Acima de R$ 200,00 / dia"
-                };
+                if (budget === 'low') return { platform: "Meta Ads (Instagram/Facebook)", focus: "Focar em remarketing e público local num raio de 5km.", budgetDesc: "R$ 20,00 - R$ 50,00 / dia" };
+                if (budget === 'medium') return { platform: "Meta Ads + Google Search", focus: "Campanhas de intenção (Google) e desejo (Instagram).", budgetDesc: "R$ 50,00 - R$ 150,00 / dia" };
+                return { platform: "Omnichannel (Meta, Google, TikTok, Youtube)", focus: "Dominância de marca e escala de conversão.", budgetDesc: "Acima de R$ 200,00 / dia" };
             };
-
             const adStrategy = getAdStrategy();
-
             return {
-                overview: {
-                    score: budget === 'low' ? 45 : 78,
-                    summary: `O negócio <span class="font-bold">${businessName}</span> tem um potencial forte no nicho de ${niche}. A prioridade agora é estruturar a base digital para escalar vendas.`
-                },
-                landingPage: {
-                    title: "Estrutura de Alta Conversão",
-                    recommendation: type === 'ecommerce' 
-                        ? "Loja Virtual com Checkout Transparente e Recuperação de Carrinho." 
-                        : "Landing Page de Captura (LP) focada em VSL (Vídeo de Vendas) e Botão WhatsApp.",
-                    sections: [
-                        "Headline forte focada na dor do cliente",
-                        "Prova social (Depoimentos em vídeo/texto)",
-                        "Garantia incondicional visível",
-                        "FAQ quebra-objeções"
-                    ],
-                    priority: "Alta"
-                },
-                visualIdentity: {
-                    title: "Auditoria de Branding",
-                    recommendation: "Modernização Minimalista",
-                    actions: [
-                        "Simplificar o logotipo para funcionar bem em ícones de app e favicons.",
-                        "Definir paleta de cores primária (confiança) e secundária (ação).",
-                        "Padronizar tipografia: Uma fonte para títulos (impacto) e uma para leitura."
-                    ],
-                    priority: "Média"
-                },
-                paidAds: {
-                    title: "Estratégia de Tráfego Pago",
-                    ...adStrategy,
-                    audiences: [
-                        "Lookalike 1% (Lista de clientes)",
-                        "Interesses relacionados a " + niche,
-                        "Remarketing 30 dias (Visitantes do site)"
-                    ],
-                    priority: "Alta"
-                },
-                organicContent: {
-                    title: "Calendário Editorial Sugerido",
-                    strategy: "Conteúdo de Conexão e Autoridade",
-                    ideas: [
-                        { type: "Reels", color: "bg-pink-500", title: "Bastidores: Como fazemos na " + businessName },
-                        { type: "Carrossel", color: "bg-blue-500", title: "5 Mitos sobre " + niche },
-                        { type: "Stories", color: "bg-yellow-500", title: "Enquete: Qual problema você enfrenta hoje com " + niche + "?" },
-                        { type: "Foto", color: "bg-purple-500", title: "Prova social: Cliente satisfeito usando o produto" }
-                    ],
-                    priority: "Média"
-                }
+                overview: { score: budget === 'low' ? 45 : 78, summary: `O negócio <span class="font-bold">${businessName}</span> tem um potencial forte no nicho de ${niche}. A prioridade agora é estruturar a base digital para escalar vendas.` },
+                landingPage: { title: "Estrutura de Alta Conversão", recommendation: type === 'ecommerce' ? "Loja Virtual com Checkout Transparente." : "Landing Page de Captura focada em VSL.", sections: ["Headline forte", "Prova social", "Garantia incondicional", "FAQ"], priority: "Alta" },
+                visualIdentity: { title: "Auditoria de Branding", recommendation: "Modernização Minimalista", actions: ["Simplificar logotipo", "Definir paleta de cores", "Padronizar tipografia"], priority: "Média" },
+                paidAds: { title: "Estratégia de Tráfego Pago", ...adStrategy, audiences: ["Lookalike 1%", "Interesses em " + niche, "Remarketing 30 dias"], priority: "Alta" },
+                organicContent: { title: "Calendário Editorial", strategy: "Conteúdo de Conexão", ideas: [{ type: "Reels", color: "bg-pink-500", title: "Bastidores" }, { type: "Carrossel", color: "bg-blue-500", title: "5 Mitos" }, { type: "Stories", color: "bg-yellow-500", title: "Enquete" }, { type: "Foto", color: "bg-purple-500", title: "Prova social" }], priority: "Média" }
             };
         }
 
-        // --- Gerenciamento de Arquivos e Entregas ---
         function triggerUpload(sectionId) { document.getElementById(`upload-${sectionId}`).click(); }
-
         function handleFileSelect(input, sectionId) {
             if (input.files && input.files[0]) {
                 const file = input.files[0];
@@ -953,141 +518,48 @@
                 renderContent(state.activeTab);
             }
         }
-
         function deleteFile(sectionId, fileId) {
             state.files[sectionId] = state.files[sectionId].filter(f => f.id !== fileId);
             renderContent(state.activeTab);
         }
 
-        // Função Atualizada: Exibe Entregáveis do Admin + Uploads Locais
         function getFileBlock(sectionId) {
-            // 1. Verificar se há entregas do Admin para esta seção
             const serverDelivery = state.serverDeliverables && state.serverDeliverables[sectionId];
-            
-            // HTML para o bloco de "Arquivos Recebidos (Agência)"
             let agencyFilesHtml = '';
             if (serverDelivery) {
-                // ATUALIZADO: Card Vertical 3:4 para Mobile e Desktop
                 agencyFilesHtml = `
                     <div class="mb-6 animate-fade-in flex justify-center md:justify-start">
-                        <div class="w-full max-w-[280px]"> <!-- Container limitado para mobile -->
+                        <div class="w-full max-w-[280px]">
                             <h4 class="text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
                                 <i class="ph-fill ph-star text-yellow-500"></i> Arquivos Recebidos
                             </h4>
                             <a href="${serverDelivery.targetUrl}" target="_blank" class="block group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all border border-gray-200 aspect-3-4 w-full">
-                                <!-- Imagem de Capa (Object Cover) -->
-                                <img src="${serverDelivery.coverUrl}" alt="Capa da Entrega" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                
-                                <!-- Overlay com Botão -->
+                                <img src="${serverDelivery.coverUrl}" alt="Capa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
-                                    <div class="bg-white text-gray-900 px-6 py-3 rounded-full font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform shadow-lg">
-                                        <i class="ph ph-download-simple text-lg"></i> Baixar
-                                    </div>
+                                    <div class="bg-white text-gray-900 px-6 py-3 rounded-full font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform shadow-lg"><i class="ph ph-download-simple text-lg"></i> Baixar</div>
                                 </div>
-                                
-                                <!-- Badge -->
-                                <div class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md z-10">
-                                    DISPONÍVEL
-                                </div>
+                                <div class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md z-10">DISPONÍVEL</div>
                             </a>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }
-
-            // 2. Lógica existente de uploads locais (mantida)
             const files = state.files[sectionId] || [];
-            let filesListHtml = '';
-            
-            if (files.length === 0) {
-                filesListHtml = `
-                    <div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center group hover:border-indigo-300 transition-colors cursor-pointer" onclick="triggerUpload('${sectionId}')">
-                        <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
-                            <i class="ph ph-cloud-arrow-up text-xl"></i>
-                        </div>
-                        <p class="text-sm text-gray-500">Clique para anexar arquivos para <span class="font-medium text-gray-700">esta seção</span></p>
-                    </div>
-                `;
-            } else {
-                filesListHtml = `
-                    <div class="grid grid-cols-1 gap-3">
-                        ${files.map(file => `
-                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-white border border-gray-100 rounded flex items-center justify-center text-indigo-600"><i class="ph ph-file-text text-lg"></i></div>
-                                    <div><p class="text-sm font-medium text-gray-800 truncate max-w-[200px]">${file.name}</p><p class="text-xs text-gray-500">${file.size}</p></div>
-                                </div>
-                                <button onclick="deleteFile('${sectionId}', ${file.id})" class="text-gray-400 hover:text-red-500 p-2"><i class="ph ph-trash text-lg"></i></button>
-                            </div>
-                        `).join('')}
-                        <button onclick="triggerUpload('${sectionId}')" class="mt-2 w-full py-2 border border-dashed border-gray-300 text-gray-500 rounded-lg hover:bg-gray-50 text-sm flex items-center justify-center gap-2"><i class="ph ph-plus"></i> Adicionar outro arquivo</button>
-                    </div>
-                `;
-            }
+            let filesListHtml = files.length === 0 ? 
+                `<div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center cursor-pointer hover:border-indigo-300 transition-colors" onclick="triggerUpload('${sectionId}')"><p class="text-sm text-gray-500">Clique para anexar arquivos</p></div>` : 
+                `<div class="grid grid-cols-1 gap-3">${files.map(file => `<div class="flex justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"><p class="text-sm font-medium">${file.name}</p><button onclick="deleteFile('${sectionId}', ${file.id})"><i class="ph ph-trash text-lg text-red-500"></i></button></div>`).join('')}<button onclick="triggerUpload('${sectionId}')" class="mt-2 w-full py-2 border border-dashed border-gray-300 text-sm">Adicionar outro</button></div>`;
 
-            return `
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mt-6 animate-fade-in">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2"><i class="ph ph-folder-notch text-indigo-600"></i> Arquivos Entregues</h3>
-                        ${files.length > 0 ? `<button onclick="triggerUpload('${sectionId}')" class="text-sm bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg font-medium hover:bg-indigo-100 transition-colors flex items-center gap-2"><i class="ph ph-upload-simple"></i> Anexar</button>` : ''}
-                    </div>
-                    
-                    ${agencyFilesHtml} <!-- Injeta os arquivos da agência aqui -->
-                    
-                    <div class="border-t border-gray-100 my-4 pt-4">
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Seus Anexos</h4>
-                        <div id="file-list-${sectionId}" class="space-y-3">${filesListHtml}</div>
-                    </div>
-                    <input type="file" id="upload-${sectionId}" class="hidden" onchange="handleFileSelect(this, '${sectionId}')">
-                </div>
-            `;
-        }
-
-        // --- Renderização ---
-
-        // O listener de submit do form inicial está dentro do bloco DOMContentLoaded/Script acima.
-
-        // --- ADMIN LOGIN LOGIC ---
-        function showAdminLogin() {
-            document.getElementById('form-screen').classList.add('hidden-section');
-            document.getElementById('admin-login-screen').classList.remove('hidden-section');
-        }
-
-        function handleAdminLogin(e) {
-            e.preventDefault();
-            const password = document.getElementById('admin-password').value;
-            if (password === 'admin123') {
-                document.getElementById('admin-login-screen').classList.add('hidden-section');
-                document.getElementById('admin-dashboard-screen').classList.remove('hidden-section');
-                
-                // Carregar dados reais
-                if(window.loadAdminData) {
-                    window.loadAdminData();
-                }
-            } else {
-                alert('Senha incorreta!');
-            }
-        }
-
-        // --- MODAL DETALHES CLIENTE (Função para fechar) ---
-        window.closeClientDetailsModal = function() {
-            document.getElementById('client-details-modal').classList.add('hidden-section');
-            document.getElementById('edit-lead-id').value = '';
+            return `<div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mt-6 animate-fade-in"><div class="flex justify-between items-center mb-4"><h3 class="text-lg font-bold text-gray-800 flex items-center gap-2"><i class="ph ph-folder-notch text-indigo-600"></i> Arquivos Entregues</h3>${files.length > 0 ? `<button onclick="triggerUpload('${sectionId}')" class="text-sm bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg font-medium">Anexar</button>` : ''}</div>${agencyFilesHtml}<div class="border-t border-gray-100 my-4 pt-4"><h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Seus Anexos</h4><div id="file-list-${sectionId}" class="space-y-3">${filesListHtml}</div></div><input type="file" id="upload-${sectionId}" class="hidden" onchange="handleFileSelect(this, '${sectionId}')"></div>`;
         }
 
         function switchTab(tabId) {
             state.activeTab = tabId;
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 if (btn.id === `btn-${tabId}`) {
-                    btn.classList.remove('text-gray-600', 'hover:bg-gray-50');
-                    btn.classList.add('bg-indigo-50', 'text-indigo-700', 'shadow-sm');
-                    btn.querySelector('i').classList.remove('text-gray-400');
-                    btn.querySelector('i').classList.add('text-indigo-600');
+                    btn.classList.remove('text-gray-600', 'hover:bg-gray-50'); btn.classList.add('bg-indigo-50', 'text-indigo-700', 'shadow-sm');
+                    btn.querySelector('i').classList.remove('text-gray-400'); btn.querySelector('i').classList.add('text-indigo-600');
                 } else {
-                    btn.classList.add('text-gray-600', 'hover:bg-gray-50');
-                    btn.classList.remove('bg-indigo-50', 'text-indigo-700', 'shadow-sm');
-                    btn.querySelector('i').classList.add('text-gray-400');
-                    btn.querySelector('i').classList.remove('text-indigo-600');
+                    btn.classList.add('text-gray-600', 'hover:bg-gray-50'); btn.classList.remove('bg-indigo-50', 'text-indigo-700', 'shadow-sm');
+                    btn.querySelector('i').classList.add('text-gray-400'); btn.querySelector('i').classList.remove('text-indigo-600');
                 }
             });
             renderContent(tabId);
@@ -1096,115 +568,22 @@
         function renderContent(tabId) {
             const container = document.getElementById('main-content');
             const d = state.diagnosis;
-            const filesBlock = getFileBlock(tabId);
             let html = '';
-
-            if (tabId === 'overview') {
-                html = `
-                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white shadow-lg animate-fade-in">
-                        <h2 class="text-3xl font-bold mb-2">Olá, gestor da ${state.data.businessName}!</h2>
-                        <p class="text-indigo-100 text-lg">${d.overview.summary}</p>
-                        <div class="mt-6 flex items-center gap-4">
-                            <div class="bg-white/20 backdrop-blur-md rounded-lg p-4"><span class="block text-sm opacity-80">Maturidade Digital</span><span class="text-2xl font-bold">${d.overview.score}/100</span></div>
-                            <div class="bg-white/20 backdrop-blur-md rounded-lg p-4"><span class="block text-sm opacity-80">Próximo Nível</span><span class="text-2xl font-bold">Escala</span></div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                            <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Ações Imediatas</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-red-100 text-red-600">Prioridade Alta</span></div>
-                            <ul class="space-y-3">
-                                <li class="flex items-start gap-3"><i class="ph-fill ph-check-circle text-green-500 text-xl mt-0.5"></i><span class="text-gray-600">Configurar Pixel e API de Conversão.</span></li>
-                                <li class="flex items-start gap-3"><i class="ph ph-check-circle text-gray-300 text-xl mt-0.5"></i><span class="text-gray-600">Otimizar Bio do Instagram para conversão.</span></li>
-                            </ul>
-                        </div>
-                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                             <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Resumo do Plano</h3></div>
-                             <p class="text-gray-600 mb-4">Seu foco principal deve ser a construção de ativos digitais que não dependam exclusivamente do seu tempo.</p>
-                             <button onclick="switchTab('landing')" class="text-indigo-600 font-semibold hover:underline flex items-center gap-1">Ver detalhes da Página <i class="ph ph-arrow-right"></i></button>
-                        </div>
-                    </div>`;
-            } else if (tabId === 'landing') {
-                html = `
-                    <h2 class="text-2xl font-bold text-gray-800 animate-fade-in">Criação de Páginas (Web)</h2>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
-                        <div class="lg:col-span-2 space-y-6">
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Recomendação de Estrutura</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-red-100 text-red-600">Prioridade ${d.landingPage.priority}</span></div>
-                                <p class="text-gray-600 mb-4 font-medium">${d.landingPage.recommendation}</p>
-                                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100"><h4 class="font-semibold text-gray-700 mb-3">Seções Obrigatórias:</h4><ul class="space-y-2">${d.landingPage.sections.map(sec => `<li class="flex items-center gap-2 text-gray-600"><div class="w-2 h-2 rounded-full bg-indigo-500"></div>${sec}</li>`).join('')}</ul></div>
-                            </div>
-                        </div>
-                        <div class="space-y-6"><div class="bg-indigo-50 border border-indigo-100 p-6 rounded-xl"><h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2"><i class="ph ph-device-mobile text-xl"></i> Mobile First</h3><p class="text-indigo-800 text-sm">80% do seu tráfego virá do celular. Certifique-se que o botão de WhatsApp esteja sempre visível (sticky) na parte inferior da tela.</p></div></div>
-                    </div>`;
-            } else if (tabId === 'design') {
-                html = `
-                     <div class="space-y-6 animate-fade-in">
-                        <h2 class="text-2xl font-bold text-gray-800">Melhorias de Logotipo e Identidade</h2>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                             <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">${d.visualIdentity.recommendation}</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-yellow-100 text-yellow-700">Prioridade ${d.visualIdentity.priority}</span></div>
-                            <div class="space-y-4">
-                                <p class="text-gray-600">Para o nicho de <span class="font-semibold">${state.data.niche}</span>, a confiança visual é determinante para o preço que você pode cobrar.</p>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">${d.visualIdentity.actions.map((action, idx) => `<div class="bg-gray-50 p-4 rounded-lg border border-gray-100"><span class="text-2xl font-bold text-indigo-200 mb-2 block">0${idx + 1}</span><p class="text-sm text-gray-700 font-medium">${action}</p></div>`).join('')}</div>
-                            </div>
-                        </div>
-                    </div>`;
-            } else if (tabId === 'ads') {
-                // ATUALIZADO: Apenas Botão Baixar e Quadrado de Anexar
-                html = `
-                    <div class="space-y-6 animate-fade-in">
-                        <h2 class="text-2xl font-bold text-gray-800">Anúncios Patrocinados</h2>
-                        
-                        <!-- Novo Bloco Simplificado -->
-                        <div class="bg-gradient-to-r from-gray-900 to-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700 text-white relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-64 h-64 bg-red-600 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
-                            
-                            <div class="flex items-center gap-4 relative z-10">
-                                <button class="bg-white/10 hover:bg-white/20 text-white px-6 py-4 rounded-xl flex items-center gap-3 transition-colors border border-white/10 h-24">
-                                    <i class="ph ph-download-simple text-2xl"></i>
-                                    <span class="font-medium text-lg">Baixar Modelo</span>
-                                </button>
-
-                                <!-- Quadrado em branco para Anexar -->
-                                <div class="w-24 h-24 bg-white rounded-xl flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors" onclick="triggerUpload('ads')">
-                                     <i class="ph ph-plus text-3xl text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                 <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Estratégia de Canais</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-red-100 text-red-600">Prioridade ${d.paidAds.priority}</span></div>
-                                <div class="mb-4"><span class="text-sm text-gray-500 block mb-1">Canais Recomendados</span><p class="font-semibold text-lg text-gray-800">${d.paidAds.platform}</p></div>
-                                <div><span class="text-sm text-gray-500 block mb-1">Orçamento Diário Sugerido</span><p class="font-semibold text-green-600">${d.paidAds.budgetDesc}</p></div>
-                            </div>
-                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Públicos-Alvo</h3></div>
-                                <ul class="divide-y divide-gray-100">${d.paidAds.audiences.map(aud => `<li class="py-3 flex items-center gap-3"><i class="ph ph-target text-indigo-500 text-lg"></i><span class="text-gray-700">${aud}</span></li>`).join('')}</ul>
-                            </div>
-                        </div>
-                    </div>`;
-            } else if (tabId === 'content') {
-                html = `
-                    <div class="space-y-6 animate-fade-in">
-                        <h2 class="text-2xl font-bold text-gray-800">Conteúdo Orgânico (Feed)</h2>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                            <div class="flex justify-between items-start mb-4"><h3 class="text-lg font-bold text-gray-800">Ideias de Publicação</h3><span class="text-xs font-bold px-3 py-1 rounded-full bg-yellow-100 text-yellow-700">Prioridade ${d.organicContent.priority}</span></div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">${d.organicContent.ideas.map(idea => `<div class="flex gap-4 items-start p-3 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-100"><div class="p-2 rounded-lg text-white text-xs font-bold uppercase tracking-wider ${idea.color}">${idea.type}</div><div><p class="font-medium text-gray-800">${idea.title}</p><p class="text-xs text-gray-500 mt-1">Foco: Engajamento</p></div></div>`).join('')}</div>
-                        </div>
-                    </div>`;
-            }
-            container.innerHTML = html + filesBlock;
+            if(tabId === 'overview') html = `<div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white shadow-lg"><h2 class="text-3xl font-bold mb-2">Olá, ${state.data.businessName}!</h2><p class="text-indigo-100 text-lg">${d.overview.summary}</p><div class="mt-6 flex gap-4"><div class="bg-white/20 rounded-lg p-4"><span>Maturidade</span><span class="block text-2xl font-bold">${d.overview.score}/100</span></div></div></div>`;
+            else if(tabId === 'landing') html = `<h2 class="text-2xl font-bold">Páginas Web</h2><div class="bg-white p-6 rounded-xl shadow-sm mt-4"><p>${d.landingPage.recommendation}</p></div>`;
+            else if(tabId === 'design') html = `<h2 class="text-2xl font-bold">Design</h2><div class="bg-white p-6 rounded-xl shadow-sm mt-4"><p>${d.visualIdentity.recommendation}</p></div>`;
+            else if(tabId === 'ads') html = `<h2 class="text-2xl font-bold">Anúncios</h2><div class="bg-gradient-to-r from-gray-900 to-gray-800 p-6 rounded-2xl text-white mt-4 flex items-center gap-4"><button class="bg-white/10 px-6 py-4 rounded-xl flex items-center gap-3 border border-white/10 h-24"><i class="ph ph-download-simple text-2xl"></i><span class="font-medium text-lg">Baixar Modelo</span></button><div class="w-24 h-24 bg-white rounded-xl flex items-center justify-center cursor-pointer hover:bg-gray-100" onclick="triggerUpload('ads')"><i class="ph ph-plus text-3xl text-gray-300"></i></div></div>`;
+            else if(tabId === 'content') html = `<h2 class="text-2xl font-bold">Conteúdo</h2><div class="bg-white p-6 rounded-xl shadow-sm mt-4"><div class="grid grid-cols-2 gap-4">${d.organicContent.ideas.map(i => `<div class="p-3 border rounded"><span class="${i.color} text-white px-2 py-1 rounded text-xs">${i.type}</span><p class="mt-2 font-medium">${i.title}</p></div>`).join('')}</div></div>`;
+            
+            container.innerHTML = html + getFileBlock(tabId);
         }
 
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobile-menu-overlay');
-            if (overlay.classList.contains('hidden')) { overlay.classList.remove('hidden'); } else { overlay.classList.add('hidden'); }
+            if (overlay.classList.contains('hidden')) overlay.classList.remove('hidden'); else overlay.classList.add('hidden');
         }
 
-        function resetApp() {
-            localStorage.removeItem('userSession');
-            location.reload();
-        }
+        function resetApp() { localStorage.removeItem('userSession'); location.reload(); }
     </script>
 </body>
 </html>
