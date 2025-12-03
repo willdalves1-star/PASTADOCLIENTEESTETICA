@@ -47,41 +47,9 @@
         .aspect-3-4 {
             aspect-ratio: 3/4;
         }
-
-        /* Cores dos blocos - estilo da imagem */
-        .bloco-roxo {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .bloco-rosa {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-        .bloco-azul {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-        .bloco-verde {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-        }
-        .bloco-laranja {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-        }
-        .bloco-cinza {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        }
-
-        /* Progress bar */
-        .progress-bar {
-            height: 8px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
     </style>
 </head>
-
+<!-- REMOVIDO 'overflow-hidden' DAQUI PARA PERMITIR ROLAGEM NO FORMULÁRIO -->
 <body class="bg-gray-50 font-sans text-gray-800">
 
     <!-- ========================================== -->
@@ -89,23 +57,12 @@
     <!-- ========================================== -->
     <div id="form-screen" class="min-h-screen flex items-center justify-center p-4">
         <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in relative">
-            <!-- Hero Section (Estilo da imagem) -->
-            <div class="bloco-roxo p-8 text-white">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                    <div class="mb-4 md:mb-0">
-                        <h1 class="text-3xl font-bold mb-2">Bem-vindo!</h1>
-                        <p class="opacity-90 text-sm">Vem abril 2024</p>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-sm font-semibold mb-1">Marca de Dia</div>
-                        <div class="text-2xl font-bold">79%</div>
-                    </div>
-                </div>
-                
-                <!-- Progress Bar -->
-                <div class="bg-white/30 rounded-full h-2 mt-2">
-                    <div class="bg-white rounded-full h-2" style="width: 79%"></div>
-                </div>
+            <!-- Hero Section (Visual Limpo e Azul) -->
+            <div class="bg-indigo-600 p-8 text-white">
+                <h1 class="text-3xl font-bold mb-2">Diagnóstico Profissional: Máquina de Vendas</h1>
+                <p class="opacity-90 text-sm leading-relaxed">
+                    Receba uma análise estratégica feita por nossa equipe de especialistas para escalar suas vendas.
+                </p>
             </div>
             
             <!-- Formulário (Visual Limpo) -->
@@ -144,71 +101,14 @@
                         </select>
                     </div>
 
-                    <div class="space-y-2">
-                        <label class="text-sm font-semibold text-gray-700">Investimento Mensal Disp.</label>
-                        <select id="input-budget" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none bg-white text-sm">
-                            <option value="low">Inicial (Até R$ 1.000)</option>
-                            <option value="medium">Crescimento (R$ 1k - R$ 5k)</option>
-                            <option value="high">Escala (R$ 5k+)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Blocos Coloridos (Estilo da imagem) -->
-                <div class="pt-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <!-- AI Content Coach -->
-                        <div class="bloco-rosa rounded-xl p-4 text-white">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                                    <i class="ph ph-brain text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-sm">AI Content Coach</h4>
-                                    <p class="text-xs opacity-90">Sugeridos de resultados a 6 terabytes.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- AI Alap Analyzer -->
-                        <div class="bloco-azul rounded-xl p-4 text-white">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                                    <i class="ph ph-chart-line text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-sm">AI Alap Analyzer</h4>
-                                    <p class="text-xs opacity-90">Climbo horário e declarações.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- AI Content Composer -->
-                        <div class="bloco-verde rounded-xl p-4 text-white">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                                    <i class="ph ph-pen-nib text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-sm">AI Content Composer</h4>
-                                    <p class="text-xs opacity-90">Com operador o pode encontrar.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Reply Guy -->
-                        <div class="bloco-laranja rounded-xl p-4 text-white">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                                    <i class="ph ph-chat-circle-dots text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-sm">Reply Guy</h4>
-                                    <p class="text-xs opacity-90">Automatic programado temporado.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+               <div class="space-y-2">
+    <label class="text-sm font-semibold text-gray-700">Investimento Mensal Disp.</label>
+    <select id="input-budget" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none bg-white text-sm">
+        <option value="low">Inicial (Até R$ 1.000)</option>
+        <option value="medium">Crescimento (R$ 1k - R$ 5k)</option>
+        <option value="high">Escala (R$ 5k+)</option>
+    </select>
+</div>
                 </div>
 
                 <div class="pt-4 space-y-3">
@@ -229,14 +129,6 @@
                 </div>
             </form>
 
-            <!-- Menu inferior estilo imagem -->
-            <div class="border-t border-gray-100 px-8 py-4 flex justify-between text-xs text-gray-500">
-                <span class="font-medium">Fotos</span>
-                <span class="font-medium">Fomentos</span>
-                <span class="font-medium">Análise</span>
-                <span class="font-medium">Profil</span>
-            </div>
-
             <!-- Link para Admin (Invisível / Secreto) -->
             <div class="absolute top-4 right-4 z-50">
                 <a href="admin.html" class="opacity-0 w-12 h-12 cursor-default block" title="Acesso Admin"></a>
@@ -249,7 +141,7 @@
     <!-- ========================================== -->
     <div id="registration-screen" class="hidden-section min-h-screen flex items-center justify-center p-4 bg-gray-50">
         <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
-            <div class="bg-indigo-600 p-6 text-white text-center">
+            <div class="bg-gray-900 p-6 text-white text-center">
                 <h2 class="text-2xl font-bold">Quase lá!</h2>
                 <p class="opacity-80 text-sm">Crie seu acesso para ver o resultado e baixar seus arquivos.</p>
             </div>
@@ -764,7 +656,7 @@
 
             if(tabId === 'overview') {
                 html = `
-                <div class="bloco-roxo rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
                     <div class="relative z-10">
                         <h2 class="text-3xl font-bold mb-4">Olá, Gestor da ${state.data.businessName}!</h2>
                         <p class="text-indigo-100 text-lg leading-relaxed mb-8">${d.overview.summary}</p>
@@ -869,7 +761,7 @@
                         <p class="text-sm text-gray-500">Campanhas de performance.</p>
                     </div>
                 </div>
-                <div class="bloco-roxo text-white p-8 rounded-2xl shadow-lg relative overflow-hidden mb-6">
+                <div class="bg-indigo-900 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden mb-6">
                      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                         <div>
                             <h3 class="text-xl font-bold mb-1">Estratégia Definida: ${d.paidAds.platform}</h3>
@@ -917,4 +809,4 @@
         function resetApp() { localStorage.removeItem('userSession'); location.reload(); }
     </script>
 </body>
-</html>
+</html>"
