@@ -47,139 +47,86 @@
         .aspect-3-4 {
             aspect-ratio: 3/4;
         }
-
-        /* Efeito de Glow Vermelho */
-        .red-glow {
-            box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
-        }
     </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800 overflow-hidden">
+<body class="bg-gray-50 font-sans text-gray-800 overflow-hidden">
 
     <!-- ========================================== -->
     <!-- TELA 1: FORMULÁRIO INICIAL (DIAGNÓSTICO) -->
     <!-- ========================================== -->
-    <div id="form-screen" class="min-h-screen flex items-center justify-center p-4 bg-gray-50">
-        <div class="max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden animate-fade-in relative flex flex-col md:flex-row">
-            
-            <!-- Coluna Esquerda: Hero / Copy -->
-            <div class="md:w-5/12 bg-gray-900 p-8 text-white relative overflow-hidden flex flex-col justify-between">
-                <!-- Efeito de Fundo -->
-                <div class="absolute top-0 right-0 w-64 h-64 bg-red-600 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
-                <div class="absolute bottom-0 left-0 w-48 h-48 bg-red-900 rounded-full blur-[80px] opacity-30 pointer-events-none"></div>
-
-                <div class="relative z-10">
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-8 h-1 bg-red-600"></div>
-                        <span class="text-xs font-bold tracking-widest uppercase text-red-500">Relatório Profissional</span>
-                    </div>
-                    
-                    <h1 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight">
-                        Diagnóstico <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600">Máquina de Vendas</span>
-                    </h1>
-                    
-                    <p class="text-gray-400 text-sm mb-8 leading-relaxed">
-                        Não deixe sua empresa estagnada. Receba uma análise estratégica feita por nossa equipe de especialistas em escala.
-                    </p>
-
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-3">
-                            <i class="ph-fill ph-check-circle text-red-500 text-xl mt-0.5"></i>
-                            <p class="text-sm font-medium text-gray-200">Recomendações de <span class="text-white font-bold">Anúncios Patrocinados</span> de alta conversão.</p>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="ph-fill ph-check-circle text-red-500 text-xl mt-0.5"></i>
-                            <p class="text-sm font-medium text-gray-200">Estrutura de <span class="text-white font-bold">Páginas de Vendas</span> validadas.</p>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="ph-fill ph-check-circle text-red-500 text-xl mt-0.5"></i>
-                            <p class="text-sm font-medium text-gray-200">3 a 6 <span class="text-white font-bold">Publicações/Ofertas</span> estratégicas para Feed.</p>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="ph-fill ph-check-circle text-red-500 text-xl mt-0.5"></i>
-                            <p class="text-sm font-medium text-gray-200">2 Novas propostas de <span class="text-white font-bold">Identidade Visual</span> completa.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-8 pt-6 border-t border-gray-800 relative z-10">
-                    <p class="text-xs text-gray-500">Para empresários que querem vender mais e superar a concorrência.</p>
-                </div>
+    <div id="form-screen" class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in relative">
+            <!-- Hero Section (Visual Limpo e Azul) -->
+            <div class="bg-indigo-600 p-8 text-white">
+                <h1 class="text-3xl font-bold mb-2">Diagnóstico Profissional: Máquina de Vendas</h1>
+                <p class="opacity-90 text-sm leading-relaxed">
+                    Receba uma análise estratégica feita por nossa equipe de especialistas para escalar suas vendas.
+                </p>
             </div>
             
-            <!-- Coluna Direita: Formulário -->
-            <div class="md:w-7/12 p-8 md:p-12 bg-white">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-bold text-gray-800">Dados da Empresa</h2>
-                    <i class="ph ph-briefcase text-2xl text-gray-400"></i>
-                </div>
-
-                <form id="diagnosis-form" class="space-y-5">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label class="text-xs font-bold text-gray-600 uppercase">Nome da Empresa</label>
-                            <input type="text" id="input-name" required placeholder="Ex: Pizzaria do João..." 
-                                class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm">
-                        </div>
-                        
-                        <div class="space-y-1">
-                            <label class="text-xs font-bold text-gray-600 uppercase">Nicho de Atuação</label>
-                            <input type="text" id="input-niche" required placeholder="Ex: Moda, Advocacia..." 
-                                class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm">
-                        </div>
+            <!-- Formulário (Visual Limpo) -->
+            <form id="diagnosis-form" class="p-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Nome da Empresa</label>
+                        <input type="text" id="input-name" required placeholder="Ex: Sua Empresa..." 
+                            class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition text-sm">
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Nicho de Atuação</label>
+                        <input type="text" id="input-niche" required placeholder="Ex: Varejo, Serviços..." 
+                            class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition text-sm">
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label class="text-xs font-bold text-gray-600 uppercase">WhatsApp / Telefone</label>
-                            <input type="tel" id="input-phone" required placeholder="(XX) 9XXXX-XXXX" 
-                                class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm">
-                        </div>
-
-                        <div class="space-y-1">
-                            <label class="text-xs font-bold text-gray-600 uppercase">Instagram</label>
-                            <input type="text" id="input-instagram" required placeholder="@seu.perfil" 
-                                class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm">
-                        </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">WhatsApp / Telefone</label>
+                        <input type="tel" id="input-phone" required placeholder="(XX) 9XXXX-XXXX" 
+                            class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition text-sm">
                     </div>
 
-                    <div class="space-y-1">
-                        <label class="text-xs font-bold text-gray-600 uppercase">Modelo de Negócio</label>
-                        <select id="input-type" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm">
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Instagram</label>
+                        <input type="text" id="input-instagram" required placeholder="@seu.perfil" 
+                            class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition text-sm">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Modelo de Negócio</label>
+                        <select id="input-type" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none bg-white text-sm">
                             <option value="service">Prestação de Serviços</option>
                             <option value="ecommerce">E-commerce / Loja Virtual</option>
                             <option value="local">Negócio Local Físico</option>
                         </select>
                     </div>
 
-                    <div class="space-y-1">
-                        <label class="text-xs font-bold text-gray-600 uppercase">Investimento Mensal Disp.</label>
-                        <select id="input-budget" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm">
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-gray-700">Investimento Mensal Disp.</label>
+                        <select id="input-budget" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none bg-white text-sm">
                             <option value="low">Inicial (Até R$ 1.000)</option>
                             <option value="medium">Crescimento (R$ 1k - R$ 5k)</option>
                             <option value="high">Escala (R$ 5k+)</option>
                         </select>
                     </div>
+                </div>
 
-                    <div class="pt-4 space-y-3">
-                        <button type="submit" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-red-900/20 flex items-center justify-center gap-2 group">
-                            Solicitar Análise da Equipe
-                            <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                <div class="pt-4 space-y-3">
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-indigo-500/30 flex items-center justify-center gap-2 group">
+                        Solicitar Análise da Equipe
+                        <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                    
+                    <div class="text-center pt-2">
+                         <button type="button" onclick="showClientLogin()" class="text-indigo-600 font-semibold hover:underline text-sm transition-colors">
+                            Já possui cadastro? Fazer Login
                         </button>
-                        
-                        <div class="text-center pt-2">
-                             <button type="button" onclick="showClientLogin()" class="text-gray-500 font-medium hover:text-red-600 text-sm transition-colors">
-                                Já possui cadastro? <span class="underline">Fazer Login</span>
-                            </button>
-                        </div>
-
-                        <p class="text-[10px] text-gray-400 text-center mt-3 flex items-center justify-center gap-1">
-                            <i class="ph-fill ph-lock-key"></i> Seus dados estão protegidos.
-                        </p>
                     </div>
-                </form>
-            </div>
+
+                    <p class="text-xs text-gray-400 text-center mt-3 flex items-center justify-center gap-1">
+                        <i class="ph-fill ph-lock-key"></i> Seus dados estão protegidos.
+                    </p>
+                </div>
+            </form>
 
             <!-- Link para Admin (Invisível / Secreto) -->
             <div class="absolute top-4 right-4 z-50">
@@ -191,41 +138,37 @@
     <!-- ========================================== -->
     <!-- TELA 1.5: CADASTRO DO CLIENTE (CRIAÇÃO DE CONTA) -->
     <!-- ========================================== -->
-    <div id="registration-screen" class="hidden-section min-h-screen flex items-center justify-center p-4 bg-gray-100">
-        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in border-t-4 border-red-600">
-            <div class="bg-white p-8 text-center border-b border-gray-100">
-                <div class="w-16 h-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="ph-fill ph-user-plus text-3xl"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900">Criar Acesso Seguro</h2>
-                <p class="text-gray-500 text-sm mt-2">Defina seu login para acessar o relatório e baixar os arquivos da equipe.</p>
+    <div id="registration-screen" class="hidden-section min-h-screen flex items-center justify-center p-4 bg-gray-50">
+        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+            <div class="bg-gray-900 p-6 text-white text-center">
+                <h2 class="text-2xl font-bold">Quase lá!</h2>
+                <p class="opacity-80 text-sm">Crie seu acesso para ver o resultado e baixar seus arquivos.</p>
             </div>
-            <form onsubmit="handleRegistration(event)" class="p-8 space-y-4 pt-4">
+            <form onsubmit="handleRegistration(event)" class="p-8 space-y-4">
                 
-                <div class="bg-gray-50 p-4 rounded-lg text-sm border border-gray-200 mb-2">
-                    <p class="text-gray-500 text-xs uppercase font-bold mb-1">Análise Solicitada Para:</p>
-                    <p class="text-gray-900 font-bold text-lg" id="reg-business-name">...</p>
+                <div class="bg-indigo-50 p-3 rounded-lg text-sm text-indigo-800 mb-4 border border-indigo-100">
+                    <p><strong>Empresa:</strong> <span id="reg-business-name">...</span></p>
                 </div>
 
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-gray-600 uppercase">Defina um Login</label>
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Defina um Login</label>
                     <input type="text" id="reg-login" required placeholder="Ex: nome.sobrenome" 
-                        class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
                 </div>
 
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-gray-600 uppercase">Defina uma Senha</label>
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Defina uma Senha</label>
                     <input type="password" id="reg-password" required placeholder="******" 
-                        class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
                 </div>
 
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-gray-600 uppercase">Confirme a Senha</label>
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Confirme a Senha</label>
                     <input type="password" id="reg-confirm-password" required placeholder="******" 
-                        class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
                 </div>
 
-                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 mt-6">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 mt-4">
                     <i class="ph-bold ph-check-circle text-xl"></i>
                     Finalizar Cadastro
                 </button>
@@ -236,34 +179,31 @@
     <!-- ========================================== -->
     <!-- TELA LOGIN CLIENTE -->
     <!-- ========================================== -->
-    <div id="client-login-screen" class="hidden-section min-h-screen flex items-center justify-center p-4 bg-gray-100">
-        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in border-t-4 border-gray-900">
-            <div class="p-8 text-center border-b border-gray-100">
-                <div class="w-16 h-16 bg-gray-100 text-gray-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="ph-fill ph-lock-key-open text-3xl"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-900">Área do Cliente</h2>
-                <p class="text-gray-500 text-sm mt-1">Acesse seus materiais exclusivos.</p>
+    <div id="client-login-screen" class="hidden-section min-h-screen flex items-center justify-center p-4 bg-gray-50">
+        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in">
+            <div class="bg-indigo-600 p-6 text-white text-center">
+                <h2 class="text-2xl font-bold">Área do Cliente</h2>
+                <p class="opacity-80 text-sm">Entre para acessar seus arquivos.</p>
             </div>
-            <form onsubmit="handleClientLogin(event)" class="p-8 space-y-5 pt-4">
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-gray-600 uppercase">Login</label>
+            <form onsubmit="handleClientLogin(event)" class="p-8 space-y-5">
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Login</label>
                     <input type="text" id="login-user" required placeholder="Seu usuário" 
-                        class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
 
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-gray-600 uppercase">Senha</label>
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Senha</label>
                     <input type="password" id="login-pass" required placeholder="******" 
-                        class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 outline-none">
+                        class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
 
-                <button type="submit" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl transition-all shadow-lg">
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg">
                     Acessar Painel
                 </button>
 
                 <div class="text-center">
-                    <button type="button" onclick="resetApp()" class="text-gray-400 hover:text-gray-600 text-xs font-medium uppercase tracking-wide">
+                    <button type="button" onclick="resetApp()" class="text-gray-500 hover:text-gray-700 text-sm">
                         Voltar ao Início
                     </button>
                 </div>
@@ -275,13 +215,8 @@
     <!-- TELA 2: LOADING (CLIENTE) -->
     <!-- ========================================== -->
     <div id="loading-screen" class="hidden-section min-h-screen flex flex-col items-center justify-center bg-gray-50">
-        <div class="relative">
-            <div class="w-20 h-20 border-4 border-gray-200 border-t-red-600 rounded-full animate-spin"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-                <i class="ph-fill ph-paper-plane-right text-red-600 text-xl"></i>
-            </div>
-        </div>
-        <h2 class="text-xl font-bold text-gray-800 mt-6 animate-pulse">Enviando solicitação...</h2>
+        <div class="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
+        <h2 class="text-xl font-semibold text-gray-700 animate-pulse">Enviando solicitação...</h2>
         <p class="text-gray-500 mt-2 text-sm">Nossa equipe está recebendo seus dados para análise.</p>
     </div>
 
@@ -291,23 +226,19 @@
     <div id="dashboard-screen" class="hidden-section flex h-screen bg-gray-50 overflow-hidden">
         <!-- Sidebar Desktop -->
         <aside class="hidden md:flex w-64 flex-col bg-white border-r border-gray-200">
-            <div class="p-6 border-b border-gray-100">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center text-white font-bold text-sm">MV</div>
-                    <div>
-                        <span class="block text-sm font-bold text-gray-800 leading-none">MÁQUINA</span>
-                        <span class="block text-xs font-bold text-red-600 leading-none">DE VENDAS</span>
-                    </div>
+            <div class="p-6 border-b border-gray-100 flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">MV</div>
+                <div>
+                    <span class="block text-sm font-bold text-gray-800 leading-none">MÁQUINA</span>
+                    <span class="block text-xs font-bold text-indigo-600 leading-none">DE VENDAS</span>
                 </div>
             </div>
             
             <nav class="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar" id="desktop-nav">
-                <div class="px-4 mb-2 mt-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Relatório</div>
-                <button onclick="switchTab('overview')" id="btn-overview" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all bg-gray-100 text-gray-900 shadow-sm">
+                <div class="px-4 mb-2 mt-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Menu Principal</div>
+                <button onclick="switchTab('overview')" id="btn-overview" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all bg-indigo-50 text-indigo-700 shadow-sm">
                     <i class="ph ph-squares-four text-xl"></i> Visão Geral
                 </button>
-                
-                <div class="px-4 mb-2 mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Materiais & Entregas</div>
                 <button onclick="switchTab('landing')" id="btn-landing" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
                     <i class="ph ph-desktop text-xl"></i> Páginas de Vendas
                 </button>
@@ -321,19 +252,19 @@
                     <i class="ph ph-article text-xl"></i> Feed & Ofertas
                 </button>
 
-                <div class="px-4 mb-2 mt-8 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Configurações</div>
+                <div class="px-4 mb-2 mt-8 text-xs font-semibold text-gray-400 uppercase tracking-wider">Conta</div>
                 <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-600 hover:bg-red-50 hover:text-red-900 transition-colors">
                     <i class="ph ph-sign-out text-xl"></i> Sair da Conta
                 </button>
             </nav>
 
-            <div class="p-4 border-t border-gray-100 bg-gray-50">
+            <div class="p-4 border-t border-gray-100">
                 <div class="flex items-center gap-3">
-                    <div id="user-avatar" class="w-10 h-10 rounded-full bg-gradient-to-tr from-gray-700 to-gray-900 flex items-center justify-center text-white font-bold text-sm shadow-md">
+                    <div id="user-avatar" class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
                         <!-- Iniciais -->
                     </div>
                     <div class="overflow-hidden">
-                        <p id="user-business-name" class="text-sm font-bold text-gray-800 truncate">Empresa</p>
+                        <p id="user-business-name" class="text-sm font-medium text-gray-700 truncate">Empresa</p>
                         <p id="user-login-display" class="text-xs text-gray-500 truncate">@login</p>
                     </div>
                 </div>
@@ -343,8 +274,8 @@
         <!-- Mobile Header -->
         <div class="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-20 flex items-center justify-between px-4 shadow-sm">
             <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-gray-900 rounded flex items-center justify-center text-white font-bold text-xs">MV</div>
-                <span class="text-sm font-bold text-gray-800">MÁQUINA <span class="text-red-600">DE VENDAS</span></span>
+                <div class="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center text-white font-bold text-xs">MV</div>
+                <span class="text-sm font-bold text-gray-800">MÁQUINA <span class="text-indigo-600">DE VENDAS</span></span>
             </div>
             <button onclick="toggleMobileMenu()" class="p-2 text-gray-600">
                 <i id="mobile-menu-icon" class="ph ph-list text-2xl"></i>
@@ -352,33 +283,32 @@
         </div>
 
         <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu-overlay" class="hidden md:hidden fixed inset-0 z-10 bg-gray-900/50 backdrop-blur-sm" onclick="toggleMobileMenu()">
+        <div id="mobile-menu-overlay" class="hidden md:hidden fixed inset-0 z-10 bg-gray-800/50 backdrop-blur-sm" onclick="toggleMobileMenu()">
             <div class="absolute right-0 top-16 bottom-0 w-64 bg-white shadow-xl p-4 space-y-2 overflow-y-auto" onclick="event.stopPropagation()">
-                <button onclick="switchTab('overview'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50">
+                <button onclick="switchTab('overview'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
                     <i class="ph ph-squares-four text-xl"></i> Visão Geral
                 </button>
-                <div class="border-t my-2 border-gray-100"></div>
-                <button onclick="switchTab('landing'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50">
+                <button onclick="switchTab('landing'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
                     <i class="ph ph-desktop text-xl"></i> Páginas de Vendas
                 </button>
-                <button onclick="switchTab('design'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50">
+                <button onclick="switchTab('design'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
                     <i class="ph ph-palette text-xl"></i> Identidade Visual
                 </button>
-                <button onclick="switchTab('ads'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50">
+                <button onclick="switchTab('ads'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
                     <i class="ph ph-megaphone text-xl"></i> Anúncios
                 </button>
-                <button onclick="switchTab('content'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50">
+                <button onclick="switchTab('content'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
                     <i class="ph ph-article text-xl"></i> Feed & Ofertas
                 </button>
                 <div class="border-t my-2 border-gray-100"></div>
-                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-600 hover:bg-red-50">
+                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-500 hover:bg-red-50">
                     <i class="ph ph-sign-out text-xl"></i> Sair
                 </button>
             </div>
         </div>
 
         <!-- Conteúdo Principal -->
-        <main class="flex-1 overflow-y-auto p-4 md:p-8 mt-16 md:mt-0 relative w-full bg-gray-50">
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 mt-16 md:mt-0 relative w-full">
             <div class="max-w-5xl mx-auto space-y-6 animate-fade-in pb-12" id="main-content">
                 <!-- Conteúdo injetado via JS -->
             </div>
@@ -686,9 +616,9 @@
                 <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 mt-6 animate-fade-in">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-                            <i class="ph ph-folder-notch-open text-red-600"></i> Central de Arquivos
+                            <i class="ph ph-folder-notch-open text-indigo-600"></i> Central de Arquivos
                         </h3>
-                        ${files.length > 0 ? `<button onclick="triggerUpload('${sectionId}')" class="text-sm bg-gray-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-black transition-colors">Enviar Novo</button>` : ''}
+                        ${files.length > 0 ? `<button onclick="triggerUpload('${sectionId}')" class="text-sm bg-indigo-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-indigo-800 transition-colors">Enviar Novo</button>` : ''}
                     </div>
                     ${agencyFilesHtml}
                     <div class="border-t border-gray-100 my-6 pt-6">
@@ -705,14 +635,14 @@
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 if (btn.id === `btn-${tabId}`) {
                     btn.classList.remove('text-gray-600', 'hover:bg-gray-50'); 
-                    btn.classList.add('bg-gray-900', 'text-white', 'shadow-lg');
+                    btn.classList.add('bg-indigo-50', 'text-indigo-700', 'shadow-sm');
                     btn.querySelector('i').classList.remove('text-xl'); 
-                    btn.querySelector('i').classList.add('text-red-500');
+                    btn.querySelector('i').classList.add('text-indigo-600');
                 } else {
                     btn.classList.add('text-gray-600', 'hover:bg-gray-50'); 
-                    btn.classList.remove('bg-gray-900', 'text-white', 'shadow-lg');
+                    btn.classList.remove('bg-indigo-50', 'text-indigo-700', 'shadow-sm');
                     btn.querySelector('i').classList.add('text-xl'); 
-                    btn.querySelector('i').classList.remove('text-red-500');
+                    btn.querySelector('i').classList.remove('text-indigo-600');
                 }
             });
             renderContent(tabId);
@@ -725,19 +655,18 @@
 
             if(tabId === 'overview') {
                 html = `
-                <div class="bg-gray-900 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-red-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
                     <div class="relative z-10">
                         <h2 class="text-3xl font-bold mb-4">Olá, Gestor da ${state.data.businessName}!</h2>
-                        <p class="text-gray-300 text-lg leading-relaxed mb-8">${d.overview.summary}</p>
+                        <p class="text-indigo-100 text-lg leading-relaxed mb-8">${d.overview.summary}</p>
                         
                         <div class="flex flex-col md:flex-row gap-4">
                             <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10">
-                                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Status do Projeto</span>
+                                <span class="text-xs font-bold text-indigo-200 uppercase tracking-wider">Status do Projeto</span>
                                 <span class="block text-2xl font-bold text-white mt-1">Em Desenvolvimento</span>
                             </div>
-                            <div class="bg-red-600/20 backdrop-blur-sm rounded-xl p-5 border border-red-500/30">
-                                <span class="text-xs font-bold text-red-300 uppercase tracking-wider">Próximo Passo</span>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/10">
+                                <span class="text-xs font-bold text-indigo-200 uppercase tracking-wider">Próximo Passo</span>
                                 <span class="block text-2xl font-bold text-white mt-1">Aprovação Visual</span>
                             </div>
                         </div>
@@ -747,13 +676,13 @@
             else if(tabId === 'landing') {
                 html = `
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="p-3 bg-red-100 rounded-lg text-red-600"><i class="ph-bold ph-desktop text-2xl"></i></div>
+                    <div class="p-3 bg-indigo-100 rounded-lg text-indigo-600"><i class="ph-bold ph-desktop text-2xl"></i></div>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Páginas de Alta Conversão</h2>
                         <p class="text-sm text-gray-500">Estrutura focada em vendas.</p>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-red-500">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-indigo-500">
                     <h3 class="font-bold text-lg text-gray-800 mb-2">Recomendação Técnica</h3>
                     <p class="text-gray-600 leading-relaxed">${d.landingPage.recommendation}</p>
                     <div class="mt-6 flex flex-wrap gap-2">
@@ -792,14 +721,14 @@
                         <p class="text-sm text-gray-500">Campanhas de performance.</p>
                     </div>
                 </div>
-                <div class="bg-gray-900 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden mb-6">
+                <div class="bg-indigo-900 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden mb-6">
                      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                         <div>
                             <h3 class="text-xl font-bold mb-1">Estratégia Definida: ${d.paidAds.platform}</h3>
-                            <p class="text-gray-400 text-sm">${d.paidAds.focus}</p>
+                            <p class="text-indigo-200 text-sm">${d.paidAds.focus}</p>
                         </div>
                         <div class="flex gap-3">
-                             <button class="bg-white text-gray-900 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors flex items-center gap-2">
+                             <button class="bg-white text-indigo-900 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors flex items-center gap-2">
                                 <i class="ph-bold ph-file-pdf"></i> Baixar Briefing
                             </button>
                         </div>
