@@ -49,7 +49,6 @@
         }
     </style>
 </head>
-<!-- REMOVIDO 'overflow-hidden' DAQUI PARA PERMITIR ROLAGEM NO FORMULÁRIO -->
 <body class="bg-gray-50 font-sans text-gray-800">
 
     <!-- ========================================== -->
@@ -253,6 +252,20 @@
                     <i class="ph ph-instagram-logo text-xl"></i> Feed & Ofertas
                 </button>
 
+                <!-- NOVAS SEÇÕES (ESTRATÉGIA) -->
+                <div class="px-4 mb-2 mt-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Estratégia</div>
+                
+                <button onclick="switchTab('plan')" id="btn-plan" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
+                    <i class="ph ph-rocket-launch text-xl"></i> Plano de Ação
+                </button>
+                <button onclick="switchTab('goals')" id="btn-goals" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
+                    <i class="ph ph-target text-xl"></i> Objetivos
+                </button>
+                <button onclick="switchTab('metrics')" id="btn-metrics" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
+                    <i class="ph ph-chart-line-up text-xl"></i> Métricas
+                </button>
+                <!-- FIM NOVAS SEÇÕES -->
+
                 <div class="px-4 mb-2 mt-8 text-xs font-semibold text-gray-400 uppercase tracking-wider">Conta</div>
                 <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-600 hover:bg-red-50 hover:text-red-900 transition-colors">
                     <i class="ph ph-sign-out text-xl"></i> Sair da Conta
@@ -301,6 +314,18 @@
                 <button onclick="switchTab('content'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
                     <i class="ph ph-instagram-logo text-xl"></i> Feed & Ofertas
                 </button>
+                
+                <div class="px-4 mt-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Estratégia</div>
+                <button onclick="switchTab('plan'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
+                    <i class="ph ph-rocket-launch text-xl"></i> Plano de Ação
+                </button>
+                <button onclick="switchTab('goals'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
+                    <i class="ph ph-target text-xl"></i> Objetivos
+                </button>
+                <button onclick="switchTab('metrics'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
+                    <i class="ph ph-chart-line-up text-xl"></i> Métricas
+                </button>
+
                 <div class="border-t my-2 border-gray-100"></div>
                 <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-red-500 hover:bg-red-50">
                     <i class="ph ph-sign-out text-xl"></i> Sair
@@ -656,7 +681,7 @@
 
             if(tabId === 'overview') {
                 html = `
-                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden animate-fade-in">
                     <div class="relative z-10">
                         <h2 class="text-3xl font-bold mb-4">Olá, Gestor da ${state.data.businessName}!</h2>
                         <p class="text-indigo-100 text-lg leading-relaxed mb-8">${d.overview.summary}</p>
@@ -675,7 +700,7 @@
                 </div>
 
                 <!-- MENU RÁPIDO (GRID) -->
-                <div class="mt-8">
+                <div class="mt-8 animate-fade-in">
                     <h3 class="text-lg font-bold text-gray-800 mb-4 px-1">Acesso Rápido</h3>
                     <div class="grid grid-cols-2 gap-4">
                         <button onclick="switchTab('landing')" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all text-left group">
@@ -715,31 +740,32 @@
             }
             else if(tabId === 'landing') {
                 html = `
-                <div class="flex items-center gap-3 mb-6">
+                <div class="flex items-center gap-3 mb-6 animate-fade-in">
                     <div class="p-3 bg-indigo-100 rounded-lg text-indigo-600"><i class="ph-bold ph-globe text-2xl"></i></div>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Páginas de Alta Conversão</h2>
                         <p class="text-sm text-gray-500">Estrutura focada em vendas.</p>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-indigo-500">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border-l-4 border-indigo-500 animate-fade-in">
                     <h3 class="font-bold text-lg text-gray-800 mb-2">Recomendação Técnica</h3>
                     <p class="text-gray-600 leading-relaxed">${d.landingPage.recommendation}</p>
                     <div class="mt-6 flex flex-wrap gap-2">
                         ${d.landingPage.sections.map(s => `<span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold uppercase">${s}</span>`).join('')}
                     </div>
-                </div>`;
+                </div>
+                ${getFileBlock(tabId)}`;
             }
             else if(tabId === 'design') {
                 html = `
-                <div class="flex items-center gap-3 mb-6">
+                <div class="flex items-center gap-3 mb-6 animate-fade-in">
                     <div class="p-3 bg-purple-100 rounded-lg text-purple-600"><i class="ph-bold ph-paint-brush text-2xl"></i></div>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Identidade Visual</h2>
                         <p class="text-sm text-gray-500">Branding e posicionamento.</p>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                <div class="bg-white p-8 rounded-2xl shadow-sm animate-fade-in">
                     <h3 class="font-bold text-lg text-gray-800 mb-4">${d.visualIdentity.title}</h3>
                     <p class="text-gray-600 mb-6">${d.visualIdentity.recommendation}. Nosso time de design preparará opções focadas no seu público-alvo.</p>
                     <div class="grid md:grid-cols-3 gap-4">
@@ -750,18 +776,19 @@
                             </div>
                         `).join('')}
                     </div>
-                </div>`;
+                </div>
+                ${getFileBlock(tabId)}`;
             }
             else if(tabId === 'ads') {
                 html = `
-                <div class="flex items-center gap-3 mb-6">
+                <div class="flex items-center gap-3 mb-6 animate-fade-in">
                     <div class="p-3 bg-blue-100 rounded-lg text-blue-600"><i class="ph-bold ph-megaphone text-2xl"></i></div>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Tráfego Pago</h2>
                         <p class="text-sm text-gray-500">Campanhas de performance.</p>
                     </div>
                 </div>
-                <div class="bg-indigo-900 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden mb-6">
+                <div class="bg-indigo-900 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden mb-6 animate-fade-in">
                      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                         <div>
                             <h3 class="text-xl font-bold mb-1">Estratégia Definida: ${d.paidAds.platform}</h3>
@@ -773,18 +800,19 @@
                             </button>
                         </div>
                      </div>
-                </div>`;
+                </div>
+                ${getFileBlock(tabId)}`;
             }
             else if(tabId === 'content') {
                 html = `
-                <div class="flex items-center gap-3 mb-6">
+                <div class="flex items-center gap-3 mb-6 animate-fade-in">
                     <div class="p-3 bg-yellow-100 rounded-lg text-yellow-600"><i class="ph-bold ph-instagram-logo text-2xl"></i></div>
                     <div>
                         <h2 class="text-2xl font-bold text-gray-900">Conteúdo Orgânico</h2>
                         <p class="text-sm text-gray-500">Engajamento e autoridade.</p>
                     </div>
                 </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                <div class="bg-white p-8 rounded-2xl shadow-sm animate-fade-in">
                     <h3 class="font-bold text-lg text-gray-800 mb-6">3 a 6 Ideias de Publicação Selecionadas</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         ${d.organicContent.ideas.map(i => `
@@ -795,10 +823,138 @@
                                 <p class="font-bold text-gray-800">${i.title}</p>
                             </div>`).join('')}
                     </div>
+                </div>
+                ${getFileBlock(tabId)}`;
+            }
+            // =====================================
+            // NOVAS SEÇÕES DO MENU (DIAGNÓSTICO)
+            // =====================================
+            else if(tabId === 'plan') {
+                html = `
+                <div class="flex items-center gap-3 mb-6 animate-fade-in">
+                    <div class="p-3 bg-red-100 rounded-lg text-red-600"><i class="ph-bold ph-rocket-launch text-2xl"></i></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Plano de Ação</h2>
+                        <p class="text-sm text-gray-500">Passos essenciais para ativar sua máquina.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden animate-fade-in">
+                    <div class="p-8 space-y-8">
+                        <!-- Passo 1 -->
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-lg">1</div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-lg">Páginas de Vendas</h4>
+                                <p class="text-gray-600 mt-2 leading-relaxed">Colocar as páginas de vendas no ar imediatamente. Verifique se o domínio está conectado e o carregamento está rápido.</p>
+                            </div>
+                        </div>
+                        <!-- Passo 2 -->
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-lg">2</div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-lg">Tráfego Pago (Anúncios)</h4>
+                                <p class="text-gray-600 mt-2 leading-relaxed">Investir nos anúncios patrocinados. Utilize os criativos disponíveis na aba 'Anúncios' para atrair público qualificado para sua página.</p>
+                            </div>
+                        </div>
+                        <!-- Passo 3 -->
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-lg">3</div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-lg">Orgânico & Feed</h4>
+                                <p class="text-gray-600 mt-2 leading-relaxed">Publicar os conteúdos no feed orgânico e manter o Instagram atualizado diariamente para gerar prova social.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            else if(tabId === 'goals') {
+                html = `
+                <div class="flex items-center gap-3 mb-6 animate-fade-in">
+                    <div class="p-3 bg-blue-100 rounded-lg text-blue-600"><i class="ph-bold ph-target text-2xl"></i></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Objetivos Principais</h2>
+                        <p class="text-sm text-gray-500">O que buscamos alcançar.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
+                    <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="ph ph-users text-2xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-lg">Mais Contatos</h4>
+                            <p class="text-sm text-gray-500">Aumentar fluxo de leads.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="ph ph-handshake text-2xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-lg">Mais Fechamentos</h4>
+                            <p class="text-sm text-gray-500">Melhorar a taxa de conversão.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="ph ph-tag text-2xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-lg">Mais Ofertas</h4>
+                            <p class="text-sm text-gray-500">Diversificar mix de produtos.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-green-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-green-50 text-green-600 flex items-center justify-center"><i class="ph ph-currency-dollar text-2xl"></i></div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-lg">Mais Lucro</h4>
+                            <p class="text-sm text-gray-500">Otimizar custos e ROI.</p>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            else if(tabId === 'metrics') {
+                html = `
+                <div class="flex items-center gap-3 mb-6 animate-fade-in">
+                    <div class="p-3 bg-green-100 rounded-lg text-green-600"><i class="ph-bold ph-chart-line-up text-2xl"></i></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Métricas Importantes</h2>
+                        <p class="text-sm text-gray-500">Dados para acompanhar diariamente.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 animate-fade-in">
+                    <div class="p-6 border-b border-gray-100 bg-gray-50/50">
+                        <h3 class="text-lg font-bold text-gray-900">Indicadores de Performance (KPIs)</h3>
+                        <p class="text-gray-500 text-sm">OBSERVAR METRICAS MAIS IMPORTANTES</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-gray-600">
+                                <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-400 border-b">
+                                    <tr>
+                                        <th class="px-6 py-3">Métrica</th>
+                                        <th class="px-6 py-3">Descrição / O que observar</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 font-bold text-gray-800 flex items-center gap-2"><i class="ph ph-whatsapp-logo text-green-500"></i> Novos Clientes (WhatsApp)</td>
+                                        <td class="px-6 py-4">QUANTIDADE DE NOVOS CLIENTES POR DIA CHAMANDO NO WHATSAPP</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 font-bold text-gray-800 flex items-center gap-2"><i class="ph ph-handshake text-blue-500"></i> Fechamentos / Vendas</td>
+                                        <td class="px-6 py-4">quantidade de fechamentos vendas realizadas por dia</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 font-bold text-gray-800 flex items-center gap-2"><i class="ph ph-money text-green-600"></i> Valor Bruto de Vendas</td>
+                                        <td class="px-6 py-4">valor bruto de vendas por dia</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 font-bold text-gray-800 flex items-center gap-2"><i class="ph ph-trend-up text-green-700"></i> Lucro Líquido</td>
+                                        <td class="px-6 py-4">total lucro liquido por dia</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>`;
             }
             
-            container.innerHTML = html + getFileBlock(tabId);
+            container.innerHTML = html;
         }
 
         function toggleMobileMenu() {
@@ -809,4 +965,4 @@
         function resetApp() { localStorage.removeItem('userSession'); location.reload(); }
     </script>
 </body>
-</html>"
+</html>
