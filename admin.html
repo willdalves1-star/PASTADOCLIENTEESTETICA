@@ -3,277 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel do Cliente - Máquina de Vendas</title>
+    <title>Painel Admin - Diagnóstico AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         .hidden-section { display: none !important; }
-        
-        /* Estilo do Menu Ativo */
-        .nav-item.active {
-            background-color: #EEF2FF; /* Indigo 50 */
-            color: #4F46E5; /* Indigo 600 */
-            border-right: 3px solid #4F46E5;
-            font-weight: 600;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.5rem;
-            color: #4B5563; /* Gray 600 */
-            font-size: 0.875rem;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-        .nav-item:hover:not(.active) {
-            background-color: #F9FAFB;
-            color: #111827;
-        }
+        .modal-overlay { background-color: rgba(0, 0, 0, 0.5); }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800 h-screen overflow-hidden">
+<body class="bg-gray-50 font-sans text-gray-800">
 
-    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-100 p-4">
-        <div class="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-200">
-                    <i class="ph ph-rocket-launch text-3xl"></i>
+    <div id="admin-login-screen" class="min-h-screen flex items-center justify-center p-4 bg-gray-100">
+        <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-gray-900 text-white rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <i class="ph ph-shield-check text-2xl"></i>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-900">Acesso do Cliente</h2>
-                <p class="text-gray-500 mt-2">Entre para acessar sua Máquina de Vendas.</p>
+                <h2 class="text-2xl font-bold text-gray-800">Acesso Restrito</h2>
+                <p class="text-gray-500 text-sm">Área exclusiva para administradores.</p>
             </div>
-            <form onsubmit="handleLogin(event)" class="space-y-5">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Usuário</label>
-                    <input type="text" id="username" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
-                    <input type="password" id="password" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" required>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 transform hover:scale-[1.02]">
-                    Entrar
-                </button>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <input type="password" id="admin-password" placeholder="Senha" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 outline-none" required>
+                <button type="submit" class="w-full bg-gray-900 text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition-colors">Entrar</button>
+                <a href="index.html" class="block text-center text-gray-500 text-sm hover:text-gray-700 mt-4">Voltar ao Site Principal</a>
             </form>
         </div>
     </div>
 
-    <div id="dashboard-screen" class="hidden-section flex h-full">
-        
-        <aside class="w-64 bg-white border-r border-gray-200 flex flex-col h-full shrink-0">
-            <div class="p-6 flex items-center gap-3 border-b border-gray-100">
-                <div class="w-8 h-8 bg-blue-600 rounded text-white flex items-center justify-center font-bold text-sm">MV</div>
-                <div>
-                    <h1 class="font-bold text-gray-900 leading-none">MÁQUINA</h1>
-                    <span class="text-xs text-blue-600 font-bold tracking-wider">DE VENDAS</span>
-                </div>
+    <div id="admin-dashboard-screen" class="hidden-section min-h-screen bg-gray-100 flex flex-col">
+        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gray-900 text-white rounded flex items-center justify-center font-bold">A</div>
+                <h1 class="text-xl font-bold text-gray-800">Painel Administrativo</h1>
             </div>
-
-            <nav class="flex-1 overflow-y-auto py-6 space-y-1">
-                <div class="px-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Menu Principal</div>
-                
-                <a onclick="switchTab('overview')" class="nav-item active" id="nav-overview">
-                    <i class="ph ph-squares-four text-lg"></i> Visão Geral
-                </a>
-                
-                <a onclick="openLink('landing')" class="nav-item">
-                    <i class="ph ph-globe text-lg"></i> Página de Vendas
-                </a>
-                <a onclick="openLink('design')" class="nav-item">
-                    <i class="ph ph-paint-brush text-lg"></i> Identidade Visual
-                </a>
-                <a onclick="openLink('ads')" class="nav-item">
-                    <i class="ph ph-megaphone text-lg"></i> Anúncios
-                </a>
-                <a onclick="openLink('content')" class="nav-item">
-                    <i class="ph ph-instagram-logo text-lg"></i> Feed & Ofertas
-                </a>
-
-                <div class="px-6 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Estratégia</div>
-
-                <a onclick="switchTab('plan')" class="nav-item" id="nav-plan">
-                    <i class="ph ph-rocket-launch text-lg"></i> Plano de Ação
-                </a>
-                <a onclick="switchTab('goals')" class="nav-item" id="nav-goals">
-                    <i class="ph ph-target text-lg"></i> Objetivos
-                </a>
-                <a onclick="switchTab('metrics')" class="nav-item" id="nav-metrics">
-                    <i class="ph ph-chart-line-up text-lg"></i> Métricas
-                </a>
-            </nav>
-
-            <div class="p-4 border-t border-gray-200">
-                <div class="px-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Conta</div>
-                <button onclick="logout()" class="w-full flex items-center gap-2 px-6 py-2 text-red-600 hover:bg-red-50 rounded-lg text-sm font-medium transition-colors">
-                    <i class="ph ph-sign-out text-lg"></i> Sair da Conta
+            <div class="flex items-center gap-4">
+                <div class="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full border border-gray-200">
+                    <span id="total-leads-count" class="font-bold text-gray-900">0</span> Leads
+                </div>
+                <button onclick="logoutAdmin()" class="text-red-600 hover:text-red-700 font-medium text-sm flex items-center gap-1">
+                    <i class="ph ph-sign-out"></i> Sair
                 </button>
             </div>
-        </aside>
+        </header>
 
-        <main class="flex-1 bg-gray-50 overflow-y-auto">
-            <header class="bg-white border-b border-gray-200 px-8 py-5 flex justify-between items-center sticky top-0 z-10">
-                <h2 class="text-xl font-bold text-gray-800" id="page-title">Visão Geral</h2>
-                <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                    <span class="text-sm font-medium text-gray-600" id="header-business-name">Carregando...</span>
+        <main class="flex-1 p-6 overflow-auto">
+            <div class="max-w-7xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500 border-b border-gray-200">
+                            <tr>
+                                <th class="px-6 py-4">Data</th>
+                                <th class="px-6 py-4">Login</th>
+                                <th class="px-6 py-4">Empresa (Editar)</th>
+                                <th class="px-6 py-4">Contato</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4 text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-table-body" class="divide-y divide-gray-100"></tbody>
+                    </table>
                 </div>
-            </header>
-
-            <div class="p-8 max-w-6xl mx-auto">
-                
-                <div id="view-overview" class="tab-content">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
-                            <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center mb-4"><i class="ph ph-laptop text-2xl"></i></div>
-                            <h3 class="font-bold text-gray-900">Página de Vendas</h3>
-                            <p class="text-sm text-gray-500 mt-2 mb-4 flex-1">Link da sua página de alta conversão.</p>
-                            <a id="btn-landing" href="#" target="_blank" class="w-full py-2 bg-gray-100 text-gray-400 rounded-lg text-sm font-bold pointer-events-none">Aguardando</a>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
-                            <div class="w-14 h-14 bg-pink-50 text-pink-600 rounded-full flex items-center justify-center mb-4"><i class="ph ph-paint-brush text-2xl"></i></div>
-                            <h3 class="font-bold text-gray-900">Identidade Visual</h3>
-                            <p class="text-sm text-gray-500 mt-2 mb-4 flex-1">Logotipo e manual da marca.</p>
-                            <a id="btn-design" href="#" target="_blank" class="w-full py-2 bg-gray-100 text-gray-400 rounded-lg text-sm font-bold pointer-events-none">Aguardando</a>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
-                            <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center mb-4"><i class="ph ph-megaphone text-2xl"></i></div>
-                            <h3 class="font-bold text-gray-900">Anúncios</h3>
-                            <p class="text-sm text-gray-500 mt-2 mb-4 flex-1">Criativos e vídeos para tráfego.</p>
-                            <a id="btn-ads" href="#" target="_blank" class="w-full py-2 bg-gray-100 text-gray-400 rounded-lg text-sm font-bold pointer-events-none">Aguardando</a>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
-                            <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4"><i class="ph ph-instagram-logo text-2xl"></i></div>
-                            <h3 class="font-bold text-gray-900">Feed & Ofertas</h3>
-                            <p class="text-sm text-gray-500 mt-2 mb-4 flex-1">Posts e estratégias orgânicas.</p>
-                            <a id="btn-content" href="#" target="_blank" class="w-full py-2 bg-gray-100 text-gray-400 rounded-lg text-sm font-bold pointer-events-none">Aguardando</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="view-plan" class="tab-content hidden-section">
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                        <div class="p-8 border-b border-gray-100 bg-red-50/50">
-                            <h3 class="text-lg font-bold text-gray-900">Plano de Execução</h3>
-                            <p class="text-gray-500 text-sm">Passos essenciais para ativar sua máquina de vendas.</p>
-                        </div>
-                        <div class="p-8 space-y-6">
-                            <div class="flex gap-4">
-                                <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-sm">1</div>
-                                <div>
-                                    <h4 class="font-bold text-gray-900">Páginas de Vendas</h4>
-                                    <p class="text-gray-600 mt-1">Colocar as páginas de vendas no ar imediatamente. Verifique se o domínio está conectado e o carregamento está rápido.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-sm">2</div>
-                                <div>
-                                    <h4 class="font-bold text-gray-900">Tráfego Pago (Anúncios)</h4>
-                                    <p class="text-gray-600 mt-1">Investir nos anúncios patrocinados. Utilize os criativos disponíveis na aba 'Anúncios' para atrair público qualificado para sua página.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-sm">3</div>
-                                <div>
-                                    <h4 class="font-bold text-gray-900">Orgânico & Feed</h4>
-                                    <p class="text-gray-600 mt-1">Publicar os conteúdos no feed orgânico e manter o Instagram atualizado diariamente para gerar prova social.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="view-goals" class="tab-content hidden-section">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="ph ph-users text-2xl"></i></div>
-                            <div>
-                                <h4 class="font-bold text-gray-900 text-lg">Mais Contatos</h4>
-                                <p class="text-sm text-gray-500">Aumentar fluxo de leads.</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="ph ph-handshake text-2xl"></i></div>
-                            <div>
-                                <h4 class="font-bold text-gray-900 text-lg">Mais Fechamentos</h4>
-                                <p class="text-sm text-gray-500">Melhorar a taxa de conversão.</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="ph ph-tag text-2xl"></i></div>
-                            <div>
-                                <h4 class="font-bold text-gray-900 text-lg">Mais Ofertas</h4>
-                                <p class="text-sm text-gray-500">Diversificar mix de produtos.</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-xl border border-green-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-green-50 text-green-600 flex items-center justify-center"><i class="ph ph-currency-dollar text-2xl"></i></div>
-                            <div>
-                                <h4 class="font-bold text-gray-900 text-lg">Mais Lucro</h4>
-                                <p class="text-sm text-gray-500">Otimizar custos e ROI.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="view-metrics" class="tab-content hidden-section">
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-                        <div class="p-6 border-b border-gray-100 bg-green-50/50">
-                            <h3 class="text-lg font-bold text-gray-900">Indicadores de Performance (KPIs)</h3>
-                            <p class="text-gray-500 text-sm">Dados que você deve acompanhar diariamente.</p>
-                        </div>
-                        <div class="p-6">
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left text-sm text-gray-600">
-                                    <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500">
-                                        <tr>
-                                            <th class="px-6 py-3 rounded-l-lg">Métrica</th>
-                                            <th class="px-6 py-3 rounded-r-lg">Descrição / O que observar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-gray-100">
-                                        <tr>
-                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-whatsapp-logo text-green-500 mr-2"></i> Novos Clientes (WhatsApp)</td>
-                                            <td class="px-6 py-4">Quantidade de pessoas novas chamando no WhatsApp por dia.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-handshake text-blue-500 mr-2"></i> Fechamentos / Vendas</td>
-                                            <td class="px-6 py-4">Quantidade absoluta de vendas realizadas no dia.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-money text-green-600 mr-2"></i> Valor Bruto de Vendas</td>
-                                            <td class="px-6 py-4">Total faturado no dia (R$).</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-trend-up text-green-700 mr-2"></i> Lucro Líquido</td>
-                                            <td class="px-6 py-4">Valor que sobra após pagar custos e anúncios.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-currency-circle-dollar text-orange-500 mr-2"></i> Investimento Diário (Ads)</td>
-                                            <td class="px-6 py-4">Quanto foi gasto nas plataformas de anúncio hoje.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-eye text-indigo-500 mr-2"></i> Alcance / Visualizações</td>
-                                            <td class="px-6 py-4">Quantas pessoas viram seu anúncio na localização selecionada.</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-cursor-click text-purple-500 mr-2"></i> Cliques no Anúncio</td>
-                                            <td class="px-6 py-4">Quantas pessoas clicaram na imagem ou vídeo do anúncio.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </main>
     </div>
 
+    <div id="client-details-modal" class="hidden-section fixed inset-0 z-50 flex items-center justify-center modal-overlay backdrop-blur-sm p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden animate-fade-in">
+            <div class="bg-gray-900 px-6 py-4 flex justify-between items-center shrink-0">
+                <h3 class="text-white font-bold flex items-center gap-2 text-lg"><i class="ph ph-user-gear"></i> Gerenciar Cliente</h3>
+                <button onclick="closeClientDetailsModal()" class="text-gray-400 hover:text-white transition-colors"><i class="ph ph-x text-2xl"></i></button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
+                <form id="edit-client-form" onsubmit="saveClientDetails(event)">
+                    <input type="hidden" id="edit-lead-id">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2">Dados Cadastrais</h4>
+                            <div class="grid gap-4">
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Empresa</label><input type="text" id="edit-business-name" class="w-full p-2 border rounded"></div>
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nicho</label><input type="text" id="edit-niche" class="w-full p-2 border rounded"></div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Telefone</label><input type="text" id="edit-phone" class="w-full p-2 border rounded"></div>
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Instagram</label><input type="text" id="edit-instagram" class="w-full p-2 border rounded"></div>
+                                </div>
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Tipo</label><input type="text" id="edit-type" class="w-full p-2 border rounded"></div>
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Budget</label><input type="text" id="edit-budget" class="w-full p-2 border rounded"></div>
+                            </div>
+                            
+                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 pt-4">Acesso</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Login</label><input type="text" id="edit-username" class="w-full p-2 border rounded"></div>
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Senha</label><input type="text" id="edit-password" class="w-full p-2 border rounded"></div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2">Entregas e Arquivos</h4>
+                            <div id="edit-deliverables-container" class="space-y-6"></div>
+
+                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 pt-6">Plano de Ação</h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 mb-1">Páginas de Vendas</label>
+                                    <input type="text" id="plan-pages" placeholder="Colocar as páginas no ar..." class="w-full p-2 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 mb-1">Tráfego Pago</label>
+                                    <input type="text" id="plan-ads" placeholder="Investir nos anúncios..." class="w-full p-2 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 mb-1">Orgânico & Feed</label>
+                                    <input type="text" id="plan-content" placeholder="Publicar conteúdos..." class="w-full p-2 border rounded">
+                                </div>
+                            </div>
+
+                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 pt-6">Objetivos</h4>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Objetivo 1</label><input type="text" id="obj-1" placeholder="Mais contatos" class="w-full p-2 border rounded"></div>
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Objetivo 2</label><input type="text" id="obj-2" placeholder="Mais fechamentos" class="w-full p-2 border rounded"></div>
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Objetivo 3</label><input type="text" id="obj-3" placeholder="Mais ofertas" class="w-full p-2 border rounded"></div>
+                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Objetivo 4</label><input type="text" id="obj-4" placeholder="Mais lucro" class="w-full p-2 border rounded"></div>
+                            </div>
+
+                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 pt-6">Métricas Importantes (Diário)</h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 mb-1">Novos Clientes (WhatsApp)</label>
+                                    <input type="text" id="met-whatsapp" class="w-full p-2 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 mb-1">Fechamentos / Vendas</label>
+                                    <input type="text" id="met-sales" class="w-full p-2 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 mb-1">Valor Bruto Vendas</label>
+                                    <input type="text" id="met-gross" class="w-full p-2 border rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-500 mb-1">Total Lucro Líquido</label>
+                                    <input type="text" id="met-profit" class="w-full p-2 border rounded">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="bg-white border-t p-4 flex justify-end gap-3 shrink-0">
+                <button onclick="closeClientDetailsModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg text-sm font-medium">Cancelar</button>
+                <button onclick="document.getElementById('edit-client-form').requestSubmit()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold flex items-center gap-2"><i class="ph ph-floppy-disk"></i> Salvar Tudo</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBr1vvN-c4QQ5S9KiHmRRF7Gq0SRzm6R_E",
@@ -288,112 +173,172 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // VARIÁVEIS GLOBAIS
-        let clientData = null;
+        // Funções Globais Admin
+        window.loadAdminData = function() {
+            const leadsRef = ref(db, 'leads');
+            const tableBody = document.getElementById('leads-table-body');
+            const countEl = document.getElementById('total-leads-count');
 
-        // LOGIN FUNCTION
-        window.handleLogin = async function(e) {
-            e.preventDefault();
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerText;
-
-            btn.innerText = "Verificando...";
-            btn.disabled = true;
-
-            try {
-                const leadsRef = ref(db, 'leads');
-                const snapshot = await get(leadsRef);
-                
-                if (snapshot.exists()) {
-                    let found = null;
-                    snapshot.forEach(child => {
-                        const data = child.val();
-                        if (data.username === user && data.password === pass) {
-                            found = data;
-                        }
-                    });
-
-                    if (found) {
-                        clientData = found;
-                        document.getElementById('login-screen').classList.add('hidden-section');
-                        document.getElementById('dashboard-screen').classList.remove('hidden-section');
-                        setupDashboard(found);
-                    } else {
-                        alert("Usuário ou senha incorretos.");
-                        btn.innerText = originalText;
-                        btn.disabled = false;
-                    }
-                } else {
-                    alert("Nenhum cadastro encontrado.");
-                    btn.innerText = originalText;
-                    btn.disabled = false;
+            onValue(leadsRef, (snapshot) => {
+                tableBody.innerHTML = '';
+                const data = snapshot.val();
+                if (!data) {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500">Nenhum lead encontrado.</td></tr>';
+                    countEl.textContent = '0';
+                    return;
                 }
-            } catch (error) {
-                console.error(error);
-                alert("Erro ao conectar.");
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }
+
+                const leads = Object.entries(data).map(([key, value]) => ({...value, id: key}));
+                countEl.textContent = leads.length;
+                leads.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+                leads.forEach(lead => {
+                    const date = new Date(lead.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit' });
+                    let budgetBadgeClass = 'bg-gray-100 text-gray-600';
+                    let budgetText = 'Iniciante';
+                    if(lead.budget === 'medium') { budgetBadgeClass = 'bg-blue-100 text-blue-700'; budgetText = 'Crescimento'; }
+                    if(lead.budget === 'high') { budgetBadgeClass = 'bg-purple-100 text-purple-700'; budgetText = 'Escala'; }
+
+                    const hasDeliveries = lead.deliverables && Object.keys(lead.deliverables).length > 0;
+                    const btnClass = hasDeliveries ? "bg-green-600 hover:bg-green-700" : "bg-gray-900 hover:bg-gray-700";
+                    const btnText = hasDeliveries ? "Ver / Editar" : "Entregar";
+                    const btnIcon = hasDeliveries ? "ph-check-circle" : "ph-paper-plane-right";
+
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-gray-50 transition-colors border-b border-gray-100";
+                    tr.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-500 text-xs">${date}</td>
+                        <td class="px-6 py-4 font-bold text-indigo-700 text-xs">${lead.username || '-'}</td>
+                        <td class="px-6 py-4"><button onclick="openClientDetails('${lead.id}')" class="font-medium text-gray-900 hover:text-indigo-600 hover:underline text-left">${lead.business_name}</button></td>
+                        <td class="px-6 py-4 text-gray-600 text-xs">${lead.phone || '-'}<br>${lead.instagram || '-'}</td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 rounded text-xs font-semibold ${budgetBadgeClass}">${budgetText}</span></td>
+                        <td class="px-6 py-4 text-right"><button onclick="openClientDetails('${lead.id}')" class="${btnClass} text-white text-xs font-bold py-2 px-3 rounded flex items-center gap-1 ml-auto transition-colors"><i class="ph ${btnIcon}"></i> ${btnText}</button></td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            });
         };
 
-        function setupDashboard(data) {
-            document.getElementById('header-business-name').textContent = data.business_name;
+        window.openClientDetails = function(leadId) {
+             const leadRef = ref(db, 'leads/' + leadId);
+             onValue(leadRef, (snapshot) => {
+                 const data = snapshot.val();
+                 if(!data) return;
+
+                 document.getElementById('edit-lead-id').value = leadId;
+                 document.getElementById('edit-business-name').value = data.business_name || '';
+                 document.getElementById('edit-niche').value = data.niche || '';
+                 document.getElementById('edit-phone').value = data.phone || '';
+                 document.getElementById('edit-instagram').value = data.instagram || '';
+                 document.getElementById('edit-type').value = data.business_type || '';
+                 document.getElementById('edit-budget').value = data.budget || '';
+                 document.getElementById('edit-username').value = data.username || '';
+                 document.getElementById('edit-password').value = data.password || '';
+
+                 // Carregar Entregas
+                 const container = document.getElementById('edit-deliverables-container');
+                 container.innerHTML = '';
+                 const sections = [{ id: 'landing', label: 'Página de Vendas' }, { id: 'design', label: 'Identidade Visual' }, { id: 'ads', label: 'Anúncios' }, { id: 'content', label: 'Feed & Conteúdo' }];
+                 sections.forEach(sec => {
+                     const delivery = (data.deliverables && data.deliverables[sec.id]) || { coverUrl: '', targetUrl: '' };
+                     const div = document.createElement('div');
+                     div.className = "bg-white p-4 rounded-lg border border-gray-200 shadow-sm";
+                     div.innerHTML = `<p class="font-semibold text-sm text-gray-800 mb-2">${sec.label}</p><div class="space-y-2"><input type="text" placeholder="Link da Capa (Imagem)" value="${delivery.coverUrl || ''}" id="del-cover-${sec.id}" class="w-full p-2 border rounded text-xs"><input type="text" placeholder="Link do Arquivo (Drive/Dropbox)" value="${delivery.targetUrl || ''}" id="del-target-${sec.id}" class="w-full p-2 border rounded text-xs"></div>`;
+                     container.appendChild(div);
+                 });
+
+                 // Carregar PLANO DE AÇÃO
+                 const plan = data.action_plan || {};
+                 document.getElementById('plan-pages').value = plan.pages || '';
+                 document.getElementById('plan-ads').value = plan.ads || '';
+                 document.getElementById('plan-content').value = plan.content || '';
+
+                 // Carregar OBJETIVOS
+                 const goals = data.objectives || {};
+                 document.getElementById('obj-1').value = goals.obj1 || '';
+                 document.getElementById('obj-2').value = goals.obj2 || '';
+                 document.getElementById('obj-3').value = goals.obj3 || '';
+                 document.getElementById('obj-4').value = goals.obj4 || '';
+
+                 // Carregar MÉTRICAS
+                 const metrics = data.metrics || {};
+                 document.getElementById('met-whatsapp').value = metrics.whatsapp || '';
+                 document.getElementById('met-sales').value = metrics.sales || '';
+                 document.getElementById('met-gross').value = metrics.gross || '';
+                 document.getElementById('met-profit').value = metrics.profit || '';
+
+                 document.getElementById('client-details-modal').classList.remove('hidden-section');
+             }, { onlyOnce: true });
+        };
+
+        window.saveClientDetails = function(e) {
+            e.preventDefault();
+            const leadId = document.getElementById('edit-lead-id').value;
+            if(!leadId) return;
+            const updates = {};
             
-            // Configurar botões da Visão Geral
+            // Dados e Login
+            updates[`leads/${leadId}/business_name`] = document.getElementById('edit-business-name').value;
+            updates[`leads/${leadId}/niche`] = document.getElementById('edit-niche').value;
+            updates[`leads/${leadId}/phone`] = document.getElementById('edit-phone').value;
+            updates[`leads/${leadId}/instagram`] = document.getElementById('edit-instagram').value;
+            updates[`leads/${leadId}/business_type`] = document.getElementById('edit-type').value;
+            updates[`leads/${leadId}/budget`] = document.getElementById('edit-budget').value;
+            updates[`leads/${leadId}/username`] = document.getElementById('edit-username').value;
+            updates[`leads/${leadId}/password`] = document.getElementById('edit-password').value;
+
+            // Entregas
             const sections = ['landing', 'design', 'ads', 'content'];
             sections.forEach(sec => {
-                const btn = document.getElementById(`btn-${sec}`);
-                if (data.deliverables && data.deliverables[sec] && data.deliverables[sec].targetUrl) {
-                    btn.href = data.deliverables[sec].targetUrl;
-                    btn.textContent = "Acessar Arquivo";
-                    btn.className = "w-full py-2 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200";
-                    btn.style.pointerEvents = "auto";
+                const cover = document.getElementById(`del-cover-${sec}`).value;
+                const target = document.getElementById(`del-target-${sec}`).value;
+                if(cover || target) {
+                    updates[`leads/${leadId}/deliverables/${sec}`] = { coverUrl: cover, targetUrl: target, updatedAt: new Date().toISOString() };
                 }
             });
-        }
+
+            // SALVAR PLANO DE AÇÃO
+            updates[`leads/${leadId}/action_plan/pages`] = document.getElementById('plan-pages').value;
+            updates[`leads/${leadId}/action_plan/ads`] = document.getElementById('plan-ads').value;
+            updates[`leads/${leadId}/action_plan/content`] = document.getElementById('plan-content').value;
+
+            // SALVAR OBJETIVOS
+            updates[`leads/${leadId}/objectives/obj1`] = document.getElementById('obj-1').value;
+            updates[`leads/${leadId}/objectives/obj2`] = document.getElementById('obj-2').value;
+            updates[`leads/${leadId}/objectives/obj3`] = document.getElementById('obj-3').value;
+            updates[`leads/${leadId}/objectives/obj4`] = document.getElementById('obj-4').value;
+
+            // SALVAR MÉTRICAS
+            updates[`leads/${leadId}/metrics/whatsapp`] = document.getElementById('met-whatsapp').value;
+            updates[`leads/${leadId}/metrics/sales`] = document.getElementById('met-sales').value;
+            updates[`leads/${leadId}/metrics/gross`] = document.getElementById('met-gross').value;
+            updates[`leads/${leadId}/metrics/profit`] = document.getElementById('met-profit').value;
+
+            update(ref(db), updates).then(() => {
+                alert('Dados atualizados com sucesso!');
+                document.getElementById('client-details-modal').classList.add('hidden-section');
+            }).catch(err => alert('Erro: ' + err.message));
+        };
     </script>
 
     <script>
-        // Função para trocar abas
-        function switchTab(tabId) {
-            // 1. Esconder todo conteúdo
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(el => el.classList.add('hidden-section'));
-
-            // 2. Remover classe active de todos os nav items
-            const navs = document.querySelectorAll('.nav-item');
-            navs.forEach(el => el.classList.remove('active'));
-
-            // 3. Mostrar conteúdo selecionado
-            document.getElementById(`view-${tabId}`).classList.remove('hidden-section');
-            
-            // 4. Ativar menu
-            document.getElementById(`nav-${tabId}`).classList.add('active');
-
-            // 5. Atualizar Título
-            const titles = {
-                'overview': 'Visão Geral',
-                'plan': 'Plano de Ação',
-                'goals': 'Objetivos',
-                'metrics': 'Métricas'
-            };
-            document.getElementById('page-title').textContent = titles[tabId];
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('admin-password').value;
+            if (password === 'admin123') {
+                document.getElementById('admin-login-screen').classList.add('hidden-section');
+                document.getElementById('admin-dashboard-screen').classList.remove('hidden-section');
+                if(window.loadAdminData) window.loadAdminData();
+            } else {
+                alert('Senha incorreta!');
+            }
         }
 
-        // Função para os links do menu lateral que são apenas atalhos
-        function openLink(type) {
-            // Se tiver link salvo no clienteData, abre. Se não, alerta ou vai para visão geral.
-            // Como clientData está no modulo, vamos apenas jogar para Visão Geral e alertar visualmente
-            switchTab('overview');
-            // Pequeno highlight no card
-            setTimeout(() => {
-                // Efeito visual simples poderia ser adicionado aqui
-            }, 100);
+        function closeClientDetailsModal() {
+            document.getElementById('client-details-modal').classList.add('hidden-section');
         }
 
-        function logout() {
+        function logoutAdmin() {
             location.reload();
         }
     </script>
