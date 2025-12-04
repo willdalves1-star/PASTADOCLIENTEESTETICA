@@ -9,11 +9,25 @@
     <style>
         .hidden-section { display: none !important; }
         .modal-overlay { background-color: rgba(0, 0, 0, 0.5); }
+        /* Estilo para as "Abas/Seções" */
+        .admin-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #111827;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #E5E7EB;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
-    <!-- LOGIN SCREEN -->
     <div id="admin-login-screen" class="min-h-screen flex items-center justify-center p-4 bg-gray-100">
         <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
             <div class="text-center mb-6">
@@ -31,7 +45,6 @@
         </div>
     </div>
 
-    <!-- DASHBOARD SCREEN -->
     <div id="admin-dashboard-screen" class="hidden-section min-h-screen bg-gray-100 flex flex-col">
         <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
             <div class="flex items-center gap-3">
@@ -69,9 +82,8 @@
         </main>
     </div>
 
-    <!-- MODAL DETALHES -->
     <div id="client-details-modal" class="hidden-section fixed inset-0 z-50 flex items-center justify-center modal-overlay backdrop-blur-sm p-4">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden animate-fade-in">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-5xl h-[90vh] flex flex-col overflow-hidden animate-fade-in">
             <div class="bg-gray-900 px-6 py-4 flex justify-between items-center shrink-0">
                 <h3 class="text-white font-bold flex items-center gap-2 text-lg"><i class="ph ph-user-gear"></i> Gerenciar Cliente</h3>
                 <button onclick="closeClientDetailsModal()" class="text-gray-400 hover:text-white transition-colors"><i class="ph ph-x text-2xl"></i></button>
@@ -79,28 +91,91 @@
             <div class="flex-1 overflow-y-auto p-6 bg-gray-50">
                 <form id="edit-client-form" onsubmit="saveClientDetails(event)">
                     <input type="hidden" id="edit-lead-id">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="space-y-4">
-                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2">Dados Cadastrais</h4>
-                            <div class="grid gap-4">
-                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Empresa</label><input type="text" id="edit-business-name" class="w-full p-2 border rounded"></div>
-                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nicho</label><input type="text" id="edit-niche" class="w-full p-2 border rounded"></div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Telefone</label><input type="text" id="edit-phone" class="w-full p-2 border rounded"></div>
-                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Instagram</label><input type="text" id="edit-instagram" class="w-full p-2 border rounded"></div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        
+                        <div class="lg:col-span-4 space-y-6">
+                            <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 mb-4">Dados Cadastrais</h4>
+                                <div class="grid gap-4">
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Empresa</label><input type="text" id="edit-business-name" class="w-full p-2 border rounded text-sm"></div>
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Nicho</label><input type="text" id="edit-niche" class="w-full p-2 border rounded text-sm"></div>
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Telefone</label><input type="text" id="edit-phone" class="w-full p-2 border rounded text-sm"></div>
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Instagram</label><input type="text" id="edit-instagram" class="w-full p-2 border rounded text-sm"></div>
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Tipo</label><input type="text" id="edit-type" class="w-full p-2 border rounded text-sm"></div>
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Budget</label><input type="text" id="edit-budget" class="w-full p-2 border rounded text-sm"></div>
                                 </div>
-                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Tipo</label><input type="text" id="edit-type" class="w-full p-2 border rounded"></div>
-                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Budget</label><input type="text" id="edit-budget" class="w-full p-2 border rounded"></div>
                             </div>
-                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 pt-4">Acesso</h4>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Login</label><input type="text" id="edit-username" class="w-full p-2 border rounded"></div>
-                                <div><label class="block text-xs font-semibold text-gray-500 mb-1">Senha</label><input type="text" id="edit-password" class="w-full p-2 border rounded"></div>
+
+                            <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                                <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2 mb-4">Acesso do Cliente</h4>
+                                <div class="space-y-4">
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Login</label><input type="text" id="edit-username" class="w-full p-2 border rounded text-sm bg-gray-50"></div>
+                                    <div><label class="block text-xs font-semibold text-gray-500 mb-1">Senha</label><input type="text" id="edit-password" class="w-full p-2 border rounded text-sm bg-gray-50"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="space-y-4">
-                            <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider border-b pb-2">Entregas e Arquivos</h4>
-                            <div id="edit-deliverables-container" class="space-y-6"></div>
+
+                        <div class="lg:col-span-8 space-y-6">
+                            
+                            <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                                <h4 class="admin-section-title text-indigo-700 mt-0"><i class="ph ph-folder-open"></i> Entregas e Arquivos</h4>
+                                <div id="edit-deliverables-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    </div>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm border-l-4 border-l-red-500">
+                                <h4 class="admin-section-title text-red-600 mt-0"><i class="ph ph-rocket-launch"></i> Plano de Ação</h4>
+                                <p class="text-xs text-gray-500 mb-4">Defina as ações que o cliente deve tomar.</p>
+                                <div class="grid gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Páginas de Vendas</label>
+                                        <input type="text" id="plan-pages" placeholder="Ex: Colocar as paginas de vendas no ar" class="w-full p-2 border rounded text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Tráfego Pago</label>
+                                        <input type="text" id="plan-ads" placeholder="Ex: Investir nos anuncios patrocinados" class="w-full p-2 border rounded text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Orgânico & Feed</label>
+                                        <textarea id="plan-content" placeholder="Ex: Publicar conteudos no feed e manter atualizado" class="w-full p-2 border rounded text-sm h-20"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm border-l-4 border-l-blue-500">
+                                <h4 class="admin-section-title text-blue-600 mt-0"><i class="ph ph-target"></i> Objetivos</h4>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Objetivo 1</label><input type="text" id="obj-1" placeholder="Mais contatos" class="w-full p-2 border rounded text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Objetivo 2</label><input type="text" id="obj-2" placeholder="Mais fechamentos" class="w-full p-2 border rounded text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Objetivo 3</label><input type="text" id="obj-3" placeholder="Mais ofertas" class="w-full p-2 border rounded text-sm"></div>
+                                    <div><label class="block text-xs font-bold text-gray-500 mb-1">Objetivo 4</label><input type="text" id="obj-4" placeholder="Mais lucro" class="w-full p-2 border rounded text-sm"></div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-lg border border-gray-200 shadow-sm border-l-4 border-l-green-500">
+                                <h4 class="admin-section-title text-green-600 mt-0"><i class="ph ph-chart-line-up"></i> Métricas Importantes</h4>
+                                <p class="text-xs text-gray-500 mb-4">Dados para o cliente observar.</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Novos Clientes (WhatsApp)</label>
+                                        <input type="text" id="met-whatsapp" placeholder="Qtd / Dia" class="w-full p-2 border rounded text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Fechamentos / Vendas</label>
+                                        <input type="text" id="met-sales" placeholder="Qtd / Dia" class="w-full p-2 border rounded text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Valor Bruto Vendas</label>
+                                        <input type="text" id="met-gross" placeholder="R$ / Dia" class="w-full p-2 border rounded text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Total Lucro Líquido</label>
+                                        <input type="text" id="met-profit" placeholder="R$ / Dia" class="w-full p-2 border rounded text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </form>
@@ -112,7 +187,6 @@
         </div>
     </div>
 
-    <!-- FIREBASE MODULE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
@@ -182,6 +256,7 @@
                  const data = snapshot.val();
                  if(!data) return;
 
+                 // Dados Básicos
                  document.getElementById('edit-lead-id').value = leadId;
                  document.getElementById('edit-business-name').value = data.business_name || '';
                  document.getElementById('edit-niche').value = data.niche || '';
@@ -192,17 +267,38 @@
                  document.getElementById('edit-username').value = data.username || '';
                  document.getElementById('edit-password').value = data.password || '';
 
+                 // Entregas (Arquivos)
                  const container = document.getElementById('edit-deliverables-container');
                  container.innerHTML = '';
-                 
                  const sections = [{ id: 'landing', label: 'Página de Vendas' }, { id: 'design', label: 'Identidade Visual' }, { id: 'ads', label: 'Anúncios' }, { id: 'content', label: 'Feed & Conteúdo' }];
                  sections.forEach(sec => {
                      const delivery = (data.deliverables && data.deliverables[sec.id]) || { coverUrl: '', targetUrl: '' };
                      const div = document.createElement('div');
-                     div.className = "bg-white p-4 rounded-lg border border-gray-200 shadow-sm";
-                     div.innerHTML = `<p class="font-semibold text-sm text-gray-800 mb-2">${sec.label}</p><div class="space-y-2"><input type="text" placeholder="Link da Capa (Imagem)" value="${delivery.coverUrl || ''}" id="del-cover-${sec.id}" class="w-full p-2 border rounded text-xs"><input type="text" placeholder="Link do Arquivo (Drive/Dropbox)" value="${delivery.targetUrl || ''}" id="del-target-${sec.id}" class="w-full p-2 border rounded text-xs"></div>`;
+                     div.className = "bg-gray-50 p-3 rounded border border-gray-200";
+                     div.innerHTML = `<p class="font-semibold text-xs text-gray-800 mb-2 uppercase">${sec.label}</p><div class="space-y-2"><input type="text" placeholder="Link da Capa (Imagem)" value="${delivery.coverUrl || ''}" id="del-cover-${sec.id}" class="w-full p-2 border rounded text-xs bg-white"><input type="text" placeholder="Link do Arquivo (Drive)" value="${delivery.targetUrl || ''}" id="del-target-${sec.id}" class="w-full p-2 border rounded text-xs bg-white"></div>`;
                      container.appendChild(div);
                  });
+
+                 // NOVOS CAMPOS: Plano de Ação
+                 const plan = data.action_plan || {};
+                 document.getElementById('plan-pages').value = plan.pages || '';
+                 document.getElementById('plan-ads').value = plan.ads || '';
+                 document.getElementById('plan-content').value = plan.content || '';
+
+                 // NOVOS CAMPOS: Objetivos
+                 const goals = data.objectives || {};
+                 document.getElementById('obj-1').value = goals.obj1 || '';
+                 document.getElementById('obj-2').value = goals.obj2 || '';
+                 document.getElementById('obj-3').value = goals.obj3 || '';
+                 document.getElementById('obj-4').value = goals.obj4 || '';
+
+                 // NOVOS CAMPOS: Métricas
+                 const metrics = data.metrics || {};
+                 document.getElementById('met-whatsapp').value = metrics.whatsapp || '';
+                 document.getElementById('met-sales').value = metrics.sales || '';
+                 document.getElementById('met-gross').value = metrics.gross || '';
+                 document.getElementById('met-profit').value = metrics.profit || '';
+
                  document.getElementById('client-details-modal').classList.remove('hidden-section');
              }, { onlyOnce: true });
         };
@@ -213,6 +309,7 @@
             if(!leadId) return;
             const updates = {};
             
+            // Dados Básicos
             updates[`leads/${leadId}/business_name`] = document.getElementById('edit-business-name').value;
             updates[`leads/${leadId}/niche`] = document.getElementById('edit-niche').value;
             updates[`leads/${leadId}/phone`] = document.getElementById('edit-phone').value;
@@ -222,6 +319,7 @@
             updates[`leads/${leadId}/username`] = document.getElementById('edit-username').value;
             updates[`leads/${leadId}/password`] = document.getElementById('edit-password').value;
 
+            // Entregas
             const sections = ['landing', 'design', 'ads', 'content'];
             sections.forEach(sec => {
                 const cover = document.getElementById(`del-cover-${sec}`).value;
@@ -231,6 +329,23 @@
                 }
             });
 
+            // SALVAR PLANO DE AÇÃO
+            updates[`leads/${leadId}/action_plan/pages`] = document.getElementById('plan-pages').value;
+            updates[`leads/${leadId}/action_plan/ads`] = document.getElementById('plan-ads').value;
+            updates[`leads/${leadId}/action_plan/content`] = document.getElementById('plan-content').value;
+
+            // SALVAR OBJETIVOS
+            updates[`leads/${leadId}/objectives/obj1`] = document.getElementById('obj-1').value;
+            updates[`leads/${leadId}/objectives/obj2`] = document.getElementById('obj-2').value;
+            updates[`leads/${leadId}/objectives/obj3`] = document.getElementById('obj-3').value;
+            updates[`leads/${leadId}/objectives/obj4`] = document.getElementById('obj-4').value;
+
+            // SALVAR MÉTRICAS
+            updates[`leads/${leadId}/metrics/whatsapp`] = document.getElementById('met-whatsapp').value;
+            updates[`leads/${leadId}/metrics/sales`] = document.getElementById('met-sales').value;
+            updates[`leads/${leadId}/metrics/gross`] = document.getElementById('met-gross').value;
+            updates[`leads/${leadId}/metrics/profit`] = document.getElementById('met-profit').value;
+
             update(ref(db), updates).then(() => {
                 alert('Dados atualizados com sucesso!');
                 document.getElementById('client-details-modal').classList.add('hidden-section');
@@ -238,7 +353,6 @@
         };
     </script>
 
-    <!-- SCRIPT LOCAL -->
     <script>
         function handleAdminLogin(e) {
             e.preventDefault();
