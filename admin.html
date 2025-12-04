@@ -3,210 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel do Cliente - Diagnóstico AI</title>
+    <title>Painel do Cliente - Máquina de Vendas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         .hidden-section { display: none !important; }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        
+        /* Estilo do Menu Ativo */
+        .nav-item.active {
+            background-color: #EEF2FF; /* Indigo 50 */
+            color: #4F46E5; /* Indigo 600 */
+            border-right: 3px solid #4F46E5;
+            font-weight: 600;
         }
-        .metric-card-static {
-            background: #F9FAFB;
-            border: 1px solid #E5E7EB;
-            border-radius: 0.75rem;
-            padding: 1rem;
+        .nav-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: #4B5563; /* Gray 600 */
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .nav-item:hover:not(.active) {
+            background-color: #F9FAFB;
+            color: #111827;
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800 min-h-screen">
+<body class="bg-gray-50 font-sans text-gray-800 h-screen overflow-hidden">
 
-    <div id="login-screen" class="min-h-screen flex items-center justify-center p-4">
+    <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-100 p-4">
         <div class="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
             <div class="text-center mb-8">
                 <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-200">
                     <i class="ph ph-rocket-launch text-3xl"></i>
                 </div>
-                <h2 class="text-3xl font-bold text-gray-900">Bem-vindo</h2>
-                <p class="text-gray-500 mt-2">Acesse seu painel exclusivo de crescimento.</p>
+                <h2 class="text-2xl font-bold text-gray-900">Acesso do Cliente</h2>
+                <p class="text-gray-500 mt-2">Entre para acessar sua Máquina de Vendas.</p>
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-5">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Usuário</label>
-                    <input type="text" id="username" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" placeholder="Seu usuário" required>
+                    <input type="text" id="username" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" required>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
-                    <input type="password" id="password" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" placeholder="Sua senha" required>
+                    <input type="password" id="password" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" required>
                 </div>
                 <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 transform hover:scale-[1.02]">
-                    Acessar Painel
+                    Entrar
                 </button>
             </form>
         </div>
     </div>
 
-    <div id="dashboard-screen" class="hidden-section min-h-screen flex flex-col">
-        <header class="bg-white border-b border-gray-200 sticky top-0 z-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-xl shadow-md">
-                        <i class="ph ph-buildings"></i>
-                    </div>
-                    <div>
-                        <h1 id="business-name" class="text-lg font-bold text-gray-900 leading-tight">Carregando...</h1>
-                        <p class="text-xs text-gray-500">Painel do Cliente</p>
-                    </div>
+    <div id="dashboard-screen" class="hidden-section flex h-full">
+        
+        <aside class="w-64 bg-white border-r border-gray-200 flex flex-col h-full shrink-0">
+            <div class="p-6 flex items-center gap-3 border-b border-gray-100">
+                <div class="w-8 h-8 bg-blue-600 rounded text-white flex items-center justify-center font-bold text-sm">MV</div>
+                <div>
+                    <h1 class="font-bold text-gray-900 leading-none">MÁQUINA</h1>
+                    <span class="text-xs text-blue-600 font-bold tracking-wider">DE VENDAS</span>
                 </div>
-                <button onclick="logout()" class="text-gray-400 hover:text-red-500 transition-colors">
-                    <i class="ph ph-sign-out text-2xl"></i>
+            </div>
+
+            <nav class="flex-1 overflow-y-auto py-6 space-y-1">
+                <div class="px-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Menu Principal</div>
+                
+                <a onclick="switchTab('overview')" class="nav-item active" id="nav-overview">
+                    <i class="ph ph-squares-four text-lg"></i> Visão Geral
+                </a>
+                
+                <a onclick="openLink('landing')" class="nav-item">
+                    <i class="ph ph-globe text-lg"></i> Página de Vendas
+                </a>
+                <a onclick="openLink('design')" class="nav-item">
+                    <i class="ph ph-paint-brush text-lg"></i> Identidade Visual
+                </a>
+                <a onclick="openLink('ads')" class="nav-item">
+                    <i class="ph ph-megaphone text-lg"></i> Anúncios
+                </a>
+                <a onclick="openLink('content')" class="nav-item">
+                    <i class="ph ph-instagram-logo text-lg"></i> Feed & Ofertas
+                </a>
+
+                <div class="px-6 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Estratégia</div>
+
+                <a onclick="switchTab('plan')" class="nav-item" id="nav-plan">
+                    <i class="ph ph-rocket-launch text-lg"></i> Plano de Ação
+                </a>
+                <a onclick="switchTab('goals')" class="nav-item" id="nav-goals">
+                    <i class="ph ph-target text-lg"></i> Objetivos
+                </a>
+                <a onclick="switchTab('metrics')" class="nav-item" id="nav-metrics">
+                    <i class="ph ph-chart-line-up text-lg"></i> Métricas
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-gray-200">
+                <div class="px-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Conta</div>
+                <button onclick="logout()" class="w-full flex items-center gap-2 px-6 py-2 text-red-600 hover:bg-red-50 rounded-lg text-sm font-medium transition-colors">
+                    <i class="ph ph-sign-out text-lg"></i> Sair da Conta
                 </button>
             </div>
-        </header>
+        </aside>
 
-        <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-            <div class="max-w-5xl mx-auto space-y-8">
+        <main class="flex-1 bg-gray-50 overflow-y-auto">
+            <header class="bg-white border-b border-gray-200 px-8 py-5 flex justify-between items-center sticky top-0 z-10">
+                <h2 class="text-xl font-bold text-gray-800" id="page-title">Visão Geral</h2>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    <span class="text-sm font-medium text-gray-600" id="header-business-name">Carregando...</span>
+                </div>
+            </header>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div id="card-landing" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-4"><i class="ph ph-laptop text-2xl"></i></div>
-                        <h3 class="font-bold text-gray-900">Página de Vendas</h3>
-                        <p class="text-xs text-gray-500 mt-1 mb-4">Sua máquina de vendas online.</p>
-                        <a id="btn-landing" href="#" target="_blank" class="block w-full text-center py-2 rounded-lg bg-gray-100 text-gray-400 text-sm font-semibold pointer-events-none">Em Breve</a>
-                    </div>
-                    <div id="card-design" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-xl flex items-center justify-center mb-4"><i class="ph ph-paint-brush text-2xl"></i></div>
-                        <h3 class="font-bold text-gray-900">Identidade Visual</h3>
-                        <p class="text-xs text-gray-500 mt-1 mb-4">Logos e materiais da marca.</p>
-                        <a id="btn-design" href="#" target="_blank" class="block w-full text-center py-2 rounded-lg bg-gray-100 text-gray-400 text-sm font-semibold pointer-events-none">Em Breve</a>
-                    </div>
-                    <div id="card-ads" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center mb-4"><i class="ph ph-megaphone text-2xl"></i></div>
-                        <h3 class="font-bold text-gray-900">Anúncios</h3>
-                        <p class="text-xs text-gray-500 mt-1 mb-4">Criativos para tráfego pago.</p>
-                        <a id="btn-ads" href="#" target="_blank" class="block w-full text-center py-2 rounded-lg bg-gray-100 text-gray-400 text-sm font-semibold pointer-events-none">Em Breve</a>
-                    </div>
-                    <div id="card-content" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4"><i class="ph ph-instagram-logo text-2xl"></i></div>
-                        <h3 class="font-bold text-gray-900">Feed & Ofertas</h3>
-                        <p class="text-xs text-gray-500 mt-1 mb-4">Conteúdo orgânico estratégico.</p>
-                        <a id="btn-content" href="#" target="_blank" class="block w-full text-center py-2 rounded-lg bg-gray-100 text-gray-400 text-sm font-semibold pointer-events-none">Em Breve</a>
+            <div class="p-8 max-w-6xl mx-auto">
+                
+                <div id="view-overview" class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                            <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center mb-4"><i class="ph ph-laptop text-2xl"></i></div>
+                            <h3 class="font-bold text-gray-900">Página de Vendas</h3>
+                            <p class="text-sm text-gray-500 mt-2 mb-4 flex-1">Link da sua página de alta conversão.</p>
+                            <a id="btn-landing" href="#" target="_blank" class="w-full py-2 bg-gray-100 text-gray-400 rounded-lg text-sm font-bold pointer-events-none">Aguardando</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                            <div class="w-14 h-14 bg-pink-50 text-pink-600 rounded-full flex items-center justify-center mb-4"><i class="ph ph-paint-brush text-2xl"></i></div>
+                            <h3 class="font-bold text-gray-900">Identidade Visual</h3>
+                            <p class="text-sm text-gray-500 mt-2 mb-4 flex-1">Logotipo e manual da marca.</p>
+                            <a id="btn-design" href="#" target="_blank" class="w-full py-2 bg-gray-100 text-gray-400 rounded-lg text-sm font-bold pointer-events-none">Aguardando</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                            <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center mb-4"><i class="ph ph-megaphone text-2xl"></i></div>
+                            <h3 class="font-bold text-gray-900">Anúncios</h3>
+                            <p class="text-sm text-gray-500 mt-2 mb-4 flex-1">Criativos e vídeos para tráfego.</p>
+                            <a id="btn-ads" href="#" target="_blank" class="w-full py-2 bg-gray-100 text-gray-400 rounded-lg text-sm font-bold pointer-events-none">Aguardando</a>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                            <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4"><i class="ph ph-instagram-logo text-2xl"></i></div>
+                            <h3 class="font-bold text-gray-900">Feed & Ofertas</h3>
+                            <p class="text-sm text-gray-500 mt-2 mb-4 flex-1">Posts e estratégias orgânicas.</p>
+                            <a id="btn-content" href="#" target="_blank" class="w-full py-2 bg-gray-100 text-gray-400 rounded-lg text-sm font-bold pointer-events-none">Aguardando</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-2 bg-red-50">
-                        <i class="ph ph-rocket text-red-600 text-xl"></i>
-                        <h3 class="font-bold text-gray-800">Plano de Ação</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="space-y-4">
-                            <div class="flex items-start gap-3">
-                                <div class="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 text-xs font-bold">1</div>
+                <div id="view-plan" class="tab-content hidden-section">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="p-8 border-b border-gray-100 bg-red-50/50">
+                            <h3 class="text-lg font-bold text-gray-900">Plano de Execução</h3>
+                            <p class="text-gray-500 text-sm">Passos essenciais para ativar sua máquina de vendas.</p>
+                        </div>
+                        <div class="p-8 space-y-6">
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-sm">1</div>
                                 <div>
-                                    <h4 class="font-bold text-gray-900 text-sm">Páginas de Vendas</h4>
-                                    <p class="text-sm text-gray-600">Colocar as páginas de vendas no ar imediatamente para receber tráfego.</p>
+                                    <h4 class="font-bold text-gray-900">Páginas de Vendas</h4>
+                                    <p class="text-gray-600 mt-1">Colocar as páginas de vendas no ar imediatamente. Verifique se o domínio está conectado e o carregamento está rápido.</p>
                                 </div>
                             </div>
-                            <div class="flex items-start gap-3">
-                                <div class="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 text-xs font-bold">2</div>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-sm">2</div>
                                 <div>
-                                    <h4 class="font-bold text-gray-900 text-sm">Tráfego Pago</h4>
-                                    <p class="text-sm text-gray-600">Investir nos anúncios patrocinados para atrair clientes qualificados.</p>
+                                    <h4 class="font-bold text-gray-900">Tráfego Pago (Anúncios)</h4>
+                                    <p class="text-gray-600 mt-1">Investir nos anúncios patrocinados. Utilize os criativos disponíveis na aba 'Anúncios' para atrair público qualificado para sua página.</p>
                                 </div>
                             </div>
-                            <div class="flex items-start gap-3">
-                                <div class="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 text-xs font-bold">3</div>
+                            <div class="flex gap-4">
+                                <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-sm">3</div>
                                 <div>
-                                    <h4 class="font-bold text-gray-900 text-sm">Orgânico & Feed</h4>
-                                    <p class="text-sm text-gray-600">Publicar os conteúdos no feed orgânico e manter o Instagram atualizado.</p>
+                                    <h4 class="font-bold text-gray-900">Orgânico & Feed</h4>
+                                    <p class="text-gray-600 mt-1">Publicar os conteúdos no feed orgânico e manter o Instagram atualizado diariamente para gerar prova social.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-2 bg-blue-50">
-                        <i class="ph ph-target text-blue-600 text-xl"></i>
-                        <h3 class="font-bold text-gray-800">Objetivos Principais</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                <i class="ph ph-users text-2xl text-blue-600 mb-2"></i>
-                                <p class="font-bold text-gray-800 text-sm">Mais Contatos</p>
+                <div id="view-goals" class="tab-content hidden-section">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="ph ph-users text-2xl"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-lg">Mais Contatos</h4>
+                                <p class="text-sm text-gray-500">Aumentar fluxo de leads.</p>
                             </div>
-                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                <i class="ph ph-handshake text-2xl text-blue-600 mb-2"></i>
-                                <p class="font-bold text-gray-800 text-sm">Mais Fechamentos</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="ph ph-handshake text-2xl"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-lg">Mais Fechamentos</h4>
+                                <p class="text-sm text-gray-500">Melhorar a taxa de conversão.</p>
                             </div>
-                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                <i class="ph ph-tag text-2xl text-blue-600 mb-2"></i>
-                                <p class="font-bold text-gray-800 text-sm">Mais Ofertas</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="ph ph-tag text-2xl"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-lg">Mais Ofertas</h4>
+                                <p class="text-sm text-gray-500">Diversificar mix de produtos.</p>
                             </div>
-                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                <i class="ph ph-currency-dollar text-2xl text-green-600 mb-2"></i>
-                                <p class="font-bold text-gray-800 text-sm">Mais Lucro</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-green-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-lg bg-green-50 text-green-600 flex items-center justify-center"><i class="ph ph-currency-dollar text-2xl"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-lg">Mais Lucro</h4>
+                                <p class="text-sm text-gray-500">Otimizar custos e ROI.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-2 bg-green-50">
-                        <i class="ph ph-chart-line-up text-green-600 text-xl"></i>
-                        <h3 class="font-bold text-gray-800">Métricas Importantes para Observar</h3>
-                    </div>
-                    <div class="p-6">
-                        <p class="text-sm text-gray-500 mb-6 font-medium uppercase tracking-wider">Acompanhamento Diário:</p>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="metric-card-static">
-                                <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><i class="ph ph-whatsapp-logo text-xl"></i></div>
-                                <span class="text-sm font-bold text-gray-700">Qtd. Novos Clientes (WhatsApp)</span>
-                            </div>
-                            <div class="metric-card-static">
-                                <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><i class="ph ph-check-circle text-xl"></i></div>
-                                <span class="text-sm font-bold text-gray-700">Qtd. Fechamentos / Vendas</span>
-                            </div>
-                            <div class="metric-card-static">
-                                <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><i class="ph ph-money text-xl"></i></div>
-                                <span class="text-sm font-bold text-gray-700">Valor Bruto de Vendas</span>
-                            </div>
-                            <div class="metric-card-static border-green-200 bg-green-50">
-                                <div class="w-10 h-10 rounded-full bg-white text-green-700 flex items-center justify-center shadow-sm"><i class="ph ph-trend-up text-xl"></i></div>
-                                <span class="text-sm font-bold text-green-800">Total Lucro Líquido</span>
-                            </div>
-
-                            <div class="md:col-span-2 pt-4 border-t mt-2">
-                                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Tráfego & Anúncios</p>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div class="metric-card-static">
-                                        <i class="ph ph-currency-circle-dollar text-orange-500 text-xl"></i>
-                                        <span class="text-sm font-medium text-gray-600">Investimento Diário Ads</span>
-                                    </div>
-                                    <div class="metric-card-static">
-                                        <i class="ph ph-eye text-blue-500 text-xl"></i>
-                                        <span class="text-sm font-medium text-gray-600">Alcance / Visualizações</span>
-                                    </div>
-                                    <div class="metric-card-static">
-                                        <i class="ph ph-cursor-click text-purple-500 text-xl"></i>
-                                        <span class="text-sm font-medium text-gray-600">Cliques no Anúncio</span>
-                                    </div>
-                                </div>
+                <div id="view-metrics" class="tab-content hidden-section">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                        <div class="p-6 border-b border-gray-100 bg-green-50/50">
+                            <h3 class="text-lg font-bold text-gray-900">Indicadores de Performance (KPIs)</h3>
+                            <p class="text-gray-500 text-sm">Dados que você deve acompanhar diariamente.</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm text-gray-600">
+                                    <thead class="bg-gray-50 text-xs uppercase font-semibold text-gray-500">
+                                        <tr>
+                                            <th class="px-6 py-3 rounded-l-lg">Métrica</th>
+                                            <th class="px-6 py-3 rounded-r-lg">Descrição / O que observar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100">
+                                        <tr>
+                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-whatsapp-logo text-green-500 mr-2"></i> Novos Clientes (WhatsApp)</td>
+                                            <td class="px-6 py-4">Quantidade de pessoas novas chamando no WhatsApp por dia.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-handshake text-blue-500 mr-2"></i> Fechamentos / Vendas</td>
+                                            <td class="px-6 py-4">Quantidade absoluta de vendas realizadas no dia.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-money text-green-600 mr-2"></i> Valor Bruto de Vendas</td>
+                                            <td class="px-6 py-4">Total faturado no dia (R$).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-trend-up text-green-700 mr-2"></i> Lucro Líquido</td>
+                                            <td class="px-6 py-4">Valor que sobra após pagar custos e anúncios.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-currency-circle-dollar text-orange-500 mr-2"></i> Investimento Diário (Ads)</td>
+                                            <td class="px-6 py-4">Quanto foi gasto nas plataformas de anúncio hoje.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-eye text-indigo-500 mr-2"></i> Alcance / Visualizações</td>
+                                            <td class="px-6 py-4">Quantas pessoas viram seu anúncio na localização selecionada.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 font-bold text-gray-800"><i class="ph ph-cursor-click text-purple-500 mr-2"></i> Cliques no Anúncio</td>
+                                            <td class="px-6 py-4">Quantas pessoas clicaram na imagem ou vídeo do anúncio.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="text-center pt-8 pb-4">
-                    <p class="text-xs text-gray-400">© 2024 Diagnóstico AI. Todos os direitos reservados.</p>
                 </div>
 
             </div>
@@ -229,6 +287,9 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+
+        // VARIÁVEIS GLOBAIS
+        let clientData = null;
 
         // LOGIN FUNCTION
         window.handleLogin = async function(e) {
@@ -255,9 +316,10 @@
                     });
 
                     if (found) {
+                        clientData = found;
                         document.getElementById('login-screen').classList.add('hidden-section');
                         document.getElementById('dashboard-screen').classList.remove('hidden-section');
-                        renderDashboard(found);
+                        setupDashboard(found);
                     } else {
                         alert("Usuário ou senha incorretos.");
                         btn.innerText = originalText;
@@ -276,30 +338,64 @@
             }
         };
 
-        function renderDashboard(data) {
-            document.getElementById('business-name').textContent = data.business_name;
-
-            // RENDERIZAR LINKS DE ENTREGAS (Isso continua vindo do Firebase)
+        function setupDashboard(data) {
+            document.getElementById('header-business-name').textContent = data.business_name;
+            
+            // Configurar botões da Visão Geral
             const sections = ['landing', 'design', 'ads', 'content'];
             sections.forEach(sec => {
                 const btn = document.getElementById(`btn-${sec}`);
-                const card = document.getElementById(`card-${sec}`);
-                
                 if (data.deliverables && data.deliverables[sec] && data.deliverables[sec].targetUrl) {
                     btn.href = data.deliverables[sec].targetUrl;
-                    btn.textContent = "Acessar Arquivos";
-                    btn.className = "block w-full text-center py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-lg shadow-blue-200 transition-all transform hover:translate-y-[-2px]";
+                    btn.textContent = "Acessar Arquivo";
+                    btn.className = "w-full py-2 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200";
                     btn.style.pointerEvents = "auto";
-                    card.classList.add('ring-2', 'ring-blue-100');
                 }
             });
+        }
+    </script>
+
+    <script>
+        // Função para trocar abas
+        function switchTab(tabId) {
+            // 1. Esconder todo conteúdo
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(el => el.classList.add('hidden-section'));
+
+            // 2. Remover classe active de todos os nav items
+            const navs = document.querySelectorAll('.nav-item');
+            navs.forEach(el => el.classList.remove('active'));
+
+            // 3. Mostrar conteúdo selecionado
+            document.getElementById(`view-${tabId}`).classList.remove('hidden-section');
             
-            // As seções Plano de Ação, Objetivos e Métricas agora são ESTÁTICAS no HTML acima.
+            // 4. Ativar menu
+            document.getElementById(`nav-${tabId}`).classList.add('active');
+
+            // 5. Atualizar Título
+            const titles = {
+                'overview': 'Visão Geral',
+                'plan': 'Plano de Ação',
+                'goals': 'Objetivos',
+                'metrics': 'Métricas'
+            };
+            document.getElementById('page-title').textContent = titles[tabId];
         }
 
-        window.logout = function() {
+        // Função para os links do menu lateral que são apenas atalhos
+        function openLink(type) {
+            // Se tiver link salvo no clienteData, abre. Se não, alerta ou vai para visão geral.
+            // Como clientData está no modulo, vamos apenas jogar para Visão Geral e alertar visualmente
+            switchTab('overview');
+            // Pequeno highlight no card
+            setTimeout(() => {
+                // Efeito visual simples poderia ser adicionado aqui
+            }, 100);
+        }
+
+        function logout() {
             location.reload();
-        };
+        }
     </script>
 </body>
 </html>
