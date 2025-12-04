@@ -242,9 +242,7 @@
                 <button onclick="switchTab('landing')" id="btn-landing" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
                     <i class="ph ph-globe text-xl"></i> Página de Vendas
                 </button>
-                <button onclick="switchTab('design')" id="btn-design" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
-                    <i class="ph ph-paint-brush text-xl"></i> Identidade Visual
-                </button>
+                <!-- REMOVIDO IDENTIDADE VISUAL -->
                 <button onclick="switchTab('ads')" id="btn-ads" class="nav-btn w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all text-gray-600 hover:bg-gray-50">
                     <i class="ph ph-megaphone text-xl"></i> Anúncios
                 </button>
@@ -305,9 +303,7 @@
                 <button onclick="switchTab('landing'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
                     <i class="ph ph-globe text-xl"></i> Página de Vendas
                 </button>
-                <button onclick="switchTab('design'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
-                    <i class="ph ph-paint-brush text-xl"></i> Identidade Visual
-                </button>
+                <!-- REMOVIDO IDENTIDADE VISUAL -->
                 <button onclick="switchTab('ads'); toggleMobileMenu()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-indigo-50">
                     <i class="ph ph-megaphone text-xl"></i> Anúncios
                 </button>
@@ -440,7 +436,7 @@
     <script>
         const state = {
             data: {}, diagnosis: {}, activeTab: 'overview', serverDeliverables: {}, 
-            files: { overview: [], landing: [], design: [], ads: [], content: [] }
+            files: { overview: [], landing: [], ads: [], content: [] }
         };
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -563,12 +559,6 @@
                         : "Recomendação da Equipe: Landing Page de Alta Conversão com VSL (Vídeo de Vendas) e Script Persuasivo.", 
                     sections: ["Headline (Promessa Única)", "Prova Social (Depoimentos Reais)", "Quebra de Objeções", "Oferta Irresistível"], 
                     priority: "Essencial" 
-                },
-                visualIdentity: { 
-                    title: "Renovação de Marca (Branding)", 
-                    recommendation: "Desenvolvimento de 2 Propostas Exclusivas", 
-                    actions: ["Paleta de cores focada em psicologia de compra", "Tipografia moderna e legível", "Design de posts padronizados"], 
-                    priority: "Estratégica" 
                 },
                 paidAds: { 
                     title: "Plano de Tráfego Pago", 
@@ -711,14 +701,6 @@
                             <span class="text-xs text-gray-500">Ver materiais</span>
                         </button>
 
-                        <button onclick="switchTab('design')" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all text-left group">
-                            <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600 mb-3 group-hover:scale-110 transition-transform">
-                                <i class="ph-fill ph-paint-brush text-2xl"></i>
-                            </div>
-                            <span class="block text-sm font-bold text-gray-800">Identidade Visual</span>
-                            <span class="text-xs text-gray-500">Ver propostas</span>
-                        </button>
-
                         <button onclick="switchTab('ads')" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all text-left group">
                             <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-3 group-hover:scale-110 transition-transform">
                                 <i class="ph-fill ph-megaphone text-2xl"></i>
@@ -752,29 +734,6 @@
                     <p class="text-gray-600 leading-relaxed">${d.landingPage.recommendation}</p>
                     <div class="mt-6 flex flex-wrap gap-2">
                         ${d.landingPage.sections.map(s => `<span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold uppercase">${s}</span>`).join('')}
-                    </div>
-                </div>
-                ${getFileBlock(tabId)}`;
-            }
-            else if(tabId === 'design') {
-                html = `
-                <div class="flex items-center gap-3 mb-6 animate-fade-in">
-                    <div class="p-3 bg-purple-100 rounded-lg text-purple-600"><i class="ph-bold ph-paint-brush text-2xl"></i></div>
-                    <div>
-                        <h2 class="text-2xl font-bold text-gray-900">Identidade Visual</h2>
-                        <p class="text-sm text-gray-500">Branding e posicionamento.</p>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-sm animate-fade-in">
-                    <h3 class="font-bold text-lg text-gray-800 mb-4">${d.visualIdentity.title}</h3>
-                    <p class="text-gray-600 mb-6">${d.visualIdentity.recommendation}. Nosso time de design preparará opções focadas no seu público-alvo.</p>
-                    <div class="grid md:grid-cols-3 gap-4">
-                        ${d.visualIdentity.actions.map((act, i) => `
-                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                <span class="text-4xl font-black text-gray-200 block mb-2">0${i+1}</span>
-                                <p class="font-bold text-gray-800 text-sm">${act}</p>
-                            </div>
-                        `).join('')}
                     </div>
                 </div>
                 ${getFileBlock(tabId)}`;
